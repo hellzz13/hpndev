@@ -19,9 +19,9 @@ export default function Navbar() {
             as="nav"
             className="dark:bg-gray-800 bg-white w-full z-30 fixed top-2"
         >
-            {({ open }: any) => (
+            {({ open }) => (
                 <>
-                    <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl ml-2 px-4 sm:px-6 lg:px-8">
                         <div className="relative flex h-16 items-center justify-between">
                             <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                                 {/* Mobile menu button*/}
