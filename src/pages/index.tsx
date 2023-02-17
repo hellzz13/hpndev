@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,7 +33,7 @@ export default function Home() {
                 </svg>
             </div>
             <header className="z-30 flex items-center w-full h-24 sm:h-32">
-                <div className="container flex items-center justify-between px-6 mx-auto">
+                {/* <div className="container flex items-center justify-between px-6 mx-auto">
                     <div className="flex items-center text-3xl font-black text-gray-800 uppercase dark:text-white">
                         <svg
                             width="25"
@@ -80,7 +81,8 @@ export default function Home() {
                             <span className="w-6 h-1 mb-1 bg-gray-800 dark:bg-white"></span>
                         </button>
                     </div>
-                </div>
+                </div> */}
+                <Navbar />
             </header>
             <div className="relative z-20 flex items-center">
                 <div className="container relative flex flex-col items-center justify-between px-6 py-4 mx-auto">
