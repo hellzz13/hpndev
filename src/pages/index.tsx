@@ -11,6 +11,7 @@ export default function Home() {
                             src={"/sunglasses.png"}
                             width={150}
                             height={100}
+                            alt={"dev oculos para cima"}
                         />
                     </span>
                     <p>Got a project?</p>
@@ -101,7 +102,7 @@ export default function Home() {
                         <div className="flex items-center justify-center mt-4">
                             <Link
                                 href="https://github.com/hellzz13"
-                                className="px-4 py-2 my-2 uppercase bg-transparent border-2 border-gray-800 md:mt-16 dark:text-gray-800 dark:bg-white hover:dark:bg-gray-100 dark:text-white hover:bg-gray-800 hover:text-white text-md"
+                                className="px-4 py-2 my-2 uppercase bg-transparent border-2 border-gray-800 md:mt-16 dark:text-gray-800 dark:bg-white hover:dark:bg-gray-100 hover:bg-gray-800 hover:text-white text-md"
                             >
                                 <p className="text-black">Check my code!</p>
                             </Link>
