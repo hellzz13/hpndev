@@ -9,7 +9,7 @@ const navigation = [
     { name: "Contact", href: "#", current: false },
 ];
 
-function classNames(...classes: any) {
+function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
 }
 
@@ -42,7 +42,7 @@ export default function Navbar() {
                                     )}
                                 </Disclosure.Button>
                             </div>
-                            <div className="flex items-center text-3xl font-black text-gray-800 uppercase dark:text-white">
+                            <div className="flex items-center text-3xl font-black text-gray-800 dark:text-white">
                                 <svg
                                     width="25"
                                     height="25"
