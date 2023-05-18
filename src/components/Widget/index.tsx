@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Widget() {
     return (
-        <div className="fixed hidden md:block -bottom-32 -left-32 w-96 h-96">
+        <div className="fixed hidden md:block -bottom-32 -left-32 w-80 h-96">
             <div className="fixed z-20 text-xl text-extrabold right-12 text-start bottom-3 left-3">
                 <span>
                     <Image

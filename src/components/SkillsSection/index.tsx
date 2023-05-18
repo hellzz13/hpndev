@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
     TbBrandHtml5,
     TbBrandCss3,
