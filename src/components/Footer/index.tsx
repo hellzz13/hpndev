@@ -57,7 +57,7 @@ export default function Footer() {
                 </div> */}
             </div>
             <div className="py-6 text-sm text-center dark:text-gray-400">
-                © 2023 Company Co. All rights reserved.
+                © 2023 hpn-dev. All rights reserved.
             </div>
         </footer>
     );

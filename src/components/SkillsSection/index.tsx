@@ -7,6 +7,7 @@ import {
     TbBrandReactNative,
     TbBrandGit,
     TbBrandNextjs,
+    TbBrandTailwind,
 } from "react-icons/tb";
 
 const skills = [
@@ -39,6 +40,11 @@ const skills = [
         name: "nextjs",
         Icon: TbBrandNextjs,
         alt: "NextJs",
+    },
+    {
+        name: "tailwindcss",
+        Icon: TbBrandTailwind,
+        alt: "TailwindCss",
     },
     {
         name: "react native",
