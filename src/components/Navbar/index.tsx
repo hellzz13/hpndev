@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 
 import Link from "next/link";
+import SwitchThemeToggle from "../SwitchThemeToggle";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
@@ -18,12 +19,22 @@ export default function Navbar() {
             href: "#",
             current: asPath.endsWith("#") || asPath.endsWith("/"),
         },
+        // {
+        //     name: "About",
+        //     href: "#about",
+        //     current: asPath.endsWith("#about"),
+        // },
+        {
+            name: "Career",
+            href: "#career",
+            current: asPath.endsWith("#carrear"),
+        },
         {
             name: "Skills",
             href: "#skills",
             current: asPath.endsWith("#skills"),
         },
-        { name: "Projects", href: "#", current: asPath.endsWith("#projects") },
+        // { name: "Projects", href: "#", current: asPath.endsWith("#projects") },
         { name: "Contact", href: "#", current: asPath.endsWith("#contact") },
     ];
 
@@ -159,6 +170,7 @@ export default function Navbar() {
                                         </Menu.Items>
                                     </Transition>
                                 </Menu>
+                                <SwitchThemeToggle />
                             </div>
                         </div>
                     </div>

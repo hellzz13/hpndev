@@ -67,7 +67,7 @@ export default function SkillsSection() {
             <div className="container p-4 mx-auto text-center">
                 <h2 className="text-4xl font-bold">Skills</h2>
             </div>
-            <div className="container flex flex-wrap justify-center mx-auto dark:text-gray-400">
+            <div className="container flex flex-wrap justify-center px-0 lg:px-12 mx-auto dark:text-gray-400">
                 {skills.map(({ Icon, alt }) => {
                     return (
                         <div

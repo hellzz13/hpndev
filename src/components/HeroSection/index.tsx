@@ -19,11 +19,14 @@ export default function HeroSection() {
                             alt={"Dev trabalhando"}
                         />
                         <p className="my-6 text-3xl text-center dark:text-white">
-                            Hi, I&#x27;m Hélio 🤘
+                            Olá, eu sou o Hélio 🤘
+                            {/* Hi, I&#x27;m Hélio 🤘 */}
                         </p>
                         <h2 className="max-w-3xl py-2 mx-auto text-2xl font-bold text-center text-gray-800 md:text-4xl dark:text-white">
-                            Front-end developer engineer, music, games, comics
-                            and experiences.
+                            {/* Front-end developer engineer, music, games, comics
+                            and nerd stuffs. */}
+                            Desenvolvedor Front-end, apaixonado por música,
+                            games, quadrinhos e outras nerdices.
                         </h2>
                         <div className="flex items-center justify-center mt-4">
                             <Link
