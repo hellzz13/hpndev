@@ -37,7 +37,7 @@ export default function SwitchThemeToggle() {
     return (
         <button
             onClick={changeTheme}
-            className="cursor-pointer dark:text-gray-100 mr-8 lg:mr-0 w-8 h-8 flex justify-center items-center"
+            className="cursor-pointer dark:text-gray-100 mr-10 lg:mr-0 w-8 h-8 flex justify-center items-center"
         >
             {theme === "light" ? (
                 <RiMoonFill size={24} />
