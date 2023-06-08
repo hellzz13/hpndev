@@ -5,6 +5,8 @@ import { RiMoonFill, RiSunFill } from "react-icons/ri";
 export default function SwitchThemeToggle() {
     const { theme, setTheme, isBrowser } = useContext(ThemeContext);
     const newtheme = isBrowser && theme === "light" ? "dark" : "light";
+    const userPreferenceTheme =
+        isBrowser && window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     useEffect(() => {
         const storageTheme = localStorage.getItem("hpndev-theme")?.toString();
@@ -15,14 +17,11 @@ export default function SwitchThemeToggle() {
             );
         }
 
-        if (
-            isBrowser &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches
-        ) {
+        if (userPreferenceTheme) {
             return setTheme("dark");
         }
         setTheme("light");
-    }, [isBrowser, setTheme]);
+    }, [userPreferenceTheme, setTheme]);
 
     if (theme === "dark") {
         isBrowser && document.documentElement.classList.add("dark");
