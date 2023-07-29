@@ -27,7 +27,7 @@ export default function Navbar() {
         {
             name: "Career",
             href: "#career",
-            current: asPath.endsWith("#carrear"),
+            current: asPath.endsWith("#career"),
         },
         {
             name: "Skills",
