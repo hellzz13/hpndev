@@ -1,10 +1,13 @@
 export default function Footer() {
-    return (
-        <footer className="px-4 divide-y dark:bg-gray-800 dark:text-gray-100">
-            <div className="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
-                {/* corrigir social media */}
+  const date = new Date();
+  const currentYear = date.getFullYear();
 
-                {/* <div className="space-y-3 mx-auto">
+  return (
+    <footer className="px-4 divide-y dark:bg-gray-800 dark:text-gray-100">
+      <div className="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
+        {/* corrigir social media */}
+
+        {/* <div className="space-y-3 mx-auto">
                     <div className="uppercase dark:text-gray-50">
                         Social media
                     </div>
@@ -55,10 +58,10 @@ export default function Footer() {
                         </a>
                     </div>
                 </div> */}
-            </div>
-            <div className="py-6 text-sm text-center dark:text-gray-400">
-                © 2023 hpn-dev. All rights reserved.
-            </div>
-        </footer>
-    );
+      </div>
+      <div className="py-6 text-sm text-center dark:text-gray-400">
+        © {currentYear} hpn dev. All rights reserved.
+      </div>
+    </footer>
+  );
 }
