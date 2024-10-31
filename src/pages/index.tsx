@@ -5,15 +5,15 @@ import SkillsSection from "@/components/SkillsSection";
 import Widget from "@/components/Widget";
 
 export default function Home() {
-    return (
-        <>
-            <HeroSection />
-            {/* componente vazio */}
-            {/* <About /> */}
-            <CarrearProgress />
-            <SkillsSection />
-            <Footer />
-            <Widget />
-        </>
-    );
+  return (
+    <main className="h-screen bg-white dark:bg-gray-800">
+      <HeroSection />
+      {/* componente vazio */}
+      {/* <About /> */}
+      {/* <CarrearProgress /> */}
+      {/* <SkillsSection /> */}
+      <Footer />
+      <Widget />
+    </main>
+  );
 }
