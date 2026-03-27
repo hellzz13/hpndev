@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/helio/workspace/hpndev"
+      ]
+    },
+    "git": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-git",
+        "/home/helio/workspace/hpndev"
+      ]
+    },
+    "web-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-duckduckgo"
+      ]
+    }
+  },
+  "_comments": {
+    "note": "MCP servers opcionais (desativados por padrão):",
+    "database": "MySQL direto - use as rotas da API em vez disso",
+    "browser": "Puppeteer para testes E2E",
+    "sequential-thinking": "Para tarefas complexas"
+  }
+}
