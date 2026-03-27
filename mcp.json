@@ -13,7 +13,7 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-git",
-        "/home/helio/workspace/hpndev"
+        "/home/helio/workspace/hpndev3"
       ]
     },
     "web-search": {
