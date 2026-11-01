@@ -11,6 +11,21 @@ const Apps = {
 
 type AppId = (typeof Apps)[keyof typeof Apps];
 
+const Spaces = {
+  HOME: "home",
+  PROJECTS: "projects",
+} as const;
+
+type SpaceId = (typeof Spaces)[keyof typeof Spaces];
+
+const AppSpaces = {
+  terminal: Spaces.HOME,
+  projects: Spaces.PROJECTS,
+  about: Spaces.HOME,
+  career: Spaces.HOME,
+  contact: Spaces.HOME,
+} as const satisfies Record<AppId, SpaceId>;
+
 const AppInfo = {
   terminal: { label: "Terminal", Icon: FiTerminal },
   projects: { label: "Projetos", Icon: FiFolder },
@@ -27,5 +42,5 @@ const WindowDragBounds = {
   bottomInset: 160,
 } as const;
 
-export { Apps, AppIds, AppInfo, DesktopBreakpoint, WindowDragBounds };
-export type { AppId };
+export { Apps, AppIds, AppInfo, Spaces, AppSpaces, DesktopBreakpoint, WindowDragBounds };
+export type { AppId, SpaceId };

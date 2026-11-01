@@ -2,9 +2,9 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { DesktopWindow } from "@/portfolio/DesktopWindow";
-import { Apps, AppIds, AppInfo } from "@/portfolio/constants";
+import { Apps, AppIds, AppInfo, AppSpaces, Spaces } from "@/portfolio/constants";
 import { Projects, Experience, InitialTerminalLines } from "@/portfolio/content";
-import type { AppId } from "@/portfolio/constants";
+import type { AppId, SpaceId } from "@/portfolio/constants";
 import { resolveTerminalCommand } from "@/portfolio/terminal";
 import { useWindowManager } from "@/portfolio/useWindowManager";
 import { SiteUrl, SiteTitle, SiteDescription, SocialImageUrl, StructuredData } from "@/portfolio/seo";
@@ -17,6 +17,9 @@ import {
 type TerminalLine = { command: string; output: string };
 
 function Home() {
+  const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
+  const isHomeSpace = currentSpace === Spaces.HOME;
+  const isProjectsSpace = currentSpace === Spaces.PROJECTS;
   const { windows, open, close, minimize, focus, move } =
     useWindowManager<AppId>(Apps.TERMINAL);
   const [selectedProject, setSelectedProject] = useState(0);
@@ -41,13 +44,38 @@ function Home() {
     const terminal = endRef.current?.parentElement;
     if (terminal) terminal.scrollTop = terminal.scrollHeight;
   }, [lines]);
+  useEffect(() => {
+    function onWorkspaceShortcut(event: KeyboardEvent) {
+      const target = event.target;
+      const isEditing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
+      const isWorkspaceShortcut = event.ctrlKey && !event.altKey && !event.metaKey;
+      if (isEditing || !isWorkspaceShortcut) return;
+
+      const nextSpace = event.key === "ArrowRight" ? Spaces.PROJECTS : event.key === "ArrowLeft" ? Spaces.HOME : null;
+      if (nextSpace === null) return;
+      event.preventDefault();
+      setCurrentSpace(nextSpace);
+    }
+    document.addEventListener("keydown", onWorkspaceShortcut);
+    return () => document.removeEventListener("keydown", onWorkspaceShortcut);
+  }, []);
+
+  function switchSpace(space: SpaceId) {
+    setCurrentSpace(space);
+  }
 
   function openApp(id: AppId) {
+    switchSpace(AppSpaces[id]);
     open(id);
     const isTerminalApp = id === Apps.TERMINAL;
     if (isTerminalApp) {
       window.setTimeout(() => inputRef.current?.focus(), 50);
     }
+  }
+
+  function isWindowVisible(item: (typeof windows)[number]) {
+    const belongsToCurrentSpace = AppSpaces[item.id] === currentSpace;
+    return !item.minimized && belongsToCurrentSpace;
   }
 
   function submitCommand() {
@@ -295,19 +323,28 @@ function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(StructuredData).replace(/</g, "\\u003c") }}
         />
       </Head>
-      <div className="desktop">
+      <div className="desktop" data-space={currentSpace}>
         <header className="menubar">
           <div>
             <span className="menubar-mark">✳</span>
             <strong>Hélio OS</strong>
-            <span className="menubar-separator" /> Portfólio
+            <span className="menubar-separator" /> <span className="menubar-section">Portfólio</span>
           </div>
+          <nav className="workspace-switcher" aria-label="Áreas de trabalho">
+            <button type="button" aria-pressed={isHomeSpace} onClick={() => switchSpace(Spaces.HOME)}>
+              <span>01</span> Início
+            </button>
+            <button type="button" aria-pressed={isProjectsSpace} onClick={() => switchSpace(Spaces.PROJECTS)}>
+              <span>02</span> Projetos
+            </button>
+          </nav>
           <div>
             <span className="available">● &nbsp; Disponível para explorar</span>
             <time>{time}</time>
           </div>
         </header>
-        <main className="desktop-main">
+        <div className={`space-track ${isProjectsSpace ? "show-projects" : ""}`}>
+        <main className="desktop-main" inert={!isHomeSpace}>
           <section className="hero">
             <span className="eyebrow">✳ &nbsp; BEM-VINDO AO MEU ESPAÇO</span>
             <h1>
@@ -324,11 +361,11 @@ function Home() {
             <button
               type="button"
               className="hero-action"
-              onClick={() => openApp("projects")}
+              onClick={() => switchSpace(Spaces.PROJECTS)}
             >
-              Explorar projetos <FiArrowUpRight />
+              Ir para projetos <FiArrowUpRight />
             </button>
-            <a className="hero-secondary" href="#projects">Ver lista de projetos</a>
+            <span className="hero-secondary">Ctrl + → para trocar de mesa</span>
           </section>
           <nav className="desktop-icons" aria-label="Aplicativos do desktop">
             {AppIds
@@ -351,11 +388,11 @@ function Home() {
               })}
           </nav>
         </main>
-        <section className="portfolio-index" id="projects" aria-labelledby="projects-heading">
+        <section className="portfolio-index" id="projects" aria-labelledby="projects-heading" inert={!isProjectsSpace}>
           <div className="portfolio-index-heading">
-            <span className="eyebrow">/ arquivo de projetos</span>
+            <span className="eyebrow">/ mesa 02 · projetos</span>
             <h2 id="projects-heading">Trabalho em destaque<span>.</span></h2>
-            <p>Explore os projetos pelo desktop ou conheça cada um por aqui.</p>
+            <p>Abra um projeto para ver os detalhes em uma janela. Use as mesas no topo para navegar.</p>
           </div>
           <div className="portfolio-index-grid">
             {Projects.map((project, index) => (
@@ -365,8 +402,8 @@ function Home() {
                 <p>{project.summary}</p>
                 <p>{project.detail}</p>
                 <div className="portfolio-index-actions">
-                  <button type="button" onClick={() => { setSelectedProject(index); openApp(Apps.PROJECTS); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-                    Abrir no desktop <FiArrowUpRight />
+                  <button type="button" onClick={() => { setSelectedProject(index); openApp(Apps.PROJECTS); }}>
+                    Abrir projeto <FiArrowUpRight />
                   </button>
                   {project.links.map((link) => (
                     <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
@@ -378,8 +415,9 @@ function Home() {
             ))}
           </div>
         </section>
+        </div>
         <div className="windows-layer">
-          {windows.filter((item) => !item.minimized).map((item) => {
+          {windows.filter(isWindowVisible).map((item) => {
             const label = AppInfo[item.id].label;
             const title = item.id === Apps.TERMINAL
               ? "helio@portfolio — zsh"

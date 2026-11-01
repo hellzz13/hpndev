@@ -20,6 +20,10 @@ Implementação: `src/portfolio/useWindowManager.ts` controla o estado; `src/por
 
 DisciplineHub e project-spec-starter são apresentados como trabalhos distintos, com descrição, estado e links. Capacidades planejadas não devem ser descritas como entregues.
 
+## BR-005 — Áreas de trabalho
+
+Início e Projetos são mesas distintas. O visitante troca entre elas pelos controles visíveis no menu superior ou por Ctrl + seta esquerda/direita. Abrir um aplicativo seleciona sua mesa; janelas abertas permanecem em estado e só aparecem na mesa correspondente. Os projetos continuam presentes no HTML para indexação.
+
 ## Dados
 
 Esta entrega não coleta dados pelo site. Contato abre o cliente de e-mail do visitante; links externos abrem os destinos declarados.

@@ -12,6 +12,8 @@
 
 `src/pages/index.tsx` compõe a página e conecta as ações dos aplicativos. Em `src/portfolio/`, `constants.ts` reúne IDs e valores estáveis da interface; `content.ts` guarda os textos e listas apresentados; `terminal.ts` interpreta comandos sem depender de React; `useWindowManager.ts` controla o estado das janelas; e `DesktopWindow.tsx` desenha a moldura e implementa o arrasto. `src/styles/globals.css` contém a linguagem visual. O fluxo está explicado em [Janelas e arrasto](WINDOWS.md).
 
+As mesas `HOME` e `PROJECTS` e a associação de aplicativos a elas ficam em `src/portfolio/constants.ts`. A página mantém a mesa ativa, desloca o painel horizontal e renderiza somente as janelas dessa mesa. A seção de projetos segue no HTML inicial para indexação, mesmo quando a mesa está inativa.
+
 ## Convenções para regras e constantes
 
 - Conjuntos fechados, como IDs de aplicativos e comandos, usam objetos `as const`; o tipo correspondente é derivado do objeto.

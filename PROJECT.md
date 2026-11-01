@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Apresentar Hélio Palenca, sua experiência e seus projetos de forma memorável e fácil de explorar. O portfólio atual é uma página de rolagem e ainda não destaca os projetos recentes.
+Apresentar Hélio Palenca, sua experiência e seus projetos de forma memorável e fácil de explorar. O portfólio organiza o conteúdo em duas áreas de trabalho.
 
 ## Público
 
@@ -15,6 +15,7 @@ Pessoas recrutadoras, equipes de produto e desenvolvimento, possíveis clientes 
 - Janelas de Sobre, Projetos, Experiência e Contato, com abertura, foco, minimização e fechamento.
 - Apresentação do DisciplineHub e do project-spec-starter com descrições fiéis aos repositórios, estado atual e links.
 - Uso por clique, teclado e toque; janelas adaptadas ao celular.
+- Mesas Início e Projetos, com troca pelo menu superior ou Ctrl + setas; cada aplicativo abre na sua mesa.
 
 ## Critérios de aceite
 
@@ -31,3 +32,7 @@ O site continua como aplicação Next.js existente. Nesta entrega não haverá b
 ## Dependências e riscos
 
 As imagens detalhadas dos projetos ainda não foram selecionadas. Links e descrições devem ser conferidos antes de publicar. A interface de janelas precisa oferecer navegação direta e responsividade para evitar que a estética esconda o conteúdo.
+
+## Próximas melhorias
+
+As ideias para prévia das áreas de trabalho e busca rápida com `⌘K` estão descritas em [Backlog do portfólio](docs/BACKLOG.md).
