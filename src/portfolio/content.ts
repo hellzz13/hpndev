@@ -13,6 +13,10 @@ const Projects = [
         label: "Ver código",
         href: "https://github.com/hellzz13/discipline-hub",
       },
+      {
+        label: "Acessar produto",
+        href: "https://discipline-hub-xi.vercel.app",
+      },
     ],
   },
   {
@@ -70,7 +74,8 @@ const Experience = [
 const InitialTerminalLines = [
   {
     command: "whoami",
-    output: "Hélio Palenca — desenvolvedor front-end e criador de produtos para a web.",
+    output:
+      "Hélio Palenca — desenvolvedor front-end e criador de produtos para a web.",
   },
   {
     command: "welcome",

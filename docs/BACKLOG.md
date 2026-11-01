@@ -31,3 +31,17 @@ Critérios de aceite:
 ## Dependências de implementação
 
 Definir componentes próprios para seletor e paleta, com catálogo de itens pesquisáveis separado da apresentação. Reaproveitar `Apps`, `Spaces`, `AppSpaces` e o fluxo `openApp`; documentar novas regras em `BUSINESS_RULES.md` quando implementadas. Validar teclado, toque, layout móvel, lint, tipos e build.
+
+## Fluxo de contribuição e entrega
+
+### Definir GitFlow para o portfólio
+
+Evoluir o fluxo mínimo de `docs/GITFLOW.md` para um processo claro de desenvolvimento, revisão e publicação. Decidir se este repositório precisa do GitFlow clássico, com branches `develop`, `release/*` e `hotfix/*`, ou se um fluxo mais leve com branches curtas e PRs atende melhor ao ritmo do portfólio. Registrar a escolha e como ela se conecta ao deploy automático da Vercel.
+
+Critérios de aceite:
+
+- Documentar o papel de `main`, o padrão de nomes das branches e o caminho para integrar funcionalidades e correções urgentes.
+- Definir quando abrir PR, quais revisões e gates são exigidos e quem pode integrar.
+- Separar preview, produção e rollback, incluindo a relação entre branch e ambiente na Vercel.
+- Configurar as proteções e verificações automáticas acordadas no GitHub e testar o fluxo com uma mudança pequena.
+- Atualizar `AGENTS.md` e `docs/GITFLOW.md` para que agentes e pessoas sigam o mesmo processo.

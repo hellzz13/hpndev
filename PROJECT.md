@@ -35,4 +35,4 @@ As imagens detalhadas dos projetos ainda não foram selecionadas. Links e descri
 
 ## Próximas melhorias
 
-As ideias para prévia das áreas de trabalho e busca rápida com `⌘K` estão descritas em [Backlog do portfólio](docs/BACKLOG.md).
+As ideias para prévia das áreas de trabalho, busca rápida com `⌘K` e fluxo de contribuição estão descritas em [Backlog do portfólio](docs/BACKLOG.md).
