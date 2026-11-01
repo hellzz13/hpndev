@@ -24,14 +24,14 @@ export default function SwitchThemeToggle() {
     }, [userPreferenceTheme, setTheme]);
 
     if (theme === "dark") {
-        isBrowser && document.documentElement.classList.add("dark");
+        if (isBrowser) document.documentElement.classList.add("dark");
     } else {
-        isBrowser && document.documentElement.classList.remove("dark");
+        if (isBrowser) document.documentElement.classList.remove("dark");
     }
 
     function changeTheme() {
         setTheme(newtheme);
-        isBrowser && localStorage.setItem("hpndev-theme", newtheme);
+        if (isBrowser) localStorage.setItem("hpndev-theme", newtheme);
     }
 
     return (

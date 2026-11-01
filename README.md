@@ -1,38 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hélio Palenca — portfólio
 
-## Getting Started
+Portfólio pessoal em forma de desktop, inspirado em macOS e Linux. O visitante pode explorar projetos, experiência e contato por ícones, dock ou comandos do terminal.
 
-First, run the development server:
+## Desenvolvimento
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra `http://localhost:3000`. Para validar a entrega:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+npx tsc --noEmit
+npm run build
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Conteúdo
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Os projetos em destaque são DisciplineHub e project-spec-starter. Descrições e links ficam em `src/portfolio/content.ts`. Os IDs e limites das janelas ficam em `constants.ts`, e as regras de comandos em `terminal.ts`. Consulte `PROJECT.md` para escopo e critérios de aceite, `docs/BUSINESS_RULES.md` para o comportamento e `docs/ENGINEERING.md` para decisões técnicas.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Como o desktop funciona
 
-## Learn More
+Veja [docs/WINDOWS.md](docs/WINDOWS.md) para entender abertura, camadas, minimização e arrasto das janelas. O `project-spec-starter` foi executado uma vez a partir do checkout local para gerar a base documental; ele não é uma dependência necessária para rodar o portfólio.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Para a URL canônica, sitemap e verificação após o deploy, veja [docs/SEO.md](docs/SEO.md).
