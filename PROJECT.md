@@ -1,8 +1,8 @@
-# Portfólio Hélio Palenca
+# Portfólio Hélio Palença
 
 ## Propósito
 
-Apresentar Hélio Palenca, sua experiência e seus projetos de forma memorável e fácil de explorar. O portfólio organiza o conteúdo em duas áreas de trabalho.
+Apresentar Hélio Palença, sua experiência e seus projetos de forma memorável e fácil de explorar. O portfólio organiza o conteúdo em duas áreas de trabalho.
 
 ## Público
 

@@ -75,7 +75,7 @@ const InitialTerminalLines = [
   {
     command: "whoami",
     output:
-      "Hélio Palenca — desenvolvedor front-end e criador de produtos para a web.",
+      "Hélio Palença — desenvolvedor front-end e criador de produtos para a web.",
   },
   {
     command: "welcome",

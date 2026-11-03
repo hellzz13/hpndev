@@ -39,6 +39,22 @@ Critérios de aceite:
 - A opção do Google exige ação explícita e não é exibida para consulta vazia.
 - A paleta funciona no celular, mantém foco acessível e não executa comandos arbitrários.
 
+## Jogo no portfólio
+
+### Abrir o jogo por comando do terminal
+
+Adicionar o jogo criado por Hélio ao portfólio como aplicativo. Um comando próprio, listado em `help`, deve abri-lo em uma janela na mesa atual, seguindo o comportamento dos demais aplicativos. O jogo também precisa de um controle visível para quem não usa o terminal.
+
+Antes de implementar, confirmar o nome do jogo, onde está o código ou a versão publicada, como ele pode ser incorporado ao site e quais controles exige. Escolher então se a janela executa o jogo diretamente ou apresenta um acesso à versão externa.
+
+Critérios de aceite:
+
+- O comando escolhido aparece em `help` e abre o jogo sem executar código arbitrário.
+- Há um ícone ou outro controle visível para abrir o mesmo conteúdo.
+- A janela pode ser focada, minimizada, fechada e movida como as demais no desktop.
+- O jogo e seus controles funcionam em tela pequena ou oferecem uma alternativa clara quando houver limitação técnica.
+- Nome, descrição e links correspondem à versão real do jogo.
+
 ## Dependências de implementação
 
 Definir componentes próprios para seletor e paleta, com catálogo de itens pesquisáveis separado da apresentação. Reaproveitar `Apps`, `Spaces` e o fluxo `openApp`; documentar novas regras em `BUSINESS_RULES.md` quando implementadas. Validar teclado, toque, layout móvel, lint, tipos e build.

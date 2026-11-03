@@ -1,7 +1,7 @@
 const SiteUrl = "https://hpndev.vercel.app/";
-const SiteTitle = "Hélio Palenca | Desenvolvedor Front-end e projetos web";
+const SiteTitle = "Hélio Palença | Software Engineer e projetos web";
 const SiteDescription =
-  "Portfólio de Hélio Palenca: desenvolvimento front-end, experiência profissional e projetos como DisciplineHub e project-spec-starter.";
+  "Portfólio de Hélio Palença: desenvolvimento front-end, experiência profissional e projetos como DisciplineHub e project-spec-starter.";
 const SocialImageUrl = `${SiteUrl}studying.png`;
 
 const StructuredData = {
@@ -11,14 +11,14 @@ const StructuredData = {
       "@type": "WebSite",
       "@id": `${SiteUrl}#website`,
       url: SiteUrl,
-      name: "Portfólio de Hélio Palenca",
+      name: "Portfólio de Hélio Palença",
       inLanguage: "pt-BR",
       description: SiteDescription,
     },
     {
       "@type": "Person",
       "@id": `${SiteUrl}#person`,
-      name: "Hélio Palenca",
+      name: "Hélio Palença",
       url: SiteUrl,
       jobTitle: "Desenvolvedor Front-end",
       image: SocialImageUrl,

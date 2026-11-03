@@ -3,16 +3,22 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { DesktopWindow } from "@/portfolio/DesktopWindow";
 import { Apps, AppIds, AppInfo, Spaces } from "@/portfolio/constants";
-import { Projects, Experience, InitialTerminalLines } from "@/portfolio/content";
+import {
+  Projects,
+  Experience,
+  InitialTerminalLines,
+} from "@/portfolio/content";
 import type { AppId, SpaceId } from "@/portfolio/constants";
 import { resolveTerminalCommand } from "@/portfolio/terminal";
 import { useWindowManager } from "@/portfolio/useWindowManager";
-import { SiteUrl, SiteTitle, SiteDescription, SocialImageUrl, StructuredData } from "@/portfolio/seo";
 import {
-  FiArrowUpRight,
-  FiGithub,
-  FiLinkedin,
-} from "react-icons/fi";
+  SiteUrl,
+  SiteTitle,
+  SiteDescription,
+  SocialImageUrl,
+  StructuredData,
+} from "@/portfolio/seo";
+import { FiArrowUpRight, FiGithub, FiLinkedin } from "react-icons/fi";
 
 type TerminalLine = { command: string; output: string };
 
@@ -20,8 +26,10 @@ function Home() {
   const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
   const isHomeSpace = currentSpace === Spaces.HOME;
   const isProjectsSpace = currentSpace === Spaces.PROJECTS;
-  const { windows, open, close, minimize, focus, move } =
-    useWindowManager<AppId, SpaceId>(Apps.TERMINAL, Spaces.HOME);
+  const { windows, open, close, minimize, focus, move } = useWindowManager<
+    AppId,
+    SpaceId
+  >(Apps.TERMINAL, Spaces.HOME);
   const [selectedProject, setSelectedProject] = useState(0);
   const [lines, setLines] = useState<TerminalLine[]>(InitialTerminalLines);
   const [command, setCommand] = useState("");
@@ -76,7 +84,10 @@ function Home() {
     const appToOpen = result.appToOpen;
     const hasAppToOpen = appToOpen !== undefined;
     if (hasAppToOpen) openApp(appToOpen);
-    setLines((current) => [...current, { command: trimmedCommand, output: result.output }]);
+    setLines((current) => [
+      ...current,
+      { command: trimmedCommand, output: result.output },
+    ]);
     setCommand("");
   }
 
@@ -296,14 +307,19 @@ function Home() {
         <meta property="og:title" content={SiteTitle} />
         <meta property="og:description" content={SiteDescription} />
         <meta property="og:image" content={SocialImageUrl} />
-        <meta property="og:image:alt" content="Avatar ilustrado de Hélio Palenca" />
+        <meta
+          property="og:image:alt"
+          content="Avatar ilustrado de Hélio Palença"
+        />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={SiteTitle} />
         <meta name="twitter:description" content={SiteDescription} />
         <meta name="twitter:image" content={SocialImageUrl} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(StructuredData).replace(/</g, "\\u003c") }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(StructuredData).replace(/</g, "\\u003c"),
+          }}
         />
       </Head>
       <div className="desktop" data-space={currentSpace}>
@@ -311,13 +327,22 @@ function Home() {
           <div>
             <span className="menubar-mark">✳</span>
             <strong>Hélio OS</strong>
-            <span className="menubar-separator" /> <span className="menubar-section">Portfólio</span>
+            <span className="menubar-separator" />{" "}
+            <span className="menubar-section">Portfólio</span>
           </div>
           <nav className="workspace-switcher" aria-label="Áreas de trabalho">
-            <button type="button" aria-pressed={isHomeSpace} onClick={() => switchSpace(Spaces.HOME)}>
+            <button
+              type="button"
+              aria-pressed={isHomeSpace}
+              onClick={() => switchSpace(Spaces.HOME)}
+            >
               <span>01</span> Início
             </button>
-            <button type="button" aria-pressed={isProjectsSpace} onClick={() => switchSpace(Spaces.PROJECTS)}>
+            <button
+              type="button"
+              aria-pressed={isProjectsSpace}
+              onClick={() => switchSpace(Spaces.PROJECTS)}
+            >
               <span>02</span> Projetos
             </button>
           </nav>
@@ -326,34 +351,36 @@ function Home() {
             <time>{time}</time>
           </div>
         </header>
-        <div className={`space-track ${isProjectsSpace ? "show-projects" : ""}`}>
-        <main className="desktop-main" inert={!isHomeSpace}>
-          <section className="hero">
-            <span className="eyebrow">✳ &nbsp; BEM-VINDO AO MEU ESPAÇO</span>
-            <h1>
-              Construindo
-              <br />
-              coisas para
-              <br />
-              <em>a web.</em>
-            </h1>
-            <p>
-              Sou Hélio Palenca, desenvolvedor front-end. Este é meu canto da
-              internet — fique à vontade para explorar.
-            </p>
-            <button
-              type="button"
-              className="hero-action"
-              onClick={() => openApp(Apps.PROJECTS)}
-            >
-              Explorar projetos <FiArrowUpRight />
-            </button>
-            <span className="hero-secondary">Use o seletor no topo para mudar de mesa</span>
-          </section>
-          <nav className="desktop-icons" aria-label="Aplicativos do desktop">
-            {AppIds
-              .filter((id) => id !== Apps.TERMINAL)
-              .map((id) => {
+        <div
+          className={`space-track ${isProjectsSpace ? "show-projects" : ""}`}
+        >
+          <main className="desktop-main" inert={!isHomeSpace}>
+            <section className="hero">
+              <span className="eyebrow">✳ &nbsp; BEM-VINDO AO MEU ESPAÇO</span>
+              <h1>
+                Construindo
+                <br />
+                coisas para
+                <br />
+                <em>a web.</em>
+              </h1>
+              <p>
+                Sou Hélio Palença, desenvolvedor front-end. Este é meu canto da
+                internet — fique à vontade para explorar.
+              </p>
+              <button
+                type="button"
+                className="hero-action"
+                onClick={() => openApp(Apps.PROJECTS)}
+              >
+                Explorar projetos <FiArrowUpRight />
+              </button>
+              <span className="hero-secondary">
+                Use o seletor no topo para mudar de mesa
+              </span>
+            </section>
+            <nav className="desktop-icons" aria-label="Aplicativos do desktop">
+              {AppIds.filter((id) => id !== Apps.TERMINAL).map((id) => {
                 const { Icon, label } = AppInfo[id];
                 return (
                   <button
@@ -369,42 +396,66 @@ function Home() {
                   </button>
                 );
               })}
-          </nav>
-        </main>
-        <section className="portfolio-index" id="projects" aria-labelledby="projects-heading" inert={!isProjectsSpace}>
-          <div className="portfolio-index-heading">
-            <span className="eyebrow">/ mesa 02 · projetos</span>
-            <h2 id="projects-heading">Trabalho em destaque<span>.</span></h2>
-            <p>Abra um projeto para ver os detalhes em uma janela. Use as mesas no topo para navegar.</p>
-          </div>
-          <div className="portfolio-index-grid">
-            {Projects.map((project, index) => (
-              <article className="portfolio-index-card" key={project.name}>
-                <span className="portfolio-index-number">{project.number} / {project.type}</span>
-                <h3>{project.name}</h3>
-                <p>{project.summary}</p>
-                <p>{project.detail}</p>
-                <div className="portfolio-index-actions">
-                  <button type="button" onClick={() => { setSelectedProject(index); openApp(Apps.PROJECTS); }}>
-                    Abrir projeto <FiArrowUpRight />
-                  </button>
-                  {project.links.map((link) => (
-                    <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
-                      {link.label} <FiArrowUpRight />
-                    </a>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+            </nav>
+          </main>
+          <section
+            className="portfolio-index"
+            id="projects"
+            aria-labelledby="projects-heading"
+            inert={!isProjectsSpace}
+          >
+            <div className="portfolio-index-heading">
+              <span className="eyebrow">/ mesa 02 · projetos</span>
+              <h2 id="projects-heading">
+                Trabalho em destaque<span>.</span>
+              </h2>
+              <p>
+                Abra um projeto para ver os detalhes em uma janela. Use as mesas
+                no topo para navegar.
+              </p>
+            </div>
+            <div className="portfolio-index-grid">
+              {Projects.map((project, index) => (
+                <article className="portfolio-index-card" key={project.name}>
+                  <span className="portfolio-index-number">
+                    {project.number} / {project.type}
+                  </span>
+                  <h3>{project.name}</h3>
+                  <p>{project.summary}</p>
+                  <p>{project.detail}</p>
+                  <div className="portfolio-index-actions">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedProject(index);
+                        openApp(Apps.PROJECTS);
+                      }}
+                    >
+                      Abrir projeto <FiArrowUpRight />
+                    </button>
+                    {project.links.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {link.label} <FiArrowUpRight />
+                      </a>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
         </div>
         <div className="windows-layer">
           {windows.filter(isWindowVisible).map((item) => {
             const label = AppInfo[item.id].label;
-            const title = item.id === Apps.TERMINAL
-              ? "helio@portfolio — zsh"
-              : `${label} — Hélio OS`;
+            const title =
+              item.id === Apps.TERMINAL
+                ? "helio@portfolio — zsh"
+                : `${label} — Hélio OS`;
             return (
               <DesktopWindow
                 key={item.id}
@@ -423,7 +474,7 @@ function Home() {
           })}
         </div>
         <footer className="desktop-footer">
-          <span>© {new Date().getFullYear()} Hélio Palenca</span>
+          <span>© {new Date().getFullYear()} Hélio Palença</span>
           <span>Feito com curiosidade ✳</span>
         </footer>
         <nav className="dock" aria-label="Dock">

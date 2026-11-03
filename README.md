@@ -1,4 +1,4 @@
-# Hélio Palenca — portfólio
+# Hélio Palença — portfólio
 
 Portfólio pessoal em forma de desktop, inspirado em macOS e Linux. O visitante pode explorar projetos, experiência e contato por ícones, dock ou comandos do terminal.
 

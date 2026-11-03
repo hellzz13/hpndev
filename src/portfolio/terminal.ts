@@ -29,7 +29,7 @@ const TerminalCommands = {
 const TerminalMessages = {
   HELP: "Comandos: help, whoami, projects, about, career, contact, clear.",
   WHOAMI:
-    "Hélio Palenca. Desenvolvedor front-end que gosta de construir interfaces, ferramentas e experiências com personalidade.",
+    "Hélio Palença. Desenvolvedor front-end que gosta de construir interfaces, ferramentas e experiências com personalidade.",
   LS: "projects/  about.txt  career.log  contact.txt",
   UNKNOWN: "Comando não encontrado. Digite help para ver as opções.",
 } as const;
@@ -37,7 +37,8 @@ const TerminalMessages = {
 function resolveTerminalCommand(rawCommand: string): TerminalResult {
   const command = rawCommand.trim().toLowerCase();
   const shouldClear = command === TerminalCommands.CLEAR;
-  const isHelp = command === TerminalCommands.HELP || command === TerminalCommands.AJUDA;
+  const isHelp =
+    command === TerminalCommands.HELP || command === TerminalCommands.AJUDA;
   const isWhoami = command === TerminalCommands.WHOAMI;
   const isList = command === TerminalCommands.LS;
   const appToOpen = TerminalTargets[command];
