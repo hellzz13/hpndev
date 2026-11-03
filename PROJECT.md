@@ -15,7 +15,7 @@ Pessoas recrutadoras, equipes de produto e desenvolvimento, possíveis clientes 
 - Janelas de Sobre, Projetos, Experiência e Contato, com abertura, foco, minimização e fechamento.
 - Apresentação do DisciplineHub e do project-spec-starter com descrições fiéis aos repositórios, estado atual e links.
 - Uso por clique, teclado e toque; janelas adaptadas ao celular.
-- Mesas Início e Projetos, com troca pelo menu superior ou Ctrl + setas; cada aplicativo abre na sua mesa.
+- Mesas Início e Projetos, com troca pelo menu superior; os aplicativos abrem na mesa atual.
 
 ## Critérios de aceite
 

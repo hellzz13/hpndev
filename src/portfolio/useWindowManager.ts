@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { DesktopBreakpoint } from "./constants";
 
-type DesktopWindowState<Id extends string> = {
+type DesktopWindowState<Id extends string, Space extends string> = {
   id: Id;
+  space: Space;
   x: number;
   y: number;
   z: number;
   minimized: boolean;
 };
 
-function useWindowManager<Id extends string>(initialWindow: Id) {
-  const [windows, setWindows] = useState<DesktopWindowState<Id>[]>([
-    { id: initialWindow, x: 0, y: 0, z: 2, minimized: false },
+function useWindowManager<Id extends string, Space extends string>(initialWindow: Id, initialSpace: Space) {
+  const [windows, setWindows] = useState<DesktopWindowState<Id, Space>[]>([
+    { id: initialWindow, space: initialSpace, x: 0, y: 0, z: 2, minimized: false },
   ]);
   const topLayer = useRef(2);
 
@@ -33,20 +34,21 @@ function useWindowManager<Id extends string>(initialWindow: Id) {
     );
   }
 
-  function open(id: Id) {
+  function open(id: Id, space: Space) {
     const z = ++topLayer.current;
     setWindows((current) => {
       const alreadyOpen = current.some((item) => item.id === id);
       if (alreadyOpen) {
         return current.map((item) => {
           const isTargetWindow = item.id === id;
-          return isTargetWindow ? { ...item, minimized: false, z } : item;
+          return isTargetWindow ? { ...item, space, minimized: false, z } : item;
         });
       }
       return [
         ...current,
         {
           id,
+          space,
           x: Math.min(current.length * 28, 100),
           y: Math.min(current.length * 25, 80),
           z,

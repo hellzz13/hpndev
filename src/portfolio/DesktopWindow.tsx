@@ -1,10 +1,19 @@
 import { useRef } from "react";
 import type { PointerEvent, ReactNode } from "react";
 import { FiMinus, FiX } from "react-icons/fi";
-import { DesktopBreakpoint, WindowDragBounds } from "./constants";
+import { DesktopBreakpoint } from "./constants";
 
 type Position = { x: number; y: number; z: number };
-type DragStart = { pointerX: number; pointerY: number; x: number; y: number };
+type DragStart = {
+  pointerX: number;
+  pointerY: number;
+  x: number;
+  y: number;
+  minX: number;
+  maxX: number;
+  minY: number;
+  maxY: number;
+};
 
 type DesktopWindowProps = {
   id: string;
@@ -37,11 +46,20 @@ function DesktopWindow({
     const canStartDrag = !isMobile && !isControl;
     if (!canStartDrag) return;
 
+    const windowElement = event.currentTarget.closest(".app-window");
+    if (!windowElement) return;
+    const windowRect = windowElement.getBoundingClientRect();
+    const menubarBottom = document.querySelector(".menubar")?.getBoundingClientRect().bottom ?? 0;
+
     dragStart.current = {
       pointerX: event.clientX,
       pointerY: event.clientY,
       x: position.x,
       y: position.y,
+      minX: position.x - windowRect.left,
+      maxX: position.x + window.innerWidth - windowRect.right,
+      minY: position.y + menubarBottom - windowRect.top,
+      maxY: position.y + window.innerHeight - windowRect.bottom,
     };
     event.currentTarget.setPointerCapture(event.pointerId);
   }
@@ -50,15 +68,8 @@ function DesktopWindow({
     const start = dragStart.current;
     if (!start) return;
 
-    // Mantém parte da janela acessível mesmo após um arrasto até a borda.
-    const x = Math.max(
-      WindowDragBounds.minX,
-      Math.min(start.x + event.clientX - start.pointerX, window.innerWidth - WindowDragBounds.rightInset),
-    );
-    const y = Math.max(
-      WindowDragBounds.minY,
-      Math.min(start.y + event.clientY - start.pointerY, window.innerHeight - WindowDragBounds.bottomInset),
-    );
+    const x = Math.max(start.minX, Math.min(start.x + event.clientX - start.pointerX, start.maxX));
+    const y = Math.max(start.minY, Math.min(start.y + event.clientY - start.pointerY, start.maxY));
     onMove(x, y);
   }
 

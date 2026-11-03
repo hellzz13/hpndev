@@ -22,7 +22,7 @@ DisciplineHub e project-spec-starter são apresentados como trabalhos distintos,
 
 ## BR-005 — Áreas de trabalho
 
-Início e Projetos são mesas distintas. O visitante troca entre elas pelos controles visíveis no menu superior ou por Ctrl + seta esquerda/direita. Abrir um aplicativo seleciona sua mesa; janelas abertas permanecem em estado e só aparecem na mesa correspondente. Os projetos continuam presentes no HTML para indexação.
+Início e Projetos são mesas distintas. O visitante troca entre elas pelos controles visíveis no menu superior. Abrir um aplicativo no dock, no desktop ou no terminal abre sua janela na mesa atual, sem mudar de mesa. Uma janela já aberta em outra mesa é trazida para a mesa atual ao ser aberta novamente. Janelas abertas permanecem em estado e só aparecem na mesa correspondente. Os projetos continuam presentes no HTML para indexação.
 
 ## Dados
 

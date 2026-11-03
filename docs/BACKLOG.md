@@ -14,6 +14,17 @@ Critérios de aceite:
 - As miniaturas refletem o conteúdo e o estado das mesas sem duplicar aplicativos interativos ou capturar dados da tela.
 - Movimento reduzido é respeitado e a prévia pode ser fechada sem trocar de mesa.
 
+### Atalho de teclado para trocar de mesa
+
+Adicionar uma forma de alternar entre **Início** e **Projetos** pelo teclado, além do seletor superior. Escolher uma combinação que funcione no macOS e no Linux sem disputar atalhos do sistema, do navegador ou o `⌘K` da busca. O atalho muda somente a mesa ativa; os aplicativos do dock continuam abrindo janelas na mesa atual.
+
+Critérios de aceite:
+
+- A combinação escolhida e sua ação aparecem na interface e na documentação.
+- O atalho funciona com foco fora de campos editáveis e não interfere na digitação do terminal ou da busca.
+- A troca preserva a posição, o conteúdo e o estado das janelas em cada mesa.
+- O seletor superior continua acessível por teclado e toque.
+
 ### Busca rápida com `⌘K`
 
 Abrir uma paleta de busca por `⌘K` no macOS, `Ctrl+K` nas demais plataformas e por um controle visível. A busca deve encontrar projetos, seções, aplicativos e comandos do portfólio, com sugestões e autocomplete enquanto a pessoa digita. Selecionar um resultado abre a mesa ou janela correspondente.
@@ -30,7 +41,7 @@ Critérios de aceite:
 
 ## Dependências de implementação
 
-Definir componentes próprios para seletor e paleta, com catálogo de itens pesquisáveis separado da apresentação. Reaproveitar `Apps`, `Spaces`, `AppSpaces` e o fluxo `openApp`; documentar novas regras em `BUSINESS_RULES.md` quando implementadas. Validar teclado, toque, layout móvel, lint, tipos e build.
+Definir componentes próprios para seletor e paleta, com catálogo de itens pesquisáveis separado da apresentação. Reaproveitar `Apps`, `Spaces` e o fluxo `openApp`; documentar novas regras em `BUSINESS_RULES.md` quando implementadas. Validar teclado, toque, layout móvel, lint, tipos e build.
 
 ## Fluxo de contribuição e entrega
 

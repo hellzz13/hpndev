@@ -18,14 +18,6 @@ const Spaces = {
 
 type SpaceId = (typeof Spaces)[keyof typeof Spaces];
 
-const AppSpaces = {
-  terminal: Spaces.HOME,
-  projects: Spaces.PROJECTS,
-  about: Spaces.HOME,
-  career: Spaces.HOME,
-  contact: Spaces.HOME,
-} as const satisfies Record<AppId, SpaceId>;
-
 const AppInfo = {
   terminal: { label: "Terminal", Icon: FiTerminal },
   projects: { label: "Projetos", Icon: FiFolder },
@@ -35,12 +27,5 @@ const AppInfo = {
 } as const satisfies Record<AppId, { label: string; Icon: IconType }>;
 const AppIds = Object.values(Apps);
 const DesktopBreakpoint = "(max-width: 760px)";
-const WindowDragBounds = {
-  minX: -100,
-  rightInset: 260,
-  minY: -40,
-  bottomInset: 160,
-} as const;
-
-export { Apps, AppIds, AppInfo, Spaces, AppSpaces, DesktopBreakpoint, WindowDragBounds };
+export { Apps, AppIds, AppInfo, Spaces, DesktopBreakpoint };
 export type { AppId, SpaceId };

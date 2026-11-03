@@ -12,7 +12,7 @@ src/pages/index.tsx
   ├─ content.ts: textos e listas apresentados
   ├─ constants.ts: IDs e parâmetros estáveis
   ├─ terminal.ts: regra pura para interpretar comandos
-  ├─ ícones e dock chamam openApp(id), que seleciona a mesa e abre a janela
+  ├─ ícones e dock chamam openApp(id), que abre a janela na mesa atual
   └─ renderiza uma DesktopWindow para cada janela visível
        ├─ useWindowManager.ts: estado e ações
        └─ DesktopWindow.tsx: moldura, controles e pointer events
@@ -20,16 +20,16 @@ src/pages/index.tsx
 
 `useWindowManager` guarda uma lista de janelas. Cada item tem `id`, posição (`x`, `y`), camada (`z`) e `minimized`. O hook oferece `open`, `focus`, `minimize`, `close` e `move`. Abrir uma janela existente restaura e eleva a janela; abrir uma nova cria um item com posição levemente deslocada. O contador de camadas fica em um `ref`, pois não precisa renderizar conteúdo por si só.
 
-A página guarda a mesa atual separadamente. `AppSpaces` associa cada aplicativo à mesa Início ou Projetos. Mudar de mesa preserva o estado das janelas; o filtro de renderização mostra apenas as da mesa ativa.
+A página guarda a mesa atual separadamente. Cada janela no `useWindowManager` registra sua mesa. Abrir um aplicativo atribui sua janela à mesa atual, mesmo que ela já estivesse aberta em outra. Mudar de mesa pelo menu superior preserva as janelas; o filtro de renderização mostra apenas as da mesa ativa.
 
-`DesktopWindow` recebe o estado e callbacks do hook. O cabeçalho recebe `pointerdown`, `pointermove`, `pointerup` e `pointercancel`. No início do arrasto, guarda a posição do ponteiro e da janela e captura o ponteiro no cabeçalho. Em cada movimento, calcula a diferença em relação ao ponto inicial e chama `onMove`. Os limites deixam parte da janela acessível mesmo perto das bordas. Ao soltar ou perder a captura, encerra o arrasto.
+`DesktopWindow` recebe o estado e callbacks do hook. O cabeçalho recebe `pointerdown`, `pointermove`, `pointerup` e `pointercancel`. No início do arrasto, guarda a posição do ponteiro, da janela e seu retângulo visível, então captura o ponteiro no cabeçalho. Em cada movimento, calcula a diferença em relação ao ponto inicial e chama `onMove`. Os limites são calculados pelo tamanho real da janela para permitir movê-la até as bordas sem sair da tela ou cobrir o menu superior. Ao soltar ou perder a captura, encerra o arrasto.
 
 O arrasto começa apenas no cabeçalho e ignora cliques nos botões de fechar e minimizar. Em telas de até 760 px, não há arrasto: o CSS apresenta a janela como painel e o terminal começa fechado, disponível pelo dock. Isso evita que a mecânica de desktop atrapalhe o uso por toque.
 
 ## Exemplo de fluxo
 
 1. Visitante clica em **Projetos** ou digita `projects`.
-2. `index.tsx` seleciona a mesa Projetos e chama `open("projects")`.
+2. `index.tsx` chama `open("projects", currentSpace)` sem trocar de mesa.
 3. `useWindowManager` cria ou restaura a janela e atualiza `z`.
 4. `DesktopWindow` recebe posição, título, conteúdo e controles.
 5. Se o visitante arrasta o cabeçalho, `DesktopWindow` calcula a nova posição e chama `move("projects", x, y)`.

@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { DesktopWindow } from "@/portfolio/DesktopWindow";
-import { Apps, AppIds, AppInfo, AppSpaces, Spaces } from "@/portfolio/constants";
+import { Apps, AppIds, AppInfo, Spaces } from "@/portfolio/constants";
 import { Projects, Experience, InitialTerminalLines } from "@/portfolio/content";
 import type { AppId, SpaceId } from "@/portfolio/constants";
 import { resolveTerminalCommand } from "@/portfolio/terminal";
@@ -21,7 +21,7 @@ function Home() {
   const isHomeSpace = currentSpace === Spaces.HOME;
   const isProjectsSpace = currentSpace === Spaces.PROJECTS;
   const { windows, open, close, minimize, focus, move } =
-    useWindowManager<AppId>(Apps.TERMINAL);
+    useWindowManager<AppId, SpaceId>(Apps.TERMINAL, Spaces.HOME);
   const [selectedProject, setSelectedProject] = useState(0);
   const [lines, setLines] = useState<TerminalLine[]>(InitialTerminalLines);
   const [command, setCommand] = useState("");
@@ -44,29 +44,12 @@ function Home() {
     const terminal = endRef.current?.parentElement;
     if (terminal) terminal.scrollTop = terminal.scrollHeight;
   }, [lines]);
-  useEffect(() => {
-    function onWorkspaceShortcut(event: KeyboardEvent) {
-      const target = event.target;
-      const isEditing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement;
-      const isWorkspaceShortcut = event.ctrlKey && !event.altKey && !event.metaKey;
-      if (isEditing || !isWorkspaceShortcut) return;
-
-      const nextSpace = event.key === "ArrowRight" ? Spaces.PROJECTS : event.key === "ArrowLeft" ? Spaces.HOME : null;
-      if (nextSpace === null) return;
-      event.preventDefault();
-      setCurrentSpace(nextSpace);
-    }
-    document.addEventListener("keydown", onWorkspaceShortcut);
-    return () => document.removeEventListener("keydown", onWorkspaceShortcut);
-  }, []);
-
   function switchSpace(space: SpaceId) {
     setCurrentSpace(space);
   }
 
   function openApp(id: AppId) {
-    switchSpace(AppSpaces[id]);
-    open(id);
+    open(id, currentSpace);
     const isTerminalApp = id === Apps.TERMINAL;
     if (isTerminalApp) {
       window.setTimeout(() => inputRef.current?.focus(), 50);
@@ -74,7 +57,7 @@ function Home() {
   }
 
   function isWindowVisible(item: (typeof windows)[number]) {
-    const belongsToCurrentSpace = AppSpaces[item.id] === currentSpace;
+    const belongsToCurrentSpace = item.space === currentSpace;
     return !item.minimized && belongsToCurrentSpace;
   }
 
@@ -361,11 +344,11 @@ function Home() {
             <button
               type="button"
               className="hero-action"
-              onClick={() => switchSpace(Spaces.PROJECTS)}
+              onClick={() => openApp(Apps.PROJECTS)}
             >
-              Ir para projetos <FiArrowUpRight />
+              Explorar projetos <FiArrowUpRight />
             </button>
-            <span className="hero-secondary">Ctrl + → para trocar de mesa</span>
+            <span className="hero-secondary">Use o seletor no topo para mudar de mesa</span>
           </section>
           <nav className="desktop-icons" aria-label="Aplicativos do desktop">
             {AppIds
