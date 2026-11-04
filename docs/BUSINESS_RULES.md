@@ -24,6 +24,10 @@ DisciplineHub e project-spec-starter são apresentados como trabalhos distintos,
 
 Início e Projetos são mesas distintas. O visitante troca entre elas pelos controles visíveis no menu superior. Abrir um aplicativo no dock, no desktop ou no terminal abre sua janela na mesa atual, sem mudar de mesa. Uma janela já aberta em outra mesa é trazida para a mesa atual ao ser aberta novamente. Janelas abertas permanecem em estado e só aparecem na mesa correspondente. Os projetos continuam presentes no HTML para indexação.
 
+## BR-006 — Página não encontrada
+
+Rotas inexistentes exibem uma página 404 inspirada em uma tela azul do Hélio OS. O controle “Reiniciar Hélio OS” navega para `/`, iniciando uma nova sessão das janelas. A página informa o erro em português e usa `noindex`.
+
 ## Dados
 
 Esta entrega não coleta dados pelo site. Contato abre o cliente de e-mail do visitante; links externos abrem os destinos declarados.
