@@ -2,6 +2,8 @@
 
 Leia `PROJECT.md`, `docs/ENGINEERING.md` e `docs/BUSINESS_RULES.md` antes de alterar o site. Preserve as decisões e mudanças locais existentes. Não invente capacidades dos projetos apresentados; confira seus repositórios ou peça o conteúdo necessário. Siga as convenções de constantes, condições nomeadas e exports no fim descritas em `docs/ENGINEERING.md`. Antes de concluir, confronte o diff com as regras aplicáveis desses documentos. Use npm e não adicione dependências sem necessidade. Valide lint, tipos e build antes de concluir mudanças de código. Não publique sem autorização específica.
 
+Estilização: use Tailwind como padrão em páginas e componentes. CSS global específico exige uma exceção técnica forte, documentada conforme `docs/ENGINEERING.md`. Confira essa regra na revisão do diff.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know

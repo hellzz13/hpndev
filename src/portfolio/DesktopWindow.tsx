@@ -1,3 +1,4 @@
+import { DesktopStyles } from "@/portfolio/styles";
 import { useRef } from "react";
 import type { PointerEvent, ReactNode } from "react";
 import { FiMinus, FiX } from "react-icons/fi";
@@ -79,7 +80,7 @@ function DesktopWindow({
 
   return (
     <section
-      className={`app-window window-${id}`}
+      className={`app-window window-${id} ${DesktopStyles.appWindow}`}
       style={{
         zIndex: position.z,
         transform: `translate(${position.x}px, ${position.y}px)`,
@@ -88,18 +89,18 @@ function DesktopWindow({
       onPointerDown={onFocus}
     >
       <div
-        className="window-bar"
+        className={`window-bar ${DesktopStyles.windowBar}`}
         onPointerDown={startDrag}
         onPointerMove={drag}
         onPointerUp={stopDrag}
         onPointerCancel={stopDrag}
         onLostPointerCapture={stopDrag}
       >
-        <div className="window-controls">
-          <button type="button" className="close" onClick={onClose} aria-label={`Fechar ${label}`}>
+        <div className={`window-controls ${DesktopStyles.windowControls}`}>
+          <button type="button" className={`close ${DesktopStyles.close}`} onClick={onClose} aria-label={`Fechar ${label}`}>
             <FiX />
           </button>
-          <button type="button" className="minimize" onClick={onMinimize} aria-label={`Minimizar ${label}`}>
+          <button type="button" className={`minimize ${DesktopStyles.minimize}`} onClick={onMinimize} aria-label={`Minimizar ${label}`}>
             <FiMinus />
           </button>
           <span />

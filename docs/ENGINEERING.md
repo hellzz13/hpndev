@@ -4,15 +4,25 @@
 
 - Next.js 16 (Active LTS) com Pages Router, React 19 e TypeScript estrito.
 - O build e o servidor local usam Webpack: o Turbopack falhou ao iniciar o processo de PostCSS neste ambiente.
-- CSS global para a interface de desktop; componentes React para conteúdo e interações.
+- Tailwind como padrão de estilização para páginas e componentes React. Desktop, mesas, janelas e 404 usam os tokens do tema e utilitários Tailwind.
 - npm e `package-lock.json`; sem dependência nova para a primeira entrega.
 - Conteúdo local, sem API ou persistência.
 
 ## Organização
 
-`src/pages/index.tsx` compõe a página e conecta as ações dos aplicativos. Em `src/portfolio/`, `constants.ts` reúne IDs e valores estáveis da interface; `content.ts` guarda os textos e listas apresentados; `terminal.ts` interpreta comandos sem depender de React; `useWindowManager.ts` controla o estado das janelas; e `DesktopWindow.tsx` desenha a moldura e implementa o arrasto. `src/styles/globals.css` contém a linguagem visual. O fluxo está explicado em [Janelas e arrasto](WINDOWS.md).
+`src/pages/index.tsx` compõe a página e conecta as ações dos aplicativos. Em `src/portfolio/`, `constants.ts` reúne IDs e valores estáveis da interface; `content.ts` guarda os textos e listas apresentados; `terminal.ts` interpreta comandos sem depender de React; `useWindowManager.ts` controla o estado das janelas; e `DesktopWindow.tsx` desenha a moldura e implementa o arrasto. `styles.ts` reúne as composições Tailwind; o tema centraliza tokens, e `src/styles/globals.css` contém somente a base compartilhada. O fluxo está explicado em [Janelas e arrasto](WINDOWS.md).
 
 As mesas `HOME` e `PROJECTS` ficam em `src/portfolio/constants.ts`. A página mantém a mesa ativa e desloca o painel horizontal. `useWindowManager` guarda a mesa de cada janela; abrir um aplicativo a atribui à mesa atual, e a página renderiza somente as janelas dessa mesa. A seção de projetos segue no HTML inicial para indexação, mesmo quando a mesa está inativa.
+
+## Estilização
+
+Os tokens de cores, espaçamento, medidas, tipografia e estados ficam em `tailwind.config.js`. Usar nomes semânticos para cores e layout e a escala compartilhada de espaçamento, evitando valores arbitrários no JSX. As composições de utilitários do desktop ficam em `src/portfolio/styles.ts`. Consulte [Tokens visuais](DESIGN_TOKENS.md) para os papéis das cores, exemplos e critérios de revisão.
+
+- Novos componentes, páginas e alterações de estilo devem usar utilitários Tailwind como primeira opção.
+- `globals.css` fica reservado à base compartilhada (diretivas do Tailwind, fontes, reset e variáveis) e a exceções com justificativa técnica forte. Não adicionar estilos específicos de página ou componente por conveniência.
+- Antes de uma exceção, demonstrar por que utilitários, variantes, valores arbitrários ou configuração do Tailwind não resolvem o caso de forma sustentável. Registrar a razão, o escopo e a alternativa avaliada nesta documentação e na entrega.
+- O CSS global existente é legado, não precedente para novas exceções. Migrar em alterações delimitadas, preservando aparência, responsividade, foco e movimento reduzido.
+- Na revisão do diff, conferir a estilização explicitamente: classes novas no global precisam de justificativa documentada. Lint, tipos e build não garantem essa regra por si só.
 
 ## Convenções para regras e constantes
 

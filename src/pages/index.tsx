@@ -1,3 +1,4 @@
+import { DesktopStyles } from "@/portfolio/styles";
 import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -100,25 +101,25 @@ function Home() {
     if (isTerminalApp)
       return (
         <div
-          className="terminal-body"
+          className={`terminal-body ${DesktopStyles.terminalBody}`}
           onClick={() => inputRef.current?.focus()}
         >
-          <div className="terminal-intro">
+          <div className={`terminal-intro ${DesktopStyles.terminalIntro}`}>
             HÉLIO OS <span>v1.0</span>
             <br />
             Um portfólio para explorar.
           </div>
           {lines.map((line, index) => (
-            <div className="terminal-line" key={`${index}-${line.command}`}>
+            <div className={`terminal-line ${DesktopStyles.terminalLine}`} key={`${index}-${line.command}`}>
               <div>
-                <span className="prompt">helio@portfolio ~ % </span>
+                <span className={`prompt ${DesktopStyles.prompt}`}>helio@portfolio ~ % </span>
                 {line.command}
               </div>
               <p>{line.output}</p>
             </div>
           ))}
           <form
-            className="terminal-form"
+            className={`terminal-form ${DesktopStyles.terminalForm}`}
             onSubmit={(event) => {
               event.preventDefault();
               submitCommand();
@@ -141,18 +142,18 @@ function Home() {
     if (isProjectsApp) {
       const project = Projects[selectedProject];
       return (
-        <div className="window-content">
-          <span className="eyebrow">/ trabalhos selecionados</span>
+        <div className={`window-content ${DesktopStyles.windowContent}`}>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ trabalhos selecionados</span>
           <h2>
             Projetos que saíram
             <br />
             <em>do papel.</em>
           </h2>
-          <p className="lede">
+          <p className={`lede ${DesktopStyles.lede}`}>
             Produtos e ferramentas que refletem como penso, construo e resolvo
             problemas.
           </p>
-          <div className="project-tabs" role="tablist" aria-label="Projetos">
+          <div className={`project-tabs ${DesktopStyles.projectTabs}`} role="tablist" aria-label="Projetos">
             {Projects.map((item, index) => {
               const isSelectedProject = selectedProject === index;
               return (
@@ -170,22 +171,22 @@ function Home() {
             })}
           </div>
           <article
-            className={`project-card project-card-${selectedProject}`}
+            className={`project-card project-card-${selectedProject} ${DesktopStyles.projectCard}`}
             role="tabpanel"
           >
-            <div className="project-type">
+            <div className={`project-type ${DesktopStyles.projectType}`}>
               {project.type}
               <FiArrowUpRight />
             </div>
             <h3>{project.name}</h3>
             <p>{project.summary}</p>
             <p className="project-detail">{project.detail}</p>
-            <div className="tag-list">
+            <div className={`tag-list ${DesktopStyles.tagList}`}>
               {project.tags.map((tag) => (
                 <span key={tag}>{tag}</span>
               ))}
             </div>
-            <div className="project-links">
+            <div className={`project-links ${DesktopStyles.projectLinks}`}>
               {project.links.map((link) => (
                 <a
                   key={link.href}
@@ -203,9 +204,9 @@ function Home() {
     }
     if (isAboutApp)
       return (
-        <div className="window-content">
-          <span className="eyebrow">/ sobre mim</span>
-          <div className="about-heading">
+        <div className={`window-content ${DesktopStyles.windowContent}`}>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ sobre mim</span>
+          <div className={`about-heading ${DesktopStyles.aboutHeading}`}>
             <Image
               src="/studying.png"
               width={132}
@@ -227,7 +228,7 @@ function Home() {
             tornar o processo de construir software mais claro.
           </p>
           <p>Fora do código: música, games, quadrinhos e outras nerdices.</p>
-          <div className="tag-list muted">
+          <div className={`tag-list muted ${DesktopStyles.tagList}`}>
             <span>React</span>
             <span>TypeScript</span>
             <span>Next.js</span>
@@ -237,16 +238,16 @@ function Home() {
       );
     if (isCareerApp)
       return (
-        <div className="window-content">
-          <span className="eyebrow">/ trajetória</span>
+        <div className={`window-content ${DesktopStyles.windowContent}`}>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ trajetória</span>
           <h2>
             Experiência<em>.</em>
           </h2>
-          <p className="lede">
+          <p className={`lede ${DesktopStyles.lede}`}>
             Uma trajetória construindo interfaces para produtos de diferentes
             áreas.
           </p>
-          <div className="career-list">
+          <div className={`career-list ${DesktopStyles.careerList}`}>
             {Experience.map((item) => (
               <article key={item.company}>
                 <div>
@@ -261,8 +262,8 @@ function Home() {
         </div>
       );
     return (
-      <div className="window-content contact-content">
-        <span className="eyebrow">/ contato</span>
+      <div className={`window-content contact-content ${DesktopStyles.windowContent} ${DesktopStyles.contactContent}`}>
+        <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ contato</span>
         <h2>
           Vamos
           <br />
@@ -272,11 +273,11 @@ function Home() {
           Tem uma ideia, projeto ou oportunidade? Minha caixa de entrada está
           aberta.
         </p>
-        <a className="contact-link primary" href="mailto:hpalenca13@gmail.com">
+        <a className={`contact-link primary ${DesktopStyles.contactLink}`} href="mailto:hpalenca13@gmail.com">
           hpalenca13@gmail.com <FiArrowUpRight />
         </a>
         <a
-          className="contact-link"
+          className={`contact-link ${DesktopStyles.contactLink}`}
           href="https://github.com/hellzz13"
           target="_blank"
           rel="noopener noreferrer"
@@ -284,7 +285,7 @@ function Home() {
           <FiGithub /> github.com/hellzz13 <FiArrowUpRight />
         </a>
         <a
-          className="contact-link"
+          className={`contact-link ${DesktopStyles.contactLink}`}
           href="https://www.linkedin.com/in/hpneto/"
           target="_blank"
           rel="noopener noreferrer"
@@ -322,15 +323,15 @@ function Home() {
           }}
         />
       </Head>
-      <div className="desktop" data-space={currentSpace}>
-        <header className="menubar">
+      <div className={`desktop ${DesktopStyles.desktop}`} data-space={currentSpace}>
+        <header className={`menubar ${DesktopStyles.menubar}`}>
           <div>
-            <span className="menubar-mark">✳</span>
+            <span className={`menubar-mark ${DesktopStyles.menubarMark}`}>✳</span>
             <strong>Hélio OS</strong>
-            <span className="menubar-separator" />{" "}
-            <span className="menubar-section">Portfólio</span>
+            <span className={`menubar-separator ${DesktopStyles.menubarSeparator}`} />{" "}
+            <span className={`menubar-section ${DesktopStyles.menubarSection}`}>Portfólio</span>
           </div>
-          <nav className="workspace-switcher" aria-label="Áreas de trabalho">
+          <nav className={`workspace-switcher ${DesktopStyles.workspaceSwitcher}`} aria-label="Áreas de trabalho">
             <button
               type="button"
               aria-pressed={isHomeSpace}
@@ -347,16 +348,16 @@ function Home() {
             </button>
           </nav>
           <div>
-            <span className="available">● &nbsp; Disponível para explorar</span>
+            <span className={`available ${DesktopStyles.available}`}>● &nbsp; Disponível para explorar</span>
             <time>{time}</time>
           </div>
         </header>
         <div
-          className={`space-track ${isProjectsSpace ? "show-projects" : ""}`}
+          className={`space-track ${isProjectsSpace ? "show-projects" : ""} ${DesktopStyles.spaceTrack}`}
         >
-          <main className="desktop-main" inert={!isHomeSpace}>
-            <section className="hero">
-              <span className="eyebrow">✳ &nbsp; BEM-VINDO AO MEU ESPAÇO</span>
+          <main className={`desktop-main ${DesktopStyles.desktopMain}`} inert={!isHomeSpace}>
+            <section className={`hero ${DesktopStyles.hero}`}>
+              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>✳ &nbsp; BEM-VINDO AO MEU ESPAÇO</span>
               <h1>
                 Construindo
                 <br />
@@ -370,16 +371,16 @@ function Home() {
               </p>
               <button
                 type="button"
-                className="hero-action"
+                className={`hero-action ${DesktopStyles.heroAction}`}
                 onClick={() => openApp(Apps.PROJECTS)}
               >
                 Explorar projetos <FiArrowUpRight />
               </button>
-              <span className="hero-secondary">
+              <span className={`hero-secondary ${DesktopStyles.heroSecondary}`}>
                 Use o seletor no topo para mudar de mesa
               </span>
             </section>
-            <nav className="desktop-icons" aria-label="Aplicativos do desktop">
+            <nav className={`desktop-icons ${DesktopStyles.desktopIcons}`} aria-label="Aplicativos do desktop">
               {AppIds.filter((id) => id !== Apps.TERMINAL).map((id) => {
                 const { Icon, label } = AppInfo[id];
                 return (
@@ -389,7 +390,7 @@ function Home() {
                     data-tooltip={label}
                     onClick={() => openApp(id)}
                   >
-                    <span className={`desktop-icon icon-${id}`}>
+                    <span className={`desktop-icon icon-${id} ${DesktopStyles.desktopIcon}`}>
                       <Icon aria-hidden="true" />
                     </span>
                     {label}
@@ -399,13 +400,13 @@ function Home() {
             </nav>
           </main>
           <section
-            className="portfolio-index"
+            className={`portfolio-index ${DesktopStyles.portfolioIndex}`}
             id="projects"
             aria-labelledby="projects-heading"
             inert={!isProjectsSpace}
           >
-            <div className="portfolio-index-heading">
-              <span className="eyebrow">/ mesa 02 · projetos</span>
+            <div className={`portfolio-index-heading ${DesktopStyles.portfolioIndexHeading}`}>
+              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ mesa 02 · projetos</span>
               <h2 id="projects-heading">
                 Trabalho em destaque<span>.</span>
               </h2>
@@ -414,16 +415,16 @@ function Home() {
                 no topo para navegar.
               </p>
             </div>
-            <div className="portfolio-index-grid">
+            <div className={`portfolio-index-grid ${DesktopStyles.portfolioIndexGrid}`}>
               {Projects.map((project, index) => (
-                <article className="portfolio-index-card" key={project.name}>
-                  <span className="portfolio-index-number">
+                <article className={`portfolio-index-card ${DesktopStyles.portfolioIndexCard}`} key={project.name}>
+                  <span className={`portfolio-index-number ${DesktopStyles.portfolioIndexNumber}`}>
                     {project.number} / {project.type}
                   </span>
                   <h3>{project.name}</h3>
                   <p>{project.summary}</p>
                   <p>{project.detail}</p>
-                  <div className="portfolio-index-actions">
+                  <div className={`portfolio-index-actions ${DesktopStyles.portfolioIndexActions}`}>
                     <button
                       type="button"
                       onClick={() => {
@@ -449,7 +450,7 @@ function Home() {
             </div>
           </section>
         </div>
-        <div className="windows-layer">
+        <div className={`windows-layer ${DesktopStyles.windowsLayer}`}>
           {windows.filter(isWindowVisible).map((item) => {
             const label = AppInfo[item.id].label;
             const title =
@@ -473,11 +474,11 @@ function Home() {
             );
           })}
         </div>
-        <footer className="desktop-footer">
+        <footer className={`desktop-footer ${DesktopStyles.desktopFooter}`}>
           <span>© {new Date().getFullYear()} Hélio Palença</span>
           <span>Feito com curiosidade ✳</span>
         </footer>
-        <nav className="dock" aria-label="Dock">
+        <nav className={`dock ${DesktopStyles.dock}`} aria-label="Dock">
           {AppIds.map((id) => {
             const { Icon, label } = AppInfo[id];
             return (

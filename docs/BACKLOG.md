@@ -1,5 +1,13 @@
 # Backlog do portfólio
 
+## Simulação da regra de Tailwind
+
+Status: concluída na 404. Os seletores `crash-*` foram removidos do global e substituídos por utilitários Tailwind, sem exceção técnica. A comparação dos retângulos e estilos computados em desktop e em 390 × 844 não apresentou diferenças. Foco por teclado e retorno à home foram validados no navegador.
+
+A migração foi ampliada para home, mesas, terminal, Projetos, Sobre, Experiência e Contato. Cores e medidas foram centralizadas no tema, com escala de espaçamento documentada em `DESIGN_TOKENS.md`. O global ficou restrito à base compartilhada. Comparações em desktop e celular preservaram a geometria e as cores; arrasto, minimização, restauração e troca de mesa foram conferidos no navegador.
+
+Usar a página 404 como primeiro exercício da regra de estilização registrada após sua publicação. Migrar as classes `crash-*` do global para Tailwind na página, preservando aparência e navegação para a home. Comparar desktop e celular, verificar foco por teclado, remover os seletores migrados do global e revisar o diff contra `ENGINEERING.md`. Validar lint, tipos e build. Registrar se houve alguma exceção técnica real; a existência do CSS legado não justifica mantê-lo em novas implementações.
+
 ## Próxima evolução da navegação
 
 ### Prévia das áreas de trabalho no seletor
