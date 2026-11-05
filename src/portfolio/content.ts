@@ -1,6 +1,20 @@
+import type { StackName } from "./constants";
+
+type PortfolioProject = {
+  name: string;
+  logo: string;
+  type: string;
+  number: string;
+  summary: string;
+  detail: string;
+  tags: StackName[];
+  links: { label: string; href: string }[];
+};
+
 const Projects = [
   {
     name: "DisciplineHub",
+    logo: "/projects/disciplinehub-transparent.png",
     type: "Produto web · em desenvolvimento",
     number: "01",
     summary:
@@ -21,6 +35,7 @@ const Projects = [
   },
   {
     name: "project-spec-starter",
+    logo: "/projects/project-spec-starter.svg",
     type: "CLI · versão 1.0.0",
     number: "02",
     summary:
@@ -43,7 +58,7 @@ const Projects = [
       },
     ],
   },
-];
+] satisfies PortfolioProject[];
 const Experience = [
   {
     company: "WeFit",

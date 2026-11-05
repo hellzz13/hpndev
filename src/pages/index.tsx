@@ -3,6 +3,8 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { DesktopWindow } from "@/portfolio/DesktopWindow";
+import { StackTags } from "@/portfolio/StackTags";
+import { ProjectIdentity } from "@/portfolio/ProjectIdentity";
 import { Apps, AppIds, AppInfo, Spaces } from "@/portfolio/constants";
 import {
   Projects,
@@ -178,14 +180,10 @@ function Home() {
               {project.type}
               <FiArrowUpRight />
             </div>
-            <h3>{project.name}</h3>
+            <ProjectIdentity name={project.name} logo={project.logo} />
             <p>{project.summary}</p>
             <p className="project-detail">{project.detail}</p>
-            <div className={`tag-list ${DesktopStyles.tagList}`}>
-              {project.tags.map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
-            </div>
+            <StackTags tags={project.tags} />
             <div className={`project-links ${DesktopStyles.projectLinks}`}>
               {project.links.map((link) => (
                 <a
@@ -421,9 +419,10 @@ function Home() {
                   <span className={`portfolio-index-number ${DesktopStyles.portfolioIndexNumber}`}>
                     {project.number} / {project.type}
                   </span>
-                  <h3>{project.name}</h3>
+                  <ProjectIdentity name={project.name} logo={project.logo} />
                   <p>{project.summary}</p>
                   <p>{project.detail}</p>
+                  <StackTags tags={project.tags} />
                   <div className={`portfolio-index-actions ${DesktopStyles.portfolioIndexActions}`}>
                     <button
                       type="button"

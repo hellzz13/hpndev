@@ -34,6 +34,8 @@ Os tokens de cores, espaçamento, medidas, tipografia e estados ficam em `tailwi
 
 ## Comportamento e qualidade
 
+`ProjectIdentity.tsx` apresenta nome e logo; `StackTags.tsx` apresenta as tecnologias com ícones decorativos e nomes legíveis. O catálogo tipado `StackIcons` fica em `constants.ts`; logos e stacks são associados aos projetos em `content.ts`. As imagens locais em `public/projects/` vêm de `apps/web/src/assets/brand/disciplinehub-symbol.png` do checkout DisciplineHub e de `website/favicon.svg` do checkout project-spec-starter. O DisciplineHub usa uma versão editada com fundo externo transparente para remover os filetes brancos; o original foi preservado. O segundo usa o símbolo do site como identidade no portfólio. Não substituir por marcas inventadas sem uma decisão de identidade visual.
+
 - Comandos aceitos são uma lista fechada e jamais executam código do usuário.
 - Estado das janelas vive na sessão React, sem armazenamento local.
 - Controles têm nomes acessíveis, foco visível e suporte a teclado.
