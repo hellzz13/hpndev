@@ -1,5 +1,31 @@
 # Backlog do portfólio
 
+## Ordem de prioridade
+
+1. Português e inglês com seletor de idioma no padrão de sistema operacional — implementado localmente, aguardando revisão e publicação.
+2. Visão geral das mesas e janelas, conforme a referência de Mission Control enviada em 22/11/2026.
+3. Atalho de teclado para trocar de mesa.
+4. Busca rápida com `⌘K` / `Ctrl+K`.
+5. Jogo acessível pelo terminal.
+6. Definir GitFlow e fluxo de publicação.
+
+## Prioridade 1 — Idioma do sistema: português e inglês
+
+Status: implementado localmente. Menu de idioma na barra do sistema e na 404, catálogos PT/EN, rotas localizadas, preferência por cookie e metadados por idioma. A troca com janelas abertas preservou mesa, posição/camada, minimização, projeto selecionado e histórico nos testes do navegador. Novas respostas do terminal foram traduzidas; a 404 e o menu foram conferidos até 320 px.
+
+Permitir que a pessoa troque de idioma a qualquer momento pelo menu superior do Hélio OS. Usar um controle de idioma integrado à barra do sistema, abrindo um menu com Português e English e indicação da opção ativa. O controle deve funcionar com clique, teclado e toque, mantendo a identidade do desktop.
+
+Critérios de aceite:
+
+- Traduzir home, mesas, menus, tooltips, títulos e controles das janelas, projetos, Sobre, Experiência, Contato, mensagens do terminal e 404, incluindo nomes acessíveis.
+- A troca preserva a mesa atual, as janelas abertas, suas posições, o projeto selecionado e o histórico do terminal. Comandos permanecem estáveis; novas respostas usam o idioma ativo e o histórico anterior não é reescrito.
+- Guardar somente a preferência de idioma no navegador, sem introduzir persistência das janelas. Definir a precedência entre idioma explícito na URL e preferência salva.
+- Centralizar traduções em catálogos tipados, evitando textos espalhados e chaves ausentes entre os idiomas.
+- Definir rotas por idioma e seus metadados antes de implementar; alinhar `lang`, título, descrição, canonical, `hreflang`, sitemap e dados estruturados ao conteúdo entregue no HTML, evitando divergência de hidratação.
+- Revisar os textos em inglês e testar o crescimento dos rótulos no desktop e no celular. Reutilizar Tailwind e tokens existentes.
+
+Estimativa inicial: complexidade média, aproximadamente 6–10 horas de implementação e validação no estado atual do projeto. A maior parte do trabalho está em centralizar os textos e preservar estado, acessibilidade e SEO; o seletor visual é a parte menor. Faixa de esforço, não prazo fechado.
+
 ## Simulação da regra de Tailwind
 
 Status: concluída na 404. Os seletores `crash-*` foram removidos do global e substituídos por utilitários Tailwind, sem exceção técnica. A comparação dos retângulos e estilos computados em desktop e em 390 × 844 não apresentou diferenças. Foco por teclado e retorno à home foram validados no navegador.
@@ -10,17 +36,24 @@ Usar a página 404 como primeiro exercício da regra de estilização registrada
 
 ## Próxima evolução da navegação
 
-### Prévia das áreas de trabalho no seletor
+### Visão geral das mesas e janelas — referência Mission Control
 
-Ao passar o mouse sobre o seletor de mesas no menu superior, mostrar uma pequena prévia visual de **Início** e **Projetos**, como o alternador de áreas de trabalho de um sistema operacional. Cada miniatura deve indicar a mesa ativa e permitir clicar para mudar de mesa. A prévia não deve cobrir os controles das janelas nem interromper o trabalho em uma mesa.
+A gravação enviada em 22/11/2026 mostra uma visão geral do macOS: faixa superior com miniaturas das mesas e, abaixo, as janelas da mesa atual reduzidas e distribuídas no espaço. Essa é a referência para o portfólio, substituindo a interpretação anterior de um pequeno popover. A visão geral deve abrir a partir do seletor superior, com transição do desktop para esse modo e retorno ao selecionar uma mesa ou janela.
+
+A referência também demonstra criação de uma mesa pelo botão `+` e transferência de uma janela para outra mesa. Essas funções formam uma extensão própria do item; exigem mesas dinâmicas e alterações nas regras atuais, que hoje têm apenas Início e Projetos. O portfólio só representa suas próprias mesas e aplicativos, sem acessar outras janelas do computador.
 
 Critérios de aceite:
 
-- Hover abre a prévia no desktop; clicar em uma miniatura muda para a mesa escolhida.
-- Foco por teclado também abre a prévia, com nomes acessíveis e acionamento por Enter ou Espaço.
-- Em telas de toque, há um modo equivalente por toque; trocar de mesa continua possível pelo seletor atual.
-- As miniaturas refletem o conteúdo e o estado das mesas sem duplicar aplicativos interativos ou capturar dados da tela.
-- Movimento reduzido é respeitado e a prévia pode ser fechada sem trocar de mesa.
+- Hover no seletor abre a visão geral no desktop; o painel permanece aberto ao mover o ponteiro para as miniaturas e janelas, sem piscar ou fechar durante a seleção.
+- A faixa superior apresenta as mesas Início e Projetos, com identificação da ativa; clicar em uma delas muda de mesa e encerra a visão geral.
+- A área principal organiza as janelas abertas da mesa atual em miniaturas que não se sobrepõem; selecionar uma restaura o desktop e foca a janela correspondente.
+- Miniaturas refletem títulos, posição relativa e conteúdo/estado, sem montar cópias interativas que disparem efeitos, capturem foco ou executem mídia novamente. Definir uma representação para janelas minimizadas e mesas sem janelas.
+- Oferecer abertura explícita por teclado e toque; Esc e um controle de fechar encerram o modo sem trocar de mesa, com restauração do foco. Respeitar movimento reduzido.
+- Manter as posições originais das janelas após sair da visão geral e preservar o comportamento do dock na mesa atual.
+
+Complexidade da primeira entrega (duas mesas existentes e seleção de janelas): média/alta, aproximadamente 8–16 horas, incluindo organização das miniaturas, transições, foco, teclado e celular. O estado atual das janelas ajuda, mas a composição da página ainda está concentrada em `index.tsx` e precisa ser separada para reutilizar conteúdo sem duplicar efeitos.
+
+Extensão para reproduzir o botão `+` e arrastar janelas entre mesas: alta, com aproximadamente 12–20 horas adicionais. Antes de implementar, definir criação, nomes e remoção de mesas, destino das janelas ao remover uma mesa, relação das novas mesas com Início/Projetos e alternativas de transferência por teclado e toque. Essa extensão não deve entrar implicitamente na primeira entrega.
 
 ### Atalho de teclado para trocar de mesa
 

@@ -26,8 +26,14 @@ Início e Projetos são mesas distintas. O visitante troca entre elas pelos cont
 
 ## BR-006 — Página não encontrada
 
-Rotas inexistentes exibem uma página 404 inspirada em uma tela azul do Hélio OS. O controle “Reiniciar Hélio OS” navega para `/`, iniciando uma nova sessão das janelas. A página informa o erro em português e usa `noindex`.
+Rotas inexistentes exibem uma página 404 inspirada em uma tela azul do Hélio OS. O controle “Reiniciar Hélio OS” navega para a home no idioma ativo, iniciando uma nova sessão das janelas. A página informa o erro no idioma ativo e usa `noindex`.
+
+## BR-007 — Idioma do sistema
+
+Português e inglês podem ser escolhidos no menu de idioma do Hélio OS, inclusive na 404, com teclado ou toque. A troca preserva mesa, posição, camada e minimização das janelas, projeto selecionado e histórico do terminal. Rótulos e novos resultados são traduzidos, mas comandos permanecem estáveis e respostas antigas não são reescritas. As rotas `/` e `/en` entregam conteúdo e metadados localizados desde o HTML inicial. A preferência é salva no cookie `NEXT_LOCALE`; idioma explícito da URL prevalece e a entrada pela raiz negocia preferência salva, idioma do navegador e português como padrão.
 
 ## Dados
 
 Esta entrega não coleta dados pelo site. Contato abre o cliente de e-mail do visitante; links externos abrem os destinos declarados.
+
+O cookie de preferência guarda somente o código do idioma, sem persistir conteúdo do terminal ou das janelas.

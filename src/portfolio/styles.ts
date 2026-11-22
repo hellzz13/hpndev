@@ -10,15 +10,17 @@ const DesktopStyles = {
     "relative z-100 flex justify-between items-center h-12 py-0 px-9.5 bg-menubar border-b border-b-menubar-border",
     "backdrop-blur-menubar text-type-xs [&>div]:flex [&>div]:items-center [&>div]:gap-5 [&_strong]:font-display",
     "[&_strong]:text-type-sm [&_time]:font-mono mobile:h-11 mobile:py-0 mobile:px-4 mobile:[&>div]:gap-2.25",
-    "mobile:[&_time]:hidden",
+    "mobile:[&_time]:hidden mobile:[&_strong]:text-type-xs",
   ].join(" "),
   menubarMark: [
+    "mobile:hidden",
     "text-accent text-type-mark",
   ].join(" "),
   menubarSeparator: [
     "h-3.75 w-0.25 bg-separator mobile:hidden",
   ].join(" "),
   available: [
+    "compact:hidden",
     "text-accent text-type-label mobile:hidden",
   ].join(" "),
   desktopMain: [
@@ -243,7 +245,7 @@ const DesktopStyles = {
     "[&_button_span]:leading-natural [&_button_span]:font-mono [&_button[aria-pressed=true]]:bg-accent",
     "[&_button[aria-pressed=true]]:text-navigation-active [&_button[aria-pressed=true]_span]:text-navigation-active-index",
     "[&_button:focus-visible]:outline [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-accent",
-    "[&_button:focus-visible]:outline-offset-2 mobile:left-auto mobile:right-3 mobile:transform-none",
+    "[&_button:focus-visible]:outline-offset-2 mobile:left-1/2 mobile:right-auto mobile:-translate-x-1/2",
     "mobile:[&_button]:py-1.5 mobile:[&_button]:px-2.25",
   ].join(" "),
   spaceTrack: [

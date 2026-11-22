@@ -1,5 +1,8 @@
-import { Apps, AppInfo } from "./constants";
+import { Apps } from "./constants";
 import type { AppId } from "./constants";
+import { Locales } from "./locales";
+import type { Locale } from "./locales";
+import { getMessages, getAppLabel } from "./messages";
 
 type TerminalResult = {
   output: string;
@@ -26,15 +29,13 @@ const TerminalCommands = {
   CLEAR: "clear",
 } as const;
 
-const TerminalMessages = {
-  HELP: "Comandos: help, whoami, projects, about, career, contact, clear.",
-  WHOAMI:
-    "Hélio Palença. Desenvolvedor front-end que gosta de construir interfaces, ferramentas e experiências com personalidade.",
-  LS: "projects/  about.txt  career.log  contact.txt",
-  UNKNOWN: "Comando não encontrado. Digite help para ver as opções.",
-} as const;
+const TerminalFiles = "projects/  about.txt  career.log  contact.txt";
 
-function resolveTerminalCommand(rawCommand: string): TerminalResult {
+function resolveTerminalCommand(
+  rawCommand: string,
+  locale: Locale = Locales.PORTUGUESE,
+): TerminalResult {
+  const t = getMessages(locale);
   const command = rawCommand.trim().toLowerCase();
   const shouldClear = command === TerminalCommands.CLEAR;
   const isHelp =
@@ -44,14 +45,18 @@ function resolveTerminalCommand(rawCommand: string): TerminalResult {
   const appToOpen = TerminalTargets[command];
 
   if (shouldClear) return { output: "", clear: true };
-  if (isHelp) return { output: TerminalMessages.HELP, clear: false };
-  if (isWhoami) return { output: TerminalMessages.WHOAMI, clear: false };
-  if (isList) return { output: TerminalMessages.LS, clear: false };
+  if (isHelp) return { output: t.help, clear: false };
+  if (isWhoami) return { output: t.whoami, clear: false };
+  if (isList) return { output: TerminalFiles, clear: false };
   if (appToOpen) {
-    const appLabel = AppInfo[appToOpen].label;
-    return { output: `Abrindo ${appLabel}...`, clear: false, appToOpen };
+    const appLabel = getAppLabel(appToOpen, locale);
+    return {
+      output: t.opening.replace("{app}", appLabel),
+      clear: false,
+      appToOpen,
+    };
   }
-  return { output: TerminalMessages.UNKNOWN, clear: false };
+  return { output: t.unknownCommand, clear: false };
 }
 
 export { resolveTerminalCommand };

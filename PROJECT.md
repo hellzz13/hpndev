@@ -35,4 +35,4 @@ As imagens detalhadas dos projetos ainda não foram selecionadas. Links e descri
 
 ## Próximas melhorias
 
-As ideias para prévia das áreas de trabalho, busca rápida com `⌘K` e fluxo de contribuição estão descritas em [Backlog do portfólio](docs/BACKLOG.md).
+O suporte a português e inglês foi implementado localmente, com seletor integrado ao menu do Hélio OS e preservação do estado ao trocar. A visão geral das mesas e janelas segue como próxima prioridade, conforme a referência de Mission Control enviada pelo usuário. Status de revisão, escopo e demais melhorias estão descritos em [Backlog do portfólio](docs/BACKLOG.md).

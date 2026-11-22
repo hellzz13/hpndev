@@ -1,0 +1,189 @@
+import type { AppId } from "./constants";
+import { Locales } from "./locales";
+import type { Locale } from "./locales";
+
+const Portuguese = {
+  portfolio: "Portfólio",
+  workspaces: "Áreas de trabalho",
+  home: "Início",
+  projects: "Projetos",
+  terminal: "Terminal",
+  about: "Sobre",
+  career: "Experiência",
+  contact: "Contato",
+  available: "Disponível para explorar",
+  welcome: "BEM-VINDO AO MEU ESPAÇO",
+  heroFirst: "Construindo",
+  heroSecond: "coisas para",
+  heroLast: "a web.",
+  heroDescription:
+    "Sou Hélio Palença, Software Engineer. Este é meu canto da internet — fique à vontade para explorar.",
+  exploreProjects: "Explorar projetos",
+  workspaceHint: "Use o seletor no topo para mudar de mesa",
+  desktopApps: "Aplicativos do desktop",
+  terminalIntro: "Um portfólio para explorar.",
+  terminalCommand: "Comando do terminal",
+  selectedWork: "/ trabalhos selecionados",
+  projectsFirst: "Projetos que saíram",
+  projectsLast: "do papel.",
+  projectsDescription:
+    "Produtos e ferramentas que refletem como penso, construo e resolvo problemas.",
+  aboutEyebrow: "/ sobre mim",
+  avatarAlt: "Avatar ilustrado de Hélio trabalhando",
+  aboutFirst: "Oi, eu sou",
+  aboutLast: "o Hélio.",
+  role: "Software Engineer.",
+  aboutDescription:
+    "Gosto de transformar ideias em interfaces que funcionam bem e têm identidade. Trabalho com produtos web e também crio ferramentas para tornar o processo de construir software mais claro.",
+  aboutOutside: "Fora do código: música, games, quadrinhos e outras nerdices.",
+  careerEyebrow: "/ trajetória",
+  careerDescription:
+    "Uma trajetória construindo interfaces para produtos de diferentes áreas.",
+  contactEyebrow: "/ contato",
+  contactFirst: "Vamos",
+  contactLast: "conversar?",
+  contactDescription:
+    "Tem uma ideia, projeto ou oportunidade? Minha caixa de entrada está aberta.",
+  projectsWorkspace: "/ mesa 02 · projetos",
+  featuredWork: "Trabalho em destaque",
+  featuredDescription:
+    "Abra um projeto para ver os detalhes em uma janela. Use as mesas no topo para navegar.",
+  openProject: "Abrir projeto",
+  madeWith: "Feito com curiosidade",
+  dock: "Dock",
+  open: "Abrir",
+  window: "Janela",
+  close: "Fechar",
+  minimize: "Minimizar",
+  technologies: "Tecnologias do projeto",
+  language: "Idioma do sistema",
+  languageOptions: "Escolher idioma",
+  languageError: "Não foi possível mudar o idioma. Tente novamente.",
+  help: "Comandos: help, whoami, projects, about, career, contact, clear.",
+  whoami:
+    "Hélio Palença. Software Engineer que gosta de construir interfaces, ferramentas e experiências com personalidade.",
+  unknownCommand: "Comando não encontrado. Digite help para ver as opções.",
+  opening: "Abrindo {app}...",
+  errorTitle: "404 · Rota não encontrada | Hélio OS",
+  recovery: "HÉLIO OS / RECUPERAÇÃO DO SISTEMA",
+  errorFirst: "Seu passeio encontrou",
+  errorLast: "uma rota inesperada.",
+  errorDescription:
+    "Esta página não existe por aqui. Acontece até nos melhores sistemas — vamos reiniciar a exploração?",
+  restart: "Reiniciar Hélio OS",
+  restartHint: "Você volta à mesa inicial do portfólio.",
+  stopCode: "Código de parada",
+  diagnosis: "Diagnóstico: você foi explorar um pouco além.",
+  errorFooter: "Uma pequena falha no caminho. A curiosidade continua.",
+  siteTitle: "Hélio Palença | Software Engineer e projetos web",
+  siteDescription:
+    "Portfólio de Hélio Palença: engenharia de software, experiência profissional e projetos como DisciplineHub e project-spec-starter.",
+  siteName: "Portfólio de Hélio Palença",
+  jobTitle: "Software Engineer",
+  socialImageAlt: "Avatar ilustrado de Hélio Palença",
+};
+
+type Messages = { [Key in keyof typeof Portuguese]: string };
+
+const English = {
+  portfolio: "Portfolio",
+  workspaces: "Workspaces",
+  home: "Home",
+  projects: "Projects",
+  terminal: "Terminal",
+  about: "About",
+  career: "Experience",
+  contact: "Contact",
+  available: "Available to explore",
+  welcome: "WELCOME TO MY SPACE",
+  heroFirst: "Building",
+  heroSecond: "things for",
+  heroLast: "the web.",
+  heroDescription:
+    "I'm Hélio Palença, a Software Engineer. This is my corner of the internet — feel free to explore.",
+  exploreProjects: "Explore projects",
+  workspaceHint: "Use the switcher at the top to change workspaces",
+  desktopApps: "Desktop apps",
+  terminalIntro: "A portfolio to explore.",
+  terminalCommand: "Terminal command",
+  selectedWork: "/ selected work",
+  projectsFirst: "Projects brought",
+  projectsLast: "to life.",
+  projectsDescription:
+    "Products and tools that reflect how I think, build and solve problems.",
+  aboutEyebrow: "/ about me",
+  avatarAlt: "Illustrated avatar of Hélio at work",
+  aboutFirst: "Hi, I'm",
+  aboutLast: "Hélio.",
+  role: "Software Engineer.",
+  aboutDescription:
+    "I enjoy turning ideas into interfaces that work well and have a personality. I work on web products and build tools to make the process of creating software clearer.",
+  aboutOutside: "Outside of code: music, games, comics and other geeky things.",
+  careerEyebrow: "/ experience",
+  careerDescription:
+    "A career building interfaces for products across different industries.",
+  contactEyebrow: "/ contact",
+  contactFirst: "Let's",
+  contactLast: "talk.",
+  contactDescription:
+    "Have an idea, a project or an opportunity? My inbox is open.",
+  projectsWorkspace: "/ workspace 02 · projects",
+  featuredWork: "Featured work",
+  featuredDescription:
+    "Open a project to see its details in a window. Use the workspaces at the top to navigate.",
+  openProject: "Open project",
+  madeWith: "Made with curiosity",
+  dock: "Dock",
+  open: "Open",
+  window: "Window",
+  close: "Close",
+  minimize: "Minimize",
+  technologies: "Project technologies",
+  language: "System language",
+  languageOptions: "Choose language",
+  languageError: "Unable to change the language. Please try again.",
+  help: "Commands: help, whoami, projects, about, career, contact, clear.",
+  whoami:
+    "Hélio Palença. A Software Engineer who enjoys building interfaces, tools and experiences with personality.",
+  unknownCommand: "Command not found. Type help to see the available commands.",
+  opening: "Opening {app}...",
+  errorTitle: "404 · Page not found | Hélio OS",
+  recovery: "HÉLIO OS / SYSTEM RECOVERY",
+  errorFirst: "Your exploration took",
+  errorLast: "an unexpected turn.",
+  errorDescription:
+    "This page doesn't exist here. It happens even on the best systems — shall we restart the adventure?",
+  restart: "Restart Hélio OS",
+  restartHint: "You'll return to the portfolio's home workspace.",
+  stopCode: "Stop code",
+  diagnosis: "Diagnosis: you explored a little further than expected.",
+  errorFooter: "A small bump along the way. Curiosity continues.",
+  siteTitle: "Hélio Palença | Software Engineer and web projects",
+  siteDescription:
+    "Hélio Palença's portfolio: software engineering, professional experience and projects including DisciplineHub and project-spec-starter.",
+  siteName: "Hélio Palença's portfolio",
+  jobTitle: "Software Engineer",
+  socialImageAlt: "Illustrated avatar of Hélio Palença",
+} satisfies Messages;
+
+const Catalogs = {
+  [Locales.PORTUGUESE]: Portuguese,
+  [Locales.ENGLISH]: English,
+} satisfies Record<Locale, Messages>;
+const AppLabelKeys = {
+  terminal: "terminal",
+  projects: "projects",
+  about: "about",
+  career: "career",
+  contact: "contact",
+} as const satisfies Record<AppId, keyof Messages>;
+
+function getMessages(locale: Locale): Messages {
+  return Catalogs[locale];
+}
+function getAppLabel(id: AppId, locale: Locale) {
+  return getMessages(locale)[AppLabelKeys[id]];
+}
+
+export { getMessages, getAppLabel };
+export type { Messages };

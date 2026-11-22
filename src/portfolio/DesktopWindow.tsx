@@ -3,6 +3,7 @@ import { useRef } from "react";
 import type { PointerEvent, ReactNode } from "react";
 import { FiMinus, FiX } from "react-icons/fi";
 import { DesktopBreakpoint } from "./constants";
+import { useLanguage } from "./useLanguage";
 
 type Position = { x: number; y: number; z: number };
 type DragStart = {
@@ -40,6 +41,7 @@ function DesktopWindow({
   children,
 }: DesktopWindowProps) {
   const dragStart = useRef<DragStart | null>(null);
+  const { t } = useLanguage();
 
   function startDrag(event: PointerEvent<HTMLDivElement>) {
     const isMobile = window.matchMedia(DesktopBreakpoint).matches;
@@ -85,7 +87,7 @@ function DesktopWindow({
         zIndex: position.z,
         transform: `translate(${position.x}px, ${position.y}px)`,
       }}
-      aria-label={`Janela ${label}`}
+      aria-label={`${t.window} ${label}`}
       onPointerDown={onFocus}
     >
       <div
@@ -97,10 +99,10 @@ function DesktopWindow({
         onLostPointerCapture={stopDrag}
       >
         <div className={`window-controls ${DesktopStyles.windowControls}`}>
-          <button type="button" className={`close ${DesktopStyles.close}`} onClick={onClose} aria-label={`Fechar ${label}`}>
+          <button type="button" className={`close ${DesktopStyles.close}`} onClick={onClose} aria-label={`${t.close} ${label}`}>
             <FiX />
           </button>
-          <button type="button" className={`minimize ${DesktopStyles.minimize}`} onClick={onMinimize} aria-label={`Minimizar ${label}`}>
+          <button type="button" className={`minimize ${DesktopStyles.minimize}`} onClick={onMinimize} aria-label={`${t.minimize} ${label}`}>
             <FiMinus />
           </button>
           <span />

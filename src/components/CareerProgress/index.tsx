@@ -1,34 +1,34 @@
 const experiences = [
   {
     company: "WeFit",
-    title: "Desenvolvedor Front-end",
+    title: "Software Engineer",
     content:
-      "Desenvolvedor front-end prestando serviços para uma grande empresa no setor de aviação. Fui responsável, junto à minha equipe, por atualizar a área do cliente e, posteriormente, manter um projeto existente, utilizando Next.js, React.js, Styled Components e AEM. Sempre seguindo as melhores práticas de desenvolvimento e trabalhando junto ao um time de UX/UI desenvolvendo componentes de acordo com planejamentos prévios.",
+      "Software Engineer prestando serviços para uma grande empresa no setor de aviação. Fui responsável, junto à minha equipe, por atualizar a área do cliente e, posteriormente, manter um projeto existente, utilizando Next.js, React.js, Styled Components e AEM. Sempre seguindo as melhores práticas de desenvolvimento e trabalhando junto ao um time de UX/UI desenvolvendo componentes de acordo com planejamentos prévios.",
     skills:
       "TypeScript · NextJs · StyledComponents · AEM · HTML · JavaScript · CSS · React.js",
     date: "Set de 2023 - Atualmente",
-    alt: "Cargo desenvolvedor front-end Wefit",
+    alt: "Cargo Software Engineer Wefit",
   },
   {
     company: "QuikDev",
-    title: "Desenvolvedor Front-end",
+    title: "Software Engineer",
     content:
       "Participei de um projeto de sistema web para fintech de financiamento de energia solar,com tecnologias do ecossistema do React, usando NextJs + Tailwindcss para desenvolver UI seguindo padrões de desenvolvimento e responsividade de layout beseados no figma. Participei também de projeto educacional gameficado seguindo padrões de acessibilidade utilizando NextJs + Metarial Ui, também baseado em design pre-desenvolvidos.",
     skills:
       "TypeScript · NextJs · TailwindCss · HTML · JavaScript · CSS · React.js",
     date: "jul de 2022 - abr de 2023",
-    alt: "Cargo desenvolvedor front-end QuikDev",
+    alt: "Cargo Software Engineer QuikDev",
   },
 
   {
     company: "Devio",
-    title: "Desenvolvedor Front-end",
+    title: "Software Engineer",
     content:
       "Desenvolver interfaces de sistemas com layout funcional sob demanda com as mais modernas ferramentas do mercado, seguindo protótipo desenvolvido previamente pelo time de design. Trabalhando em equipe visando o foco no produto final e qualidade e usabilidade para o cliente.",
     skills:
       "React Native · TailwindCss · Styled-components · HTML · JavaScript · CSS · React.js",
     date: "set de 2021 - jul de 2022",
-    alt: "Cargo desenvolvedor front-end Devio",
+    alt: "Cargo Software Engineer Devio",
   },
   {
     company: "Unique Controle Gestão de Processos",

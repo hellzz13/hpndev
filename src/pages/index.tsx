@@ -6,26 +6,21 @@ import { DesktopWindow } from "@/portfolio/DesktopWindow";
 import { StackTags } from "@/portfolio/StackTags";
 import { ProjectIdentity } from "@/portfolio/ProjectIdentity";
 import { Apps, AppIds, AppInfo, Spaces } from "@/portfolio/constants";
-import {
-  Projects,
-  Experience,
-  InitialTerminalLines,
-} from "@/portfolio/content";
+import { getContent } from "@/portfolio/content";
+import { useLanguage } from "@/portfolio/useLanguage";
+import { LanguageSwitcher } from "@/portfolio/LanguageSwitcher";
 import type { AppId, SpaceId } from "@/portfolio/constants";
 import { resolveTerminalCommand } from "@/portfolio/terminal";
 import { useWindowManager } from "@/portfolio/useWindowManager";
-import {
-  SiteUrl,
-  SiteTitle,
-  SiteDescription,
-  SocialImageUrl,
-  StructuredData,
-} from "@/portfolio/seo";
+import { getSeo, LocaleUrls } from "@/portfolio/seo";
 import { FiArrowUpRight, FiGithub, FiLinkedin } from "react-icons/fi";
 
 type TerminalLine = { command: string; output: string };
 
 function Home() {
+  const { locale, t, appLabel } = useLanguage();
+  const { Projects, Experience, InitialTerminalLines } = getContent(locale);
+  const { SiteUrl, SiteTitle, SiteDescription, SocialImageUrl, StructuredData, ogLocale } = getSeo(locale);
   const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
   const isHomeSpace = currentSpace === Spaces.HOME;
   const isProjectsSpace = currentSpace === Spaces.PROJECTS;
@@ -42,7 +37,8 @@ function Home() {
   useEffect(() => {
     const update = () =>
       setTime(
-        new Intl.DateTimeFormat("pt-BR", {
+        new Intl.DateTimeFormat(locale, {
+          hour12: false,
           hour: "2-digit",
           minute: "2-digit",
         }).format(new Date()),
@@ -50,7 +46,7 @@ function Home() {
     update();
     const timer = window.setInterval(update, 60_000);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [locale]);
   useEffect(() => {
     const terminal = endRef.current?.parentElement;
     if (terminal) terminal.scrollTop = terminal.scrollHeight;
@@ -77,7 +73,7 @@ function Home() {
     const hasCommand = trimmedCommand.length > 0;
     if (!hasCommand) return;
 
-    const result = resolveTerminalCommand(trimmedCommand);
+    const result = resolveTerminalCommand(trimmedCommand, locale);
     const shouldClearHistory = result.clear;
     if (shouldClearHistory) {
       setLines([]);
@@ -109,7 +105,7 @@ function Home() {
           <div className={`terminal-intro ${DesktopStyles.terminalIntro}`}>
             HÉLIO OS <span>v1.0</span>
             <br />
-            Um portfólio para explorar.
+            {t.terminalIntro}
           </div>
           {lines.map((line, index) => (
             <div className={`terminal-line ${DesktopStyles.terminalLine}`} key={`${index}-${line.command}`}>
@@ -135,7 +131,7 @@ function Home() {
               onChange={(event) => setCommand(event.target.value)}
               autoComplete="off"
               spellCheck={false}
-              aria-label="Comando do terminal"
+              aria-label={t.terminalCommand}
             />
           </form>
           <div ref={endRef} />
@@ -145,17 +141,16 @@ function Home() {
       const project = Projects[selectedProject];
       return (
         <div className={`window-content ${DesktopStyles.windowContent}`}>
-          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ trabalhos selecionados</span>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.selectedWork}</span>
           <h2>
-            Projetos que saíram
+            {t.projectsFirst}
             <br />
-            <em>do papel.</em>
+            <em>{t.projectsLast}</em>
           </h2>
           <p className={`lede ${DesktopStyles.lede}`}>
-            Produtos e ferramentas que refletem como penso, construo e resolvo
-            problemas.
+            {t.projectsDescription}
           </p>
-          <div className={`project-tabs ${DesktopStyles.projectTabs}`} role="tablist" aria-label="Projetos">
+          <div className={`project-tabs ${DesktopStyles.projectTabs}`} role="tablist" aria-label={t.projects}>
             {Projects.map((item, index) => {
               const isSelectedProject = selectedProject === index;
               return (
@@ -203,29 +198,27 @@ function Home() {
     if (isAboutApp)
       return (
         <div className={`window-content ${DesktopStyles.windowContent}`}>
-          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ sobre mim</span>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.aboutEyebrow}</span>
           <div className={`about-heading ${DesktopStyles.aboutHeading}`}>
             <Image
               src="/studying.png"
               width={132}
               height={132}
-              alt="Avatar ilustrado de Hélio trabalhando"
+              alt={t.avatarAlt}
             />
             <div>
               <h2>
-                Oi, eu sou
+                {t.aboutFirst}
                 <br />
-                <em>o Hélio.</em>
+                <em>{t.aboutLast}</em>
               </h2>
-              <p>Desenvolvedor front-end.</p>
+              <p>{t.role}</p>
             </div>
           </div>
           <p>
-            Gosto de transformar ideias em interfaces que funcionam bem e têm
-            identidade. Trabalho com produtos web e também crio ferramentas para
-            tornar o processo de construir software mais claro.
+            {t.aboutDescription}
           </p>
-          <p>Fora do código: música, games, quadrinhos e outras nerdices.</p>
+          <p>{t.aboutOutside}</p>
           <div className={`tag-list muted ${DesktopStyles.tagList}`}>
             <span>React</span>
             <span>TypeScript</span>
@@ -237,13 +230,12 @@ function Home() {
     if (isCareerApp)
       return (
         <div className={`window-content ${DesktopStyles.windowContent}`}>
-          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ trajetória</span>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.careerEyebrow}</span>
           <h2>
-            Experiência<em>.</em>
+            {t.career}<em>.</em>
           </h2>
           <p className={`lede ${DesktopStyles.lede}`}>
-            Uma trajetória construindo interfaces para produtos de diferentes
-            áreas.
+            {t.careerDescription}
           </p>
           <div className={`career-list ${DesktopStyles.careerList}`}>
             {Experience.map((item) => (
@@ -261,15 +253,14 @@ function Home() {
       );
     return (
       <div className={`window-content contact-content ${DesktopStyles.windowContent} ${DesktopStyles.contactContent}`}>
-        <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ contato</span>
+        <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.contactEyebrow}</span>
         <h2>
-          Vamos
+          {t.contactFirst}
           <br />
-          <em>conversar?</em>
+          <em>{t.contactLast}</em>
         </h2>
         <p>
-          Tem uma ideia, projeto ou oportunidade? Minha caixa de entrada está
-          aberta.
+          {t.contactDescription}
         </p>
         <a className={`contact-link primary ${DesktopStyles.contactLink}`} href="mailto:hpalenca13@gmail.com">
           hpalenca13@gmail.com <FiArrowUpRight />
@@ -300,15 +291,18 @@ function Home() {
         <meta name="description" content={SiteDescription} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={SiteUrl} />
+        <link rel="alternate" hrefLang="pt-BR" href={LocaleUrls["pt-BR"]} />
+        <link rel="alternate" hrefLang="en" href={LocaleUrls.en} />
+        <link rel="alternate" hrefLang="x-default" href={LocaleUrls["pt-BR"]} />
         <meta property="og:type" content="website" />
-        <meta property="og:locale" content="pt_BR" />
+        <meta property="og:locale" content={ogLocale} />
         <meta property="og:url" content={SiteUrl} />
         <meta property="og:title" content={SiteTitle} />
         <meta property="og:description" content={SiteDescription} />
         <meta property="og:image" content={SocialImageUrl} />
         <meta
           property="og:image:alt"
-          content="Avatar ilustrado de Hélio Palença"
+          content={t.socialImageAlt}
         />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={SiteTitle} />
@@ -327,27 +321,28 @@ function Home() {
             <span className={`menubar-mark ${DesktopStyles.menubarMark}`}>✳</span>
             <strong>Hélio OS</strong>
             <span className={`menubar-separator ${DesktopStyles.menubarSeparator}`} />{" "}
-            <span className={`menubar-section ${DesktopStyles.menubarSection}`}>Portfólio</span>
+            <span className={`menubar-section ${DesktopStyles.menubarSection}`}>{t.portfolio}</span>
           </div>
-          <nav className={`workspace-switcher ${DesktopStyles.workspaceSwitcher}`} aria-label="Áreas de trabalho">
+          <nav className={`workspace-switcher ${DesktopStyles.workspaceSwitcher}`} aria-label={t.workspaces}>
             <button
               type="button"
               aria-pressed={isHomeSpace}
               onClick={() => switchSpace(Spaces.HOME)}
             >
-              <span>01</span> Início
+              <span>01</span> {t.home}
             </button>
             <button
               type="button"
               aria-pressed={isProjectsSpace}
               onClick={() => switchSpace(Spaces.PROJECTS)}
             >
-              <span>02</span> Projetos
+              <span>02</span> {t.projects}
             </button>
           </nav>
           <div>
-            <span className={`available ${DesktopStyles.available}`}>● &nbsp; Disponível para explorar</span>
+            <span className={`available ${DesktopStyles.available}`}>● &nbsp; {t.available}</span>
             <time>{time}</time>
+            <LanguageSwitcher />
           </div>
         </header>
         <div
@@ -355,32 +350,32 @@ function Home() {
         >
           <main className={`desktop-main ${DesktopStyles.desktopMain}`} inert={!isHomeSpace}>
             <section className={`hero ${DesktopStyles.hero}`}>
-              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>✳ &nbsp; BEM-VINDO AO MEU ESPAÇO</span>
+              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>✳ &nbsp; {t.welcome}</span>
               <h1>
-                Construindo
+                {t.heroFirst}
                 <br />
-                coisas para
+                {t.heroSecond}
                 <br />
-                <em>a web.</em>
+                <em>{t.heroLast}</em>
               </h1>
               <p>
-                Sou Hélio Palença, desenvolvedor front-end. Este é meu canto da
-                internet — fique à vontade para explorar.
+                {t.heroDescription}
               </p>
               <button
                 type="button"
                 className={`hero-action ${DesktopStyles.heroAction}`}
                 onClick={() => openApp(Apps.PROJECTS)}
               >
-                Explorar projetos <FiArrowUpRight />
+                {t.exploreProjects} <FiArrowUpRight />
               </button>
               <span className={`hero-secondary ${DesktopStyles.heroSecondary}`}>
-                Use o seletor no topo para mudar de mesa
+                {t.workspaceHint}
               </span>
             </section>
-            <nav className={`desktop-icons ${DesktopStyles.desktopIcons}`} aria-label="Aplicativos do desktop">
+            <nav className={`desktop-icons ${DesktopStyles.desktopIcons}`} aria-label={t.desktopApps}>
               {AppIds.filter((id) => id !== Apps.TERMINAL).map((id) => {
-                const { Icon, label } = AppInfo[id];
+                const { Icon } = AppInfo[id];
+                const label = appLabel(id);
                 return (
                   <button
                     type="button"
@@ -404,13 +399,12 @@ function Home() {
             inert={!isProjectsSpace}
           >
             <div className={`portfolio-index-heading ${DesktopStyles.portfolioIndexHeading}`}>
-              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>/ mesa 02 · projetos</span>
+              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.projectsWorkspace}</span>
               <h2 id="projects-heading">
-                Trabalho em destaque<span>.</span>
+                {t.featuredWork}<span>.</span>
               </h2>
               <p>
-                Abra um projeto para ver os detalhes em uma janela. Use as mesas
-                no topo para navegar.
+                {t.featuredDescription}
               </p>
             </div>
             <div className={`portfolio-index-grid ${DesktopStyles.portfolioIndexGrid}`}>
@@ -431,7 +425,7 @@ function Home() {
                         openApp(Apps.PROJECTS);
                       }}
                     >
-                      Abrir projeto <FiArrowUpRight />
+                      {t.openProject} <FiArrowUpRight />
                     </button>
                     {project.links.map((link) => (
                       <a
@@ -451,7 +445,7 @@ function Home() {
         </div>
         <div className={`windows-layer ${DesktopStyles.windowsLayer}`}>
           {windows.filter(isWindowVisible).map((item) => {
-            const label = AppInfo[item.id].label;
+            const label = appLabel(item.id);
             const title =
               item.id === Apps.TERMINAL
                 ? "helio@portfolio — zsh"
@@ -475,17 +469,18 @@ function Home() {
         </div>
         <footer className={`desktop-footer ${DesktopStyles.desktopFooter}`}>
           <span>© {new Date().getFullYear()} Hélio Palença</span>
-          <span>Feito com curiosidade ✳</span>
+          <span>{t.madeWith} ✳</span>
         </footer>
-        <nav className={`dock ${DesktopStyles.dock}`} aria-label="Dock">
+        <nav className={`dock ${DesktopStyles.dock}`} aria-label={t.dock}>
           {AppIds.map((id) => {
-            const { Icon, label } = AppInfo[id];
+            const { Icon } = AppInfo[id];
+                const label = appLabel(id);
             return (
               <button
                 type="button"
                 key={id}
                 data-tooltip={label}
-                aria-label={`Abrir ${label}`}
+                aria-label={`${t.open} ${label}`}
                 className={
                   windows.some((item) => item.id === id && !item.minimized)
                     ? "running"

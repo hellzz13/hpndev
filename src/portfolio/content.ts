@@ -1,4 +1,7 @@
 import type { StackName } from "./constants";
+import { Locales } from "./locales";
+import type { Locale } from "./locales";
+import { translateProjects, EnglishExperience, EnglishInitialTerminalLines } from "./content.en";
 
 type PortfolioProject = {
   name: string;
@@ -7,8 +10,8 @@ type PortfolioProject = {
   number: string;
   summary: string;
   detail: string;
-  tags: StackName[];
-  links: { label: string; href: string }[];
+  tags: readonly StackName[];
+  links: readonly { label: string; href: string }[];
 };
 
 const Projects = [
@@ -58,23 +61,26 @@ const Projects = [
       },
     ],
   },
-] satisfies PortfolioProject[];
+] as const satisfies readonly PortfolioProject[];
+type ProjectName = (typeof Projects)[number]["name"];
+type ProjectLinkLabel = (typeof Projects)[number]["links"][number]["label"];
+
 const Experience = [
   {
     company: "WeFit",
-    role: "Desenvolvedor Front-end",
+    role: "Software Engineer",
     date: "2023 — atual",
     note: "Interfaces e manutenção de produtos com React, Next.js e AEM, em colaboração com UX/UI.",
   },
   {
     company: "QuikDev",
-    role: "Desenvolvedor Front-end",
+    role: "Software Engineer",
     date: "2022 — 2023",
     note: "Produtos web para fintech e educação, com foco em interfaces responsivas e acessibilidade.",
   },
   {
     company: "Devio",
-    role: "Desenvolvedor Front-end",
+    role: "Software Engineer",
     date: "2021 — 2022",
     note: "Desenvolvimento de interfaces web e mobile a partir de projetos de design.",
   },
@@ -90,7 +96,7 @@ const InitialTerminalLines = [
   {
     command: "whoami",
     output:
-      "Hélio Palença — desenvolvedor front-end e criador de produtos para a web.",
+      "Hélio Palença — Software Engineer e criador de produtos para a web.",
   },
   {
     command: "welcome",
@@ -98,4 +104,14 @@ const InitialTerminalLines = [
   },
 ];
 
-export { Projects, Experience, InitialTerminalLines };
+const EnglishProjects = translateProjects(Projects);
+
+function getContent(locale: Locale) {
+  const isEnglish = locale === Locales.ENGLISH;
+  return isEnglish
+    ? { Projects: EnglishProjects, Experience: EnglishExperience, InitialTerminalLines: EnglishInitialTerminalLines }
+    : { Projects, Experience, InitialTerminalLines };
+}
+
+export { Projects, Experience, InitialTerminalLines, getContent };
+export type { PortfolioProject, ProjectName, ProjectLinkLabel };

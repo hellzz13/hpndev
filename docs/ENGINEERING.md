@@ -14,6 +14,12 @@
 
 As mesas `HOME` e `PROJECTS` ficam em `src/portfolio/constants.ts`. A página mantém a mesa ativa e desloca o painel horizontal. `useWindowManager` guarda a mesa de cada janela; abrir um aplicativo a atribui à mesa atual, e a página renderiza somente as janelas dessa mesa. A seção de projetos segue no HTML inicial para indexação, mesmo quando a mesa está inativa.
 
+## Idiomas
+
+O roteamento i18n nativo do Pages Router entrega português (`pt-BR`, `/`) e inglês (`en`, `/en`), inclusive HTML estático localizado e 404. `locales.ts` reúne os IDs e a preferência; `messages.ts` contém catálogos com o mesmo conjunto de chaves, verificado pelo TypeScript; `content.en.ts` traduz os textos dos projetos e da experiência. `useLanguage` lê o locale do router, e `LanguageSwitcher` apresenta o menu de idioma na barra do sistema e na 404.
+
+A troca usa navegação cliente com o mesmo componente de página, sem chave por URL e sem reiniciar `useWindowManager`, o projeto selecionado ou o histórico do terminal. Novas respostas do terminal usam o idioma ativo; linhas anteriores preservam seu texto. O idioma explícito na URL prevalece; ao entrar pela raiz, o Next negocia primeiro o cookie `NEXT_LOCALE`, depois o idioma do navegador, com português como padrão. O cookie dura até um ano, é restrito ao mesmo site e não contém dados de janelas. Se o armazenamento for bloqueado, a troca continua disponível. O Next define `lang` no HTML inicial e o atualiza nas transições cliente; não é necessário sincronizá-lo com um efeito em `_app`. Metadados e sitemap acompanham as duas rotas.
+
 ## Estilização
 
 Os tokens de cores, espaçamento, medidas, tipografia e estados ficam em `tailwind.config.js`. Usar nomes semânticos para cores e layout e a escala compartilhada de espaçamento, evitando valores arbitrários no JSX. As composições de utilitários do desktop ficam em `src/portfolio/styles.ts`. Consulte [Tokens visuais](DESIGN_TOKENS.md) para os papéis das cores, exemplos e critérios de revisão.
@@ -31,6 +37,19 @@ Os tokens de cores, espaçamento, medidas, tipografia e estados ficam em `tailwi
 - Condições que decidem o fluxo recebem nomes que expressam a intenção (`canStartDrag`, `alreadyOpen`, `shouldClear`) antes de serem usadas.
 - O módulo declara suas constantes, tipos e funções primeiro e reúne os exports no final. Páginas Next.js mantêm o `export default` no final.
 - Não criar arquivos `constants.ts` globais ou separar valores usados uma única vez apenas para cumprir uma forma: a divisão deve ajudar a encontrar a responsabilidade.
+
+## Efeitos e responsabilidades do framework
+
+Antes de adicionar ou alterar um `useEffect`, responder:
+
+1. Qual sistema externo precisa ser sincronizado com React? Identificar concretamente o timer, listener, DOM ou integração envolvida.
+2. O resultado pode ser calculado durante o render ou tratado no evento que o causa? Evitar estado espelhado, cadeias de efeitos e efeitos usados somente para transformar dados.
+3. A versão instalada do React/Next já realiza essa sincronização? Conferir a documentação local ou a implementação relevante antes de criar uma solução própria. Exemplo deste projeto: o router do Next já atualiza `document.documentElement.lang` ao mudar o locale.
+4. As dependências estão completas e há cleanup quando necessário? Verificar criação/remoção de listeners, timers e assinaturas, inclusive a repetição de montagem em Strict Mode.
+
+Na revisão do diff, examinar cada efeito novo ou alterado e relatar na entrega seu propósito e a evidência da necessidade. Caso a solução própria sobreponha um comportamento nativo, removê-la ou documentar a limitação concreta que justifica a exceção. Efeitos legítimos, como o timer do relógio e a sincronização da rolagem do terminal, continuam permitidos.
+
+O ESLint já usa as regras de React Hooks fornecidas pelo Next. Elas ajudam com dependências e padrões incorretos, mas não provam que um efeito é necessário nem detectam toda duplicação de responsabilidade do framework. Essa verificação exige revisão explícita, também lembrada no template de pull request.
 
 ## Comportamento e qualidade
 
@@ -52,3 +71,5 @@ Os tokens de cores, espaçamento, medidas, tipografia e estados ficam em `tailwi
 ## Revisão das regras
 
 O `project-spec-starter` gera documentos iniciais, mas não aplica suas convenções ao código nem cria um gate automático. Antes de concluir uma mudança, conferir o diff contra as regras aplicáveis deste documento e de `BUSINESS_RULES.md`: tipos derivados de conjuntos fechados, condições nomeadas, localização de constantes e conteúdo, exports no fim, acessibilidade e comportamento das janelas. Registrar exceções reais na entrega. Essa revisão faltou na primeira implementação do desktop e motivou a reorganização posterior.
+
+Incluir nessa revisão a necessidade de cada efeito novo/alterado e a eventual duplicação de recursos do framework. A mesma revisão vale para entregas diretas, mesmo quando não houver PR.

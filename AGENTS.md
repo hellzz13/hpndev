@@ -4,6 +4,8 @@ Leia `PROJECT.md`, `docs/ENGINEERING.md` e `docs/BUSINESS_RULES.md` antes de alt
 
 Estilização: use Tailwind como padrão em páginas e componentes. CSS global específico exige uma exceção técnica forte, documentada conforme `docs/ENGINEERING.md`. Confira essa regra na revisão do diff.
 
+Efeitos e responsabilidades do framework: antes de adicionar ou alterar `useEffect`, identifique o sistema externo sincronizado, avalie renderização derivada e handlers de eventos e confirme na documentação ou implementação da versão instalada se React/Next já cuidam do comportamento. Revise dependências e cleanup. Na entrega, justifique os efeitos introduzidos ou alterados e registre como foram verificados, conforme `docs/ENGINEERING.md`.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know

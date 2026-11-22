@@ -1,10 +1,12 @@
 import { StackIcons } from "./constants";
 import type { StackName } from "./constants";
+import { useLanguage } from "./useLanguage";
 type StackTagsProps = { tags: readonly StackName[] };
 
 function StackTags({ tags }: StackTagsProps) {
+  const { t } = useLanguage();
   return (
-    <ul aria-label="Tecnologias do projeto" className="mt-4.5 flex list-none flex-wrap gap-1.5 p-0">
+    <ul aria-label={t.technologies} className="mt-4.5 flex list-none flex-wrap gap-1.5 p-0">
       {tags.map((tag) => {
         const Icon = StackIcons[tag];
         return (
