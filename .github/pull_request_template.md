@@ -9,6 +9,7 @@ Descreva o problema e o comportamento resultante.
 - [ ] Revisei dependências e cleanup de efeitos e verifiquei os comportamentos afetados.
 - [ ] Usei Tailwind e tokens existentes; justifiquei eventuais exceções de CSS global.
 - [ ] Executei os gates aplicáveis e registrei resultados e limitações.
+- [ ] Formatei os arquivos alterados conforme o format on save do VS Code e apliquei as correções do ESLint pertinentes antes dos gates.
 
 ## Efeitos e validação
 

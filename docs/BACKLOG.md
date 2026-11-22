@@ -2,12 +2,29 @@
 
 ## Ordem de prioridade
 
-1. Português e inglês com seletor de idioma no padrão de sistema operacional — implementado localmente, aguardando revisão e publicação.
-2. Visão geral das mesas e janelas, conforme a referência de Mission Control enviada em 22/11/2026.
-3. Atalho de teclado para trocar de mesa.
-4. Busca rápida com `⌘K` / `Ctrl+K`.
-5. Jogo acessível pelo terminal.
-6. Definir GitFlow e fluxo de publicação.
+1. Português e inglês com seletor de idioma no padrão de sistema operacional — integrado em `e053411`.
+2. Visão geral das mesas e janelas — primeira entrega aprovada pelo usuário, pendente de commit e publicação.
+3. Atalho de teclado para trocar de mesa — próximo item de implementação.
+4. Prévias mais visuais das janelas na visão geral.
+5. Transição mais fluida entre desktop e visão geral.
+6. Busca rápida com `⌘K` / `Ctrl+K`.
+7. Jogo acessível pelo terminal.
+8. Definir GitFlow e fluxo de publicação.
+9. Explorar identidade pessoal com o asterisco do Hélio OS e as iniciais HPN.
+
+## Identidade pessoal — asterisco e HPN
+
+Status: identidade definitiva para explorar e refinar. Como aplicação provisória autorizada, o favicon usa um asterisco vetorial verde sobre fundo escuro, com fallback ICO; isso não define a marca final ou sua combinação com HPN.
+
+Hélio gostou do asterisco que acompanha o nome Hélio OS e quer investigar seu uso como uma marca pessoal simples. As iniciais **HPN**, que já usa com frequência, também são uma referência para essa exploração.
+
+Pontos para refinamento:
+
+- Explorar o asterisco sozinho, uma assinatura com HPN e uma possível combinação entre os dois, sem assumir uma solução antes de comparar alternativas.
+- Buscar uma identidade simples, reconhecível e legível em tamanhos pequenos, com versões monocromáticas e para fundos claros e escuros.
+- Avaliar usos no portfólio, favicon, avatar e materiais pessoais, preservando a personalidade do Hélio OS.
+- Verificar a consistência de renderização do símbolo atual entre fontes e plataformas; avaliar um desenho vetorial próprio para a marca final.
+- Apresentar alternativas e refinar com Hélio antes de substituir a identidade existente. A escolha da marca e suas aplicações fica para uma entrega futura.
 
 ## Prioridade 1 — Idioma do sistema: português e inglês
 
@@ -38,13 +55,15 @@ Usar a página 404 como primeiro exercício da regra de estilização registrada
 
 ### Visão geral das mesas e janelas — referência Mission Control
 
+Status: primeira entrega implementada localmente e aprovada pelo usuário, pendente de commit e publicação. Duas mesas com miniaturas posicionais, prévias resumidas dos dados das janelas, restauração de minimizadas, troca direta pelos botões das mesas, visão geral opcional pelo botão de grade (clique/teclado/toque) e fechamento por Esc. Sem criação de mesas ou transferência de janelas. As prévias representam o estado da sessão sem duplicar componentes interativos; não reproduzem todos os pixels do aplicativo.
+
 A gravação enviada em 22/11/2026 mostra uma visão geral do macOS: faixa superior com miniaturas das mesas e, abaixo, as janelas da mesa atual reduzidas e distribuídas no espaço. Essa é a referência para o portfólio, substituindo a interpretação anterior de um pequeno popover. A visão geral deve abrir a partir do seletor superior, com transição do desktop para esse modo e retorno ao selecionar uma mesa ou janela.
 
 A referência também demonstra criação de uma mesa pelo botão `+` e transferência de uma janela para outra mesa. Essas funções formam uma extensão própria do item; exigem mesas dinâmicas e alterações nas regras atuais, que hoje têm apenas Início e Projetos. O portfólio só representa suas próprias mesas e aplicativos, sem acessar outras janelas do computador.
 
 Critérios de aceite:
 
-- Hover no seletor abre a visão geral no desktop; o painel permanece aberto ao mover o ponteiro para as miniaturas e janelas, sem piscar ou fechar durante a seleção.
+- Início e Projetos mantêm a troca rápida por clique. Um botão de grade separado abre a visão geral explicitamente; hover não interrompe a navegação com um modal. O painel permanece aberto até selecionar ou fechar.
 - A faixa superior apresenta as mesas Início e Projetos, com identificação da ativa; clicar em uma delas muda de mesa e encerra a visão geral.
 - A área principal organiza as janelas abertas da mesa atual em miniaturas que não se sobrepõem; selecionar uma restaura o desktop e foca a janela correspondente.
 - Miniaturas refletem títulos, posição relativa e conteúdo/estado, sem montar cópias interativas que disparem efeitos, capturem foco ou executem mídia novamente. Definir uma representação para janelas minimizadas e mesas sem janelas.
@@ -65,6 +84,28 @@ Critérios de aceite:
 - O atalho funciona com foco fora de campos editáveis e não interfere na digitação do terminal ou da busca.
 - A troca preserva a posição, o conteúdo e o estado das janelas em cada mesa.
 - O seletor superior continua acessível por teclado e toque.
+
+### Prévias mais visuais das janelas
+
+Evoluir os resumos atuais para representações visuais reconhecíveis de cada aplicativo: avatar no Sobre, identidade do projeto selecionado e aparência própria do terminal. Preservar a troca direta entre mesas e a abertura opcional da visão geral.
+
+Critérios de aceite:
+
+- Refletir projeto selecionado, histórico/comando do terminal e estado de minimização da sessão.
+- Usar dados e componentes de apresentação sem montar cópias interativas dos aplicativos ou duplicar efeitos, foco e mídia.
+- Manter títulos acessíveis, seleção por teclado/toque e legibilidade no celular.
+- Reutilizar Tailwind e tokens existentes, sem exigir capturas exatas do DOM.
+
+### Transição mais fluida para a visão geral
+
+Dar a sensação de afastar o desktop ao abrir a visão geral e retornar à janela escolhida ao sair. A animação deve complementar a navegação rápida, sem atrasar a troca direta de mesa.
+
+Critérios de aceite:
+
+- Coordenar entrada e saída do desktop, miniaturas e janela escolhida sem saltos visuais.
+- Preservar posições, conteúdo, foco e minimização; fechar por Esc continua sem mudar de mesa.
+- Respeitar movimento reduzido, com alternativa imediata ou discreta.
+- Validar fluidez no desktop e celular, sem duplicar aplicativos durante a transição.
 
 ### Busca rápida com `⌘K`
 

@@ -63,6 +63,12 @@ O ESLint já usa as regras de React Hooks fornecidas pelo Next. Elas ajudam com 
 
 ## Gates
 
+### Formatação antes da validação
+
+Após cada alteração, formatar os arquivos alterados com o equivalente ao “Format Document”/format on save do VS Code. Respeitar a configuração do workspace, da linguagem e do formatter, incluindo opções de projeto quando existirem. A configuração atual do editor usa Prettier para TypeScript/TSX e `source.fixAll.eslint` ao salvar: aplicar formatação e correções do ESLint nesses arquivos, revisar o diff e só então executar os gates.
+
+O repositório ainda não possui Prettier próprio nem script de formatação. Enquanto isso, usar a instalação disponível na extensão do VS Code, sem adicionar dependência implicitamente. Se o formatter estiver indisponível, informar a limitação; não declarar lint como equivalente à formatação. Evitar formatar arquivos sem relação com a mudança. Aplicar novamente o formatter após ajustes posteriores.
+
 - `npx tsc --noEmit`
 - `npm run lint`
 - `npm run build`
@@ -73,3 +79,9 @@ O ESLint já usa as regras de React Hooks fornecidas pelo Next. Elas ajudam com 
 O `project-spec-starter` gera documentos iniciais, mas não aplica suas convenções ao código nem cria um gate automático. Antes de concluir uma mudança, conferir o diff contra as regras aplicáveis deste documento e de `BUSINESS_RULES.md`: tipos derivados de conjuntos fechados, condições nomeadas, localização de constantes e conteúdo, exports no fim, acessibilidade e comportamento das janelas. Registrar exceções reais na entrega. Essa revisão faltou na primeira implementação do desktop e motivou a reorganização posterior.
 
 Incluir nessa revisão a necessidade de cada efeito novo/alterado e a eventual duplicação de recursos do framework. A mesma revisão vale para entregas diretas, mesmo quando não houver PR.
+
+## Visão geral das mesas
+
+`WorkspaceOverview.tsx` apresenta mesas e prévias de janelas a partir do estado existente, sem instanciar `DesktopWindow` ou remontar aplicativos. As miniaturas de mesa usam posições relativas limitadas ao seu quadro; as prévias maiores usam grade responsiva sem sobreposição. Conteúdo é resumido a dados da sessão, incluindo o projeto selecionado e as duas últimas respostas do terminal. Abertura/seleção pertencem aos handlers da página; nenhum efeito novo foi necessário.
+
+O `Dialog` do Headless UI, dependência já existente, oferece modal, isolamento do fundo, contenção/restauração de foco e Escape. Não duplicar esses comportamentos com listeners próprios. A transição usa Tailwind e respeita movimento reduzido. Os botões das mesas preservam a troca direta. O botão de grade abre a visão geral apenas por ação explícita; não usar hover para interromper a navegação rápida com um modal.

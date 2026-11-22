@@ -32,6 +32,12 @@ Rotas inexistentes exibem uma página 404 inspirada em uma tela azul do Hélio O
 
 Português e inglês podem ser escolhidos no menu de idioma do Hélio OS, inclusive na 404, com teclado ou toque. A troca preserva mesa, posição, camada e minimização das janelas, projeto selecionado e histórico do terminal. Rótulos e novos resultados são traduzidos, mas comandos permanecem estáveis e respostas antigas não são reescritas. As rotas `/` e `/en` entregam conteúdo e metadados localizados desde o HTML inicial. A preferência é salva no cookie `NEXT_LOCALE`; idioma explícito da URL prevalece e a entrada pela raiz negocia preferência salva, idioma do navegador e português como padrão.
 
+## BR-008 — Visão geral das mesas e janelas
+
+Os botões Início e Projetos no topo trocam de mesa diretamente, sem abrir a visão geral. Um botão de grade separado, ao lado deles, abre a visão geral por clique, teclado ou toque. Hover não abre o modal. A faixa superior apresenta as duas mesas e suas janelas em posições relativas; selecionar uma mesa encerra a visão geral e troca a mesa ativa. A área principal apresenta prévias resumidas das janelas da mesa atual, incluindo as minimizadas com indicação explícita. Selecionar uma janela a restaura e foca na mesa de origem, preservando posição, conteúdo e projeto selecionado. Esc ou fechar retorna sem trocar de mesa, com restauração do foco anterior.
+
+As prévias são representações de dados da sessão: projeto selecionado, últimas respostas/comando do terminal e textos dos aplicativos. Não são cópias interativas nem capturas exatas do DOM. A visão geral não cria mesas nem transfere janelas; o dock mantém a abertura de aplicativos na mesa atual.
+
 ## Dados
 
 Esta entrega não coleta dados pelo site. Contato abre o cliente de e-mail do visitante; links externos abrem os destinos declarados.

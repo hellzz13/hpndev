@@ -8,20 +8,31 @@ import { ProjectIdentity } from "@/portfolio/ProjectIdentity";
 import { Apps, AppIds, AppInfo, Spaces } from "@/portfolio/constants";
 import { getContent } from "@/portfolio/content";
 import { useLanguage } from "@/portfolio/useLanguage";
+import { WorkspaceOverview } from "@/portfolio/WorkspaceOverview";
 import { LanguageSwitcher } from "@/portfolio/LanguageSwitcher";
 import type { AppId, SpaceId } from "@/portfolio/constants";
 import { resolveTerminalCommand } from "@/portfolio/terminal";
 import { useWindowManager } from "@/portfolio/useWindowManager";
 import { getSeo, LocaleUrls } from "@/portfolio/seo";
-import { FiArrowUpRight, FiGithub, FiLinkedin } from "react-icons/fi";
+import { FiArrowUpRight, FiGithub, FiLinkedin, FiGrid } from "react-icons/fi";
+
+const TerminalPreviewLineLimit = 2;
 
 type TerminalLine = { command: string; output: string };
 
 function Home() {
   const { locale, t, appLabel } = useLanguage();
   const { Projects, Experience, InitialTerminalLines } = getContent(locale);
-  const { SiteUrl, SiteTitle, SiteDescription, SocialImageUrl, StructuredData, ogLocale } = getSeo(locale);
+  const {
+    SiteUrl,
+    SiteTitle,
+    SiteDescription,
+    SocialImageUrl,
+    StructuredData,
+    ogLocale,
+  } = getSeo(locale);
   const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
+  const [isOverviewOpen, setOverviewOpen] = useState(false);
   const isHomeSpace = currentSpace === Spaces.HOME;
   const isProjectsSpace = currentSpace === Spaces.PROJECTS;
   const { windows, open, close, minimize, focus, move } = useWindowManager<
@@ -108,9 +119,14 @@ function Home() {
             {t.terminalIntro}
           </div>
           {lines.map((line, index) => (
-            <div className={`terminal-line ${DesktopStyles.terminalLine}`} key={`${index}-${line.command}`}>
+            <div
+              className={`terminal-line ${DesktopStyles.terminalLine}`}
+              key={`${index}-${line.command}`}
+            >
               <div>
-                <span className={`prompt ${DesktopStyles.prompt}`}>helio@portfolio ~ % </span>
+                <span className={`prompt ${DesktopStyles.prompt}`}>
+                  helio@portfolio ~ %{" "}
+                </span>
                 {line.command}
               </div>
               <p>{line.output}</p>
@@ -141,7 +157,9 @@ function Home() {
       const project = Projects[selectedProject];
       return (
         <div className={`window-content ${DesktopStyles.windowContent}`}>
-          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.selectedWork}</span>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>
+            {t.selectedWork}
+          </span>
           <h2>
             {t.projectsFirst}
             <br />
@@ -150,7 +168,11 @@ function Home() {
           <p className={`lede ${DesktopStyles.lede}`}>
             {t.projectsDescription}
           </p>
-          <div className={`project-tabs ${DesktopStyles.projectTabs}`} role="tablist" aria-label={t.projects}>
+          <div
+            className={`project-tabs ${DesktopStyles.projectTabs}`}
+            role="tablist"
+            aria-label={t.projects}
+          >
             {Projects.map((item, index) => {
               const isSelectedProject = selectedProject === index;
               return (
@@ -198,7 +220,9 @@ function Home() {
     if (isAboutApp)
       return (
         <div className={`window-content ${DesktopStyles.windowContent}`}>
-          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.aboutEyebrow}</span>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>
+            {t.aboutEyebrow}
+          </span>
           <div className={`about-heading ${DesktopStyles.aboutHeading}`}>
             <Image
               src="/studying.png"
@@ -215,9 +239,7 @@ function Home() {
               <p>{t.role}</p>
             </div>
           </div>
-          <p>
-            {t.aboutDescription}
-          </p>
+          <p>{t.aboutDescription}</p>
           <p>{t.aboutOutside}</p>
           <div className={`tag-list muted ${DesktopStyles.tagList}`}>
             <span>React</span>
@@ -230,13 +252,14 @@ function Home() {
     if (isCareerApp)
       return (
         <div className={`window-content ${DesktopStyles.windowContent}`}>
-          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.careerEyebrow}</span>
+          <span className={`eyebrow ${DesktopStyles.eyebrow}`}>
+            {t.careerEyebrow}
+          </span>
           <h2>
-            {t.career}<em>.</em>
+            {t.career}
+            <em>.</em>
           </h2>
-          <p className={`lede ${DesktopStyles.lede}`}>
-            {t.careerDescription}
-          </p>
+          <p className={`lede ${DesktopStyles.lede}`}>{t.careerDescription}</p>
           <div className={`career-list ${DesktopStyles.careerList}`}>
             {Experience.map((item) => (
               <article key={item.company}>
@@ -252,17 +275,22 @@ function Home() {
         </div>
       );
     return (
-      <div className={`window-content contact-content ${DesktopStyles.windowContent} ${DesktopStyles.contactContent}`}>
-        <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.contactEyebrow}</span>
+      <div
+        className={`window-content contact-content ${DesktopStyles.windowContent} ${DesktopStyles.contactContent}`}
+      >
+        <span className={`eyebrow ${DesktopStyles.eyebrow}`}>
+          {t.contactEyebrow}
+        </span>
         <h2>
           {t.contactFirst}
           <br />
           <em>{t.contactLast}</em>
         </h2>
-        <p>
-          {t.contactDescription}
-        </p>
-        <a className={`contact-link primary ${DesktopStyles.contactLink}`} href="mailto:hpalenca13@gmail.com">
+        <p>{t.contactDescription}</p>
+        <a
+          className={`contact-link primary ${DesktopStyles.contactLink}`}
+          href="mailto:hpalenca13@gmail.com"
+        >
           hpalenca13@gmail.com <FiArrowUpRight />
         </a>
         <a
@@ -300,10 +328,7 @@ function Home() {
         <meta property="og:title" content={SiteTitle} />
         <meta property="og:description" content={SiteDescription} />
         <meta property="og:image" content={SocialImageUrl} />
-        <meta
-          property="og:image:alt"
-          content={t.socialImageAlt}
-        />
+        <meta property="og:image:alt" content={t.socialImageAlt} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={SiteTitle} />
         <meta name="twitter:description" content={SiteDescription} />
@@ -315,32 +340,56 @@ function Home() {
           }}
         />
       </Head>
-      <div className={`desktop ${DesktopStyles.desktop}`} data-space={currentSpace}>
+      <div
+        className={`desktop ${DesktopStyles.desktop}`}
+        data-space={currentSpace}
+      >
         <header className={`menubar ${DesktopStyles.menubar}`}>
           <div>
-            <span className={`menubar-mark ${DesktopStyles.menubarMark}`}>✳</span>
+            <span className={`menubar-mark ${DesktopStyles.menubarMark}`}>
+              ✳
+            </span>
             <strong>Hélio OS</strong>
-            <span className={`menubar-separator ${DesktopStyles.menubarSeparator}`} />{" "}
-            <span className={`menubar-section ${DesktopStyles.menubarSection}`}>{t.portfolio}</span>
+            <span
+              className={`menubar-separator ${DesktopStyles.menubarSeparator}`}
+            />{" "}
+            <span className={`menubar-section ${DesktopStyles.menubarSection}`}>
+              {t.portfolio}
+            </span>
           </div>
-          <nav className={`workspace-switcher ${DesktopStyles.workspaceSwitcher}`} aria-label={t.workspaces}>
+          <nav
+            className={`workspace-switcher ${DesktopStyles.workspaceSwitcher}`}
+            aria-label={t.workspaces}
+          >
             <button
               type="button"
               aria-pressed={isHomeSpace}
               onClick={() => switchSpace(Spaces.HOME)}
             >
-              <span>01</span> {t.home}
+              <span className="mobile:hidden">01</span> {t.home}
             </button>
             <button
               type="button"
               aria-pressed={isProjectsSpace}
               onClick={() => switchSpace(Spaces.PROJECTS)}
             >
-              <span>02</span> {t.projects}
+              <span className="mobile:hidden">02</span> {t.projects}
+            </button>
+            <button
+              type="button"
+              aria-haspopup="dialog"
+              aria-expanded={isOverviewOpen}
+              aria-label={t.overviewTitle}
+              title={t.overviewTitle}
+              onClick={() => setOverviewOpen(true)}
+            >
+              <FiGrid aria-hidden="true" className="h-3.5 w-3.5" />
             </button>
           </nav>
           <div>
-            <span className={`available ${DesktopStyles.available}`}>● &nbsp; {t.available}</span>
+            <span className={`available ${DesktopStyles.available}`}>
+              ● &nbsp; {t.available}
+            </span>
             <time>{time}</time>
             <LanguageSwitcher />
           </div>
@@ -348,9 +397,14 @@ function Home() {
         <div
           className={`space-track ${isProjectsSpace ? "show-projects" : ""} ${DesktopStyles.spaceTrack}`}
         >
-          <main className={`desktop-main ${DesktopStyles.desktopMain}`} inert={!isHomeSpace}>
+          <main
+            className={`desktop-main ${DesktopStyles.desktopMain}`}
+            inert={!isHomeSpace}
+          >
             <section className={`hero ${DesktopStyles.hero}`}>
-              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>✳ &nbsp; {t.welcome}</span>
+              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>
+                ✳ &nbsp; {t.welcome}
+              </span>
               <h1>
                 {t.heroFirst}
                 <br />
@@ -358,9 +412,7 @@ function Home() {
                 <br />
                 <em>{t.heroLast}</em>
               </h1>
-              <p>
-                {t.heroDescription}
-              </p>
+              <p>{t.heroDescription}</p>
               <button
                 type="button"
                 className={`hero-action ${DesktopStyles.heroAction}`}
@@ -372,7 +424,10 @@ function Home() {
                 {t.workspaceHint}
               </span>
             </section>
-            <nav className={`desktop-icons ${DesktopStyles.desktopIcons}`} aria-label={t.desktopApps}>
+            <nav
+              className={`desktop-icons ${DesktopStyles.desktopIcons}`}
+              aria-label={t.desktopApps}
+            >
               {AppIds.filter((id) => id !== Apps.TERMINAL).map((id) => {
                 const { Icon } = AppInfo[id];
                 const label = appLabel(id);
@@ -383,7 +438,9 @@ function Home() {
                     data-tooltip={label}
                     onClick={() => openApp(id)}
                   >
-                    <span className={`desktop-icon icon-${id} ${DesktopStyles.desktopIcon}`}>
+                    <span
+                      className={`desktop-icon icon-${id} ${DesktopStyles.desktopIcon}`}
+                    >
                       <Icon aria-hidden="true" />
                     </span>
                     {label}
@@ -398,26 +455,38 @@ function Home() {
             aria-labelledby="projects-heading"
             inert={!isProjectsSpace}
           >
-            <div className={`portfolio-index-heading ${DesktopStyles.portfolioIndexHeading}`}>
-              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>{t.projectsWorkspace}</span>
+            <div
+              className={`portfolio-index-heading ${DesktopStyles.portfolioIndexHeading}`}
+            >
+              <span className={`eyebrow ${DesktopStyles.eyebrow}`}>
+                {t.projectsWorkspace}
+              </span>
               <h2 id="projects-heading">
-                {t.featuredWork}<span>.</span>
+                {t.featuredWork}
+                <span>.</span>
               </h2>
-              <p>
-                {t.featuredDescription}
-              </p>
+              <p>{t.featuredDescription}</p>
             </div>
-            <div className={`portfolio-index-grid ${DesktopStyles.portfolioIndexGrid}`}>
+            <div
+              className={`portfolio-index-grid ${DesktopStyles.portfolioIndexGrid}`}
+            >
               {Projects.map((project, index) => (
-                <article className={`portfolio-index-card ${DesktopStyles.portfolioIndexCard}`} key={project.name}>
-                  <span className={`portfolio-index-number ${DesktopStyles.portfolioIndexNumber}`}>
+                <article
+                  className={`portfolio-index-card ${DesktopStyles.portfolioIndexCard}`}
+                  key={project.name}
+                >
+                  <span
+                    className={`portfolio-index-number ${DesktopStyles.portfolioIndexNumber}`}
+                  >
                     {project.number} / {project.type}
                   </span>
                   <ProjectIdentity name={project.name} logo={project.logo} />
                   <p>{project.summary}</p>
                   <p>{project.detail}</p>
                   <StackTags tags={project.tags} />
-                  <div className={`portfolio-index-actions ${DesktopStyles.portfolioIndexActions}`}>
+                  <div
+                    className={`portfolio-index-actions ${DesktopStyles.portfolioIndexActions}`}
+                  >
                     <button
                       type="button"
                       onClick={() => {
@@ -474,7 +543,7 @@ function Home() {
         <nav className={`dock ${DesktopStyles.dock}`} aria-label={t.dock}>
           {AppIds.map((id) => {
             const { Icon } = AppInfo[id];
-                const label = appLabel(id);
+            const label = appLabel(id);
             return (
               <button
                 type="button"
@@ -494,6 +563,34 @@ function Home() {
           })}
         </nav>
       </div>
+      <WorkspaceOverview
+        isOpen={isOverviewOpen}
+        currentSpace={currentSpace}
+        windows={windows}
+        previews={{
+          [Apps.TERMINAL]:
+            lines
+              .slice(-TerminalPreviewLineLimit)
+              .map((line) => `% ${line.command}\n${line.output}`)
+              .join("\n\n") + `\n% ${command}`,
+          [Apps.PROJECTS]: `${Projects[selectedProject].name}\n\n${Projects[selectedProject].summary}`,
+          [Apps.ABOUT]: `${t.aboutFirst} ${t.aboutLast}\n${t.role}\n\n${t.aboutDescription}`,
+          [Apps.CAREER]: Experience.map(
+            (item) => `${item.company} · ${item.role}\n${item.date}`,
+          ).join("\n\n"),
+          [Apps.CONTACT]: `${t.contactDescription}\n\nhpalenca13@gmail.com\nlinkedin.com/in/hpneto`,
+        }}
+        onClose={() => setOverviewOpen(false)}
+        onSelectSpace={(space) => {
+          switchSpace(space);
+          setOverviewOpen(false);
+        }}
+        onSelectWindow={(item) => {
+          switchSpace(item.space);
+          open(item.id, item.space);
+          setOverviewOpen(false);
+        }}
+      />
     </>
   );
 }

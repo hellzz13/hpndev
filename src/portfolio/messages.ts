@@ -3,6 +3,15 @@ import { Locales } from "./locales";
 import type { Locale } from "./locales";
 
 const Portuguese = {
+  overviewTitle: "Visão geral das mesas",
+  closeOverview: "Fechar visão geral",
+  overviewWindows: "janelas",
+  overviewSelectWindow: "Selecionar janela",
+  overviewEmpty:
+    "Nenhuma janela nesta mesa. Volte ao desktop para abrir um aplicativo.",
+  overviewMinimized: "Minimizada",
+  overviewHint:
+    "Selecione uma mesa ou janela para voltar. Esc fecha sem mudar de mesa.",
   portfolio: "Portfólio",
   workspaces: "Áreas de trabalho",
   home: "Início",
@@ -86,6 +95,15 @@ const Portuguese = {
 type Messages = { [Key in keyof typeof Portuguese]: string };
 
 const English = {
+  overviewTitle: "Workspace overview",
+  closeOverview: "Close overview",
+  overviewWindows: "windows",
+  overviewSelectWindow: "Select window",
+  overviewEmpty:
+    "No windows in this workspace. Return to the desktop to open an app.",
+  overviewMinimized: "Minimized",
+  overviewHint:
+    "Select a workspace or window to return. Esc closes without switching workspaces.",
   portfolio: "Portfolio",
   workspaces: "Workspaces",
   home: "Home",
