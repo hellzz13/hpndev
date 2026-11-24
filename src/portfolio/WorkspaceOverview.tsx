@@ -31,7 +31,7 @@ const PreviewPosition = {
   origin: 30,
   divisor: 12,
   minimum: 4,
-  maximum: 65,
+  maximum: 46,
 } as const;
 const FocusStyle =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus";
@@ -173,7 +173,7 @@ function WorkspaceOverviewContent({
                             top: `${top}%`,
                             zIndex: item.z,
                           }}
-                          className={`absolute w-1/2 overflow-hidden rounded border border-window-border shadow-elevation-dock ${minimizedStyle}`}
+                          className={`absolute w-fit max-w-overview-mini overflow-hidden bg-window [&>svg]:h-auto [&>svg]:w-auto [&>svg]:max-w-full [&>svg]:max-h-20 mobile:[&>svg]:max-h-8 rounded border border-window-border shadow-elevation-dock ${minimizedStyle}`}
                         >
                           {renderPreview(item.id)}
                         </span>
@@ -209,7 +209,7 @@ function WorkspaceOverviewContent({
                 {t.overviewEmpty}
               </p>
             ) : (
-              <div className="grid grid-cols-3 items-center gap-8 compact:grid-cols-2 mobile:grid-cols-1">
+              <div className="grid grid-cols-3 items-start justify-items-center gap-8 compact:grid-cols-2 mobile:grid-cols-1">
                 {currentWindows.map((item) => {
                   const minimizedLabel = item.minimized
                     ? ` · ${t.overviewMinimized}`
@@ -221,11 +221,11 @@ function WorkspaceOverviewContent({
                       key={item.id}
                       aria-label={selectionLabel}
                       onClick={() => onSelectWindow(item)}
-                      className={`group min-w-0 text-left ${FocusStyle}`}
+                      className={`group w-full min-w-0 max-w-sm text-left ${FocusStyle}`}
                     >
                       <span
                         aria-hidden="true"
-                        className="block overflow-hidden rounded-project-card border border-window-border bg-window shadow-elevation-dock transition duration-200 group-hover:-translate-y-1 group-hover:border-accent group-hover:ring-2 group-hover:ring-accent motion-reduce:transform-none motion-reduce:transition-none"
+                        className="mx-auto block w-fit max-w-full overflow-hidden rounded-project-card [&>svg]:h-auto [&>svg]:w-auto [&>svg]:max-h-64 [&>svg]:max-w-full border border-window-border bg-window shadow-elevation-dock transition duration-200 group-hover:-translate-y-1 group-hover:border-accent group-hover:ring-2 group-hover:ring-accent motion-reduce:transform-none motion-reduce:transition-none"
                       >
                         {renderPreview(item.id)}
                       </span>

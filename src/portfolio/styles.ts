@@ -81,6 +81,10 @@ const DesktopStyles = {
     "mobile:!left-3 mobile:!w-window-mobile mobile:!h-window-mobile mobile:max-h-none mobile:!transform-none",
     "mobile:[&.window-terminal]:!top-auto mobile:[&.window-terminal]:bottom-17",
     "mobile:[&.window-terminal]:!h-terminal-mobile",
+    "desktop:[&[data-maximized=true]]:!top-3 desktop:[&[data-maximized=true]]:!left-3 desktop:[&[data-maximized=true]]:!w-maximized-window desktop:[&[data-maximized=true]]:!h-maximized-window desktop:[&[data-maximized=true]]:!max-h-none",
+    "desktop:[&[data-resized=true]]:!max-h-none",
+    "[&[data-maximized=true]_.window-bar]:cursor-default [&[data-maximized=true]_.window-bar:active]:cursor-default",
+    "[&_button:focus-visible_svg]:opacity-100",
   ].join(" "),
   windowBar: [
     "flex-window-bar flex items-center justify-between py-0 px-3.25 border-b border-b-window-bar-border bg-window-bar",

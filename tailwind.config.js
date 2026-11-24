@@ -149,6 +149,7 @@ const Config = {
         101: "101",
       },
       width: {
+        "maximized-window": "calc(100% - 24px)",
         terminal: "min(530px, 45vw)",
         "projects-window": "min(690px, 68vw)",
         "content-window": "min(560px, 60vw)",
@@ -158,6 +159,7 @@ const Config = {
         "workspace-track": "200%",
       },
       height: {
+        "maximized-window": "calc(100dvh - 156px)",
         workspace: "calc(100dvh - 48px)",
         "projects-window": "min(650px, calc(100vh - 160px))",
         "content-window": "min(620px, calc(100vh - 160px))",
@@ -166,7 +168,9 @@ const Config = {
         "terminal-mobile": "min(440px,calc(100dvh - 92px))",
       },
       maxWidth: {
+        "overview-mini": "50%",
         "snake-board": "320px",
+        "snake-board-expanded": "max(160px, calc(100dvh - 280px))",
         tooltip: "140px",
         hero: "600px",
         "projects-heading": "760px",
@@ -183,6 +187,7 @@ const Config = {
         "window-limit": "calc(100vh - 165px)",
       },
       minWidth: {
+        "snake-board-min": "min(240px, 100%)",
         terminal: "min(530px, 45vw)",
         "projects-window": "min(690px, 68vw)",
         "content-window": "min(560px, 60vw)",
@@ -275,6 +280,7 @@ const Config = {
         tooltip: "6px",
         "desktop-icon-mobile": "14px",
       },
+      flexBasis: { "snake-board": "240px" },
       flex: {
         "window-bar": "0 0 39px",
         "terminal-body": "1",
@@ -289,6 +295,7 @@ const Config = {
         "projects-mobile": "1fr",
       },
       screens: {
+        desktop: { raw: "(min-width: 761px)" },
         compact: {
           raw: "(max-width: 1000px)",
         },

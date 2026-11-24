@@ -75,10 +75,8 @@ function Home() {
   const finishBoot = useCallback(() => setBooting(false), []);
   const isHomeSpace = currentSpace === Spaces.HOME;
   const isProjectsSpace = currentSpace === Spaces.PROJECTS;
-  const { windows, open, close, minimize, focus, move } = useWindowManager<
-    AppId,
-    SpaceId
-  >(Apps.TERMINAL, Spaces.HOME);
+  const { windows, open, close, minimize, focus, move, setMaximized, resize } =
+    useWindowManager<AppId, SpaceId>(Apps.TERMINAL, Spaces.HOME);
   const visibleWindows = windows.filter(
     (item) => !item.minimized && item.space === currentSpace,
   );
@@ -186,6 +184,12 @@ function Home() {
     const isProject = action.kind === SearchActions.PROJECT;
     const isSpace = action.kind === SearchActions.SPACE;
     const isCommand = action.kind === SearchActions.COMMAND;
+    const isWindowSize = action.kind === SearchActions.WINDOW_SIZE;
+    if (isWindowSize) {
+      openApp(action.appId);
+      setMaximized(action.appId, action.maximized);
+      return;
+    }
     const isOverview = action.kind === SearchActions.OVERVIEW;
     const isGoogle = action.kind === SearchActions.GOOGLE;
     if (isApp) {
@@ -650,11 +654,13 @@ function Home() {
                 label={label}
                 title={title}
                 position={item}
+                onToggleMaximize={() => setMaximized(item.id, !item.maximized)}
                 onFocus={() => {
                   const isOtherApp = item.id !== Apps.SNAKE;
                   if (isOtherApp) snakeDispatch({ type: "pause" });
                   focus(item.id);
                 }}
+                onResize={(geometry) => resize(item.id, geometry)}
                 onMove={(x, y) => move(item.id, x, y)}
                 onClose={() => {
                   const isSnake = item.id === Apps.SNAKE;

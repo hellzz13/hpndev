@@ -86,63 +86,71 @@ function SnakeGame({ state, dispatch }: SnakeGameProps) {
           {t.snakeScore}: {state.score}
         </span>
       </div>
-      <div
-        ref={boardRef}
-        tabIndex={0}
-        role="group"
-        aria-label={t.snakeControls}
-        className="relative mx-auto w-full max-w-snake-board overflow-hidden rounded-md border border-terminal-border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terminal-prompt"
-      >
-        <SnakeBoard state={state} />
-        {!isRunning && (
-          <div className="absolute inset-0 flex items-center justify-center bg-terminal/80 p-4 text-center text-terminal-prompt">
-            <span>{statusLabels[state.status]}</span>
-          </div>
-        )}
-      </div>
-      <p role="status" className="my-3 text-center text-terminal-muted">
-        {statusLabels[state.status]}
-      </p>
-      <div className="flex flex-wrap justify-center gap-2">
-        <button
-          type="button"
-          className={ButtonStyle}
-          onClick={isRunning ? () => dispatch({ type: "pause" }) : play}
+      <div className="flex flex-wrap items-center justify-center gap-6">
+        <div
+          ref={boardRef}
+          tabIndex={0}
+          role="group"
+          aria-label={t.snakeControls}
+          className="relative min-w-snake-board-min flex-1 basis-snake-board max-w-snake-board overflow-hidden [[data-maximized=true]_&]:max-w-snake-board-expanded [[data-resized=true]_&]:max-w-snake-board-expanded rounded-md border border-terminal-border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terminal-prompt"
         >
-          {isRunning ? t.snakePause : isFinished ? t.snakeRestart : t.snakePlay}
-        </button>
-        {!isFinished && (
-          <button
-            type="button"
-            className={ButtonStyle}
-            onClick={() => {
-              dispatch({ type: "restart" });
-              boardRef.current?.focus();
-            }}
+          <SnakeBoard state={state} />
+          {!isRunning && (
+            <div className="absolute inset-0 flex items-center justify-center bg-terminal/80 p-4 text-center text-terminal-prompt">
+              <span>{statusLabels[state.status]}</span>
+            </div>
+          )}
+        </div>
+        <div className="w-52 shrink-0">
+          <p role="status" className="my-3 text-center text-terminal-muted">
+            {statusLabels[state.status]}
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            <button
+              type="button"
+              className={ButtonStyle}
+              onClick={isRunning ? () => dispatch({ type: "pause" }) : play}
+            >
+              {isRunning
+                ? t.snakePause
+                : isFinished
+                  ? t.snakeRestart
+                  : t.snakePlay}
+            </button>
+            {!isFinished && (
+              <button
+                type="button"
+                className={ButtonStyle}
+                onClick={() => {
+                  dispatch({ type: "restart" });
+                  boardRef.current?.focus();
+                }}
+              >
+                {t.snakeRestart}
+              </button>
+            )}
+          </div>
+          <div
+            className="mt-3 flex justify-center gap-2"
+            aria-label={t.snakeDirections}
           >
-            {t.snakeRestart}
-          </button>
-        )}
+            {DirectionButtons.map(({ direction, symbol }) => (
+              <button
+                key={direction}
+                type="button"
+                aria-label={directionLabels[direction]}
+                className={`${ButtonStyle} min-h-11 min-w-11`}
+                onClick={() => turn(direction)}
+              >
+                {symbol}
+              </button>
+            ))}
+          </div>
+          <p className="mb-0 mt-3 text-center leading-relaxed text-terminal-muted">
+            {t.snakeInstructions}
+          </p>
+        </div>
       </div>
-      <div
-        className="mt-3 flex justify-center gap-2"
-        aria-label={t.snakeDirections}
-      >
-        {DirectionButtons.map(({ direction, symbol }) => (
-          <button
-            key={direction}
-            type="button"
-            aria-label={directionLabels[direction]}
-            className={`${ButtonStyle} min-h-11 min-w-11`}
-            onClick={() => turn(direction)}
-          >
-            {symbol}
-          </button>
-        ))}
-      </div>
-      <p className="mb-0 mt-3 text-center leading-relaxed text-terminal-muted">
-        {t.snakeInstructions}
-      </p>
     </div>
   );
 }

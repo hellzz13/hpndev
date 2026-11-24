@@ -6,7 +6,7 @@
 2. Snake no terminal — implementado localmente nesta entrega, aguardando avaliação/publicação.
 3. Definir GitFlow e fluxo de publicação.
 4. Explorar identidade pessoal com asterisco e iniciais HPN.
-5. Redimensionar e maximizar/restaurar janelas.
+5. Redimensionar, maximizar/restaurar janelas — implementado localmente, pendente avaliação/publicação.
 6. Avaliar extensão da visão geral com criação/remoção de mesas e transferência de janelas (escopo ainda a definir).
 
 Português/inglês e a primeira visão geral já estão integrados. Atalhos, prévias, transições, busca, paletas e boot estão implementados. A navegação por direcionais/Enter na visão geral também está concluída. Gestos exigem validação física no trackpad do usuário.
@@ -180,7 +180,7 @@ Pontos para refinamento e aceite:
 
 ## Redimensionar e maximizar janelas
 
-Status: solicitado para backlog, sem implementação.
+Status: implementado localmente para avaliação. Botão verde, duplo clique e busca maximizam/restauram; oito alças permitem redimensionamento por ponteiro e teclado, respeitando mínimos por aplicativo e a área útil. Snake amplia o tabuleiro e posiciona controles ao lado em janelas grandes.
 
 Permitir aumentar ou diminuir as janelas do Hélio OS pelas bordas/cantos, além de oferecer maximizar e restaurar o tamanho anterior por um controle no cabeçalho. Refinar a interação mantendo o padrão visual do sistema operacional.
 

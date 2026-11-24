@@ -12,6 +12,7 @@ const SearchActions = {
   SPACE: "space",
   COMMAND: "command",
   OVERVIEW: "overview",
+  WINDOW_SIZE: "window-size",
   GOOGLE: "google",
 } as const;
 type SearchAction =
@@ -20,6 +21,7 @@ type SearchAction =
   | { kind: typeof SearchActions.SPACE; spaceId: SpaceId }
   | { kind: typeof SearchActions.COMMAND; command: string }
   | { kind: typeof SearchActions.OVERVIEW }
+  | { kind: typeof SearchActions.WINDOW_SIZE; appId: AppId; maximized: boolean }
   | { kind: typeof SearchActions.GOOGLE; query: string };
 type SearchEntry = {
   id: string;
@@ -76,6 +78,27 @@ function getSearchCatalog(locale: Locale): SearchEntry[] {
           ...AppKeywords[appId],
         ],
         action: { kind: SearchActions.APP, appId },
+      }),
+    ),
+    ...AppIds.flatMap((appId): SearchEntry[] =>
+      [true, false].map((maximized) => {
+        const title = maximized ? t.maximize : t.restoreWindow;
+        const keywords = maximized
+          ? ["maximize", "maximizar", "ampliar", "expandir"]
+          : ["restore", "restaurar", "tamanho", "size"];
+        return {
+          id: `window-size:${appId}:${maximized}`,
+          title: `${title} ${getAppLabel(appId, locale)}`,
+          description: t.searchOpenApp,
+          category: t.workspaces,
+          keywords: [
+            appId,
+            getAppLabel(appId, Locales.PORTUGUESE),
+            getAppLabel(appId, Locales.ENGLISH),
+            ...keywords,
+          ],
+          action: { kind: SearchActions.WINDOW_SIZE, appId, maximized },
+        };
       }),
     ),
     ...Projects.map(

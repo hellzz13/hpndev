@@ -9,6 +9,7 @@ import { useId, useRef, useState } from "react";
 import type { RefObject } from "react";
 import type { IconType } from "react-icons";
 import {
+  FiMaximize2,
   FiArrowUpRight,
   FiSearch,
   FiGrid,
@@ -37,6 +38,7 @@ type SearchBodyProps = Omit<SearchProps, "isOpen"> & {
 };
 const SearchIcons = {
   [SearchActions.APP]: FiFolder,
+  [SearchActions.WINDOW_SIZE]: FiMaximize2,
   [SearchActions.PROJECT]: FiFolder,
   [SearchActions.SPACE]: FiGrid,
   [SearchActions.COMMAND]: FiTerminal,

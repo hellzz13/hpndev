@@ -208,7 +208,9 @@ function WindowPreview({
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
-      className="block w-full"
+      width={width}
+      height={height}
+      className="block h-auto w-full"
       aria-hidden="true"
       focusable="false"
     >

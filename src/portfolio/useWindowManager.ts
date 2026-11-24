@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { WindowGeometry } from "./windowResize";
 import { DesktopBreakpoint } from "./constants";
 
 type DesktopWindowState<Id extends string, Space extends string> = {
@@ -8,17 +9,32 @@ type DesktopWindowState<Id extends string, Space extends string> = {
   y: number;
   z: number;
   minimized: boolean;
+  maximized: boolean;
+  width?: number;
+  height?: number;
 };
 
-function useWindowManager<Id extends string, Space extends string>(initialWindow: Id, initialSpace: Space) {
+function useWindowManager<Id extends string, Space extends string>(
+  initialWindow: Id,
+  initialSpace: Space,
+) {
   const [windows, setWindows] = useState<DesktopWindowState<Id, Space>[]>([
-    { id: initialWindow, space: initialSpace, x: 0, y: 0, z: 2, minimized: false },
+    {
+      id: initialWindow,
+      space: initialSpace,
+      x: 0,
+      y: 0,
+      z: 2,
+      minimized: false,
+      maximized: false,
+    },
   ]);
   const topLayer = useRef(2);
 
   // No celular, os atalhos ficam visíveis antes de abrir qualquer janela.
   useEffect(() => {
-    const shouldStartWithoutWindows = window.matchMedia(DesktopBreakpoint).matches;
+    const shouldStartWithoutWindows =
+      window.matchMedia(DesktopBreakpoint).matches;
     if (!shouldStartWithoutWindows) return;
     const frame = window.requestAnimationFrame(() => setWindows([]));
     return () => window.cancelAnimationFrame(frame);
@@ -41,7 +57,9 @@ function useWindowManager<Id extends string, Space extends string>(initialWindow
       if (alreadyOpen) {
         return current.map((item) => {
           const isTargetWindow = item.id === id;
-          return isTargetWindow ? { ...item, space, minimized: false, z } : item;
+          return isTargetWindow
+            ? { ...item, space, minimized: false, z }
+            : item;
         });
       }
       return [
@@ -53,16 +71,19 @@ function useWindowManager<Id extends string, Space extends string>(initialWindow
           y: Math.min(current.length * 25, 80),
           z,
           minimized: false,
+          maximized: false,
         },
       ];
     });
   }
 
   function close(id: Id) {
-    setWindows((current) => current.filter((item) => {
-      const shouldKeepWindow = item.id !== id;
-      return shouldKeepWindow;
-    }));
+    setWindows((current) =>
+      current.filter((item) => {
+        const shouldKeepWindow = item.id !== id;
+        return shouldKeepWindow;
+      }),
+    );
   }
 
   function minimize(id: Id) {
@@ -70,6 +91,24 @@ function useWindowManager<Id extends string, Space extends string>(initialWindow
       current.map((item) => {
         const isTargetWindow = item.id === id;
         return isTargetWindow ? { ...item, minimized: true } : item;
+      }),
+    );
+  }
+
+  function setMaximized(id: Id, maximized: boolean) {
+    setWindows((current) =>
+      current.map((item) => {
+        const isTargetWindow = item.id === id;
+        return isTargetWindow ? { ...item, maximized } : item;
+      }),
+    );
+  }
+
+  function resize(id: Id, geometry: WindowGeometry) {
+    setWindows((current) =>
+      current.map((item) => {
+        const canResize = item.id === id && !item.maximized;
+        return canResize ? { ...item, ...geometry } : item;
       }),
     );
   }
@@ -83,7 +122,7 @@ function useWindowManager<Id extends string, Space extends string>(initialWindow
     );
   }
 
-  return { windows, open, close, minimize, focus, move };
+  return { windows, open, close, minimize, focus, move, setMaximized, resize };
 }
 
 export { useWindowManager };

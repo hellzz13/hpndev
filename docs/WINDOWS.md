@@ -35,3 +35,7 @@ O arrasto começa apenas no cabeçalho e ignora cliques nos botões de fechar e 
 5. Se o visitante arrasta o cabeçalho, `DesktopWindow` calcula a nova posição e chama `move("projects", x, y)`.
 
 O terminal interpreta somente comandos declarados em `terminal.ts`; ele não executa comandos do sistema operacional. O estado das janelas existe apenas na sessão React e é reiniciado ao recarregar a página.
+
+## Maximizar e restaurar
+
+O item da janela também mantém `maximized`. O botão verde e duplo clique no cabeçalho chamam `setMaximized`, preservando `x`/`y` e o tamanho normal definido pelo tema. O layout maximizado usa a área útil no desktop e impede arrasto; restaurar retorna à geometria normal. Minimização e mudança de mesa/idioma conservam o estado. No celular, o painel adaptado prevalece. As ações também estão no catálogo da busca; miniaturas mostram a área ampliada sem modificar a posição salva. Redimensionamento livre usa oito alças por ponteiro ou setas, com limites da área útil e mínimos por aplicativo. `resize` salva dimensões e posição normais na sessão. Maximizar não sobrescreve essas dimensões, e restaurar as recupera. Não há alças no celular ou em janelas maximizadas.

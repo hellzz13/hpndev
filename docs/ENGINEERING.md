@@ -145,3 +145,19 @@ Dois efeitos novos em `useSnake` sincronizam sistemas externos: um intervalo de 
 `npm run test:snake` usa o runner nativo do Node (Node 24 ou versão com suporte nativo a TypeScript). Cobre reversão, múltiplos comandos no mesmo tick, colisões, cauda que se move, crescimento, comida livre, vitória e reinício. Validar também terminal, busca, minimização, mesas, overview e layout 320 px. Sem novos estilos globais ou dependências.
 
 A descoberta do Snake é intencional: `isSnakeUnlocked` na home libera os ícones de desktop/dock após a primeira abertura, inclusive pela busca. O catálogo da busca e comandos continuam disponíveis desde o início. A flag vive somente na sessão React, sem efeito ou armazenamento; fechar não a remove e recarregar reinicia.
+
+## Maximização de janelas
+
+`useWindowManager` guarda `maximized` e expõe `setMaximized`. A posição normal não é alterada ao maximizar. `DesktopWindow` aplica dimensões/posição por variantes Tailwind no breakpoint desktop; o transform de arrasto só usa coordenadas normais. O botão verde é nativo, com nome PT/EN, estado pressionado e foco; duplo clique ignora controles e celular. Maximizado bloqueia início do arrasto. Não houve efeitos novos ou alterações na sincronização dos existentes; mudanças de viewport são resolvidas pelo CSS. O catálogo da busca contempla as duas ações por aplicativo.
+
+A maximização preserva o conteúdo e estado da sessão; Snake mantém seu tabuleiro quadrado limitado e pausa ao perder foco. Validar restauração da geometria após arrasto, minimização, mesas, idiomas e viewport móvel, incluindo miniaturas da visão geral. O tamanho maximizado deixa margem e espaço para o dock, usando tokens compartilhados e sem CSS global.
+
+## Redimensionamento pelas bordas
+
+`windowResize.ts` concentra a regra pura de geometria, limites, direções e passo de teclado. `DesktopWindow` captura o ponteiro nas oito alças e mede a janela/área útil somente no evento de início; a função calcula dimensões e deslocamento com a borda oposta preservada. `useWindowManager.resize` aplica a geometria normal e ignora janelas maximizadas. `width`/`height` são dados opcionais da sessão, não tokens fixos. Estilos inline representam esses dados de execução, como já ocorre com o arrasto; as alças usam utilitários Tailwind. Não foram adicionados efeitos, observadores de tamanho ou listeners globais. `pointerup`, `pointercancel` e perda da captura limpam a interação.
+
+A alternativa de teclado usa botões nomeados em PT/EN, foco visível e setas. Alças ficam ocultas no celular e ausentes quando maximizado. Redimensionamento é um controle interno da janela; maximizar/restaurar continua no catálogo da busca. Prévias das mesas mantêm escala limitada, independente do tamanho personalizado, sem montar aplicativos. `npm run test:windows` valida âncoras, mínimos, limites nas oito direções e viewport curta; verificar também arrasto real e restauração após maximização.
+
+Snake usa composição flexível: tabuleiro limitado pela área/altura disponível e controles laterais quando couberem; em janelas estreitas, controles abaixo e rolagem preservam o acesso. Tokens do tema centralizam medidas estruturais. Não há efeito para medir/redimensionar o jogo e nenhuma regra de gameplay é alterada.
+
+Na visão geral, a grade limita cada cartão a `max-w-sm` e cada SVG a `max-h-64`/`max-w-full`, preservando a proporção intrínseca do app. A moldura acompanha o SVG, sem quadro adicional ou faixas vazias. Maximização e dimensões personalizadas não mudam a escala das prévias. A seleção preserva a geometria real no desktop. Sem efeitos ou medições novas.
