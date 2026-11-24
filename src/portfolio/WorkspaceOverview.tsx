@@ -1,6 +1,13 @@
-import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+  TransitionChild,
+} from "@headlessui/react";
 import { FiX } from "react-icons/fi";
-import { AppInfo, Apps, Spaces } from "./constants";
+import type { ReactNode } from "react";
+import { Spaces } from "./constants";
 import type { AppId, SpaceId } from "./constants";
 import type { DesktopWindowState } from "./useWindowManager";
 import { useLanguage } from "./useLanguage";
@@ -10,7 +17,7 @@ type WorkspaceOverviewProps = {
   isOpen: boolean;
   currentSpace: SpaceId;
   windows: readonly OverviewWindow[];
-  previews: Record<AppId, string>;
+  renderPreview: (id: AppId) => ReactNode;
   onClose: () => void;
   onSelectSpace: (space: SpaceId) => void;
   onSelectWindow: (window: OverviewWindow) => void;
@@ -30,7 +37,7 @@ function WorkspaceOverview({
   isOpen,
   currentSpace,
   windows,
-  previews,
+  renderPreview,
   onClose,
   onSelectSpace,
   onSelectWindow,
@@ -49,14 +56,17 @@ function WorkspaceOverview({
       open={isOpen}
       onClose={onClose}
       transition
-      className="relative z-101 transition duration-200 data-[closed]:opacity-0 motion-reduce:transition-none"
+      className="relative z-101"
     >
-      <div
-        className="fixed inset-0 bg-desktop/95 backdrop-blur-menubar"
-        aria-hidden="true"
+      <DialogBackdrop
+        transition
+        className="fixed inset-0 bg-desktop/95 backdrop-blur-menubar transition-opacity duration-300 ease-out data-[closed]:opacity-0 motion-reduce:transition-none"
       />
       <div className="fixed inset-0 overflow-y-auto">
-        <DialogPanel className="mx-auto flex min-h-dvh w-full max-w-screen-xl flex-col gap-8 p-8 text-foreground mobile:gap-6 mobile:p-4">
+        <DialogPanel
+          transition
+          className="mx-auto flex min-h-dvh w-full max-w-screen-xl origin-center flex-col gap-8 p-8 text-foreground transition duration-300 ease-out data-[closed]:translate-y-3 data-[closed]:scale-105 data-[closed]:opacity-0 motion-reduce:transition-none motion-reduce:!transform-none mobile:gap-6 mobile:p-4"
+        >
           <header className="flex items-center justify-between gap-4">
             <div>
               <p className="font-mono text-type-label text-accent">
@@ -140,9 +150,9 @@ function WorkspaceOverview({
                             top: `${top}%`,
                             zIndex: item.z,
                           }}
-                          className={`absolute w-1/3 truncate rounded border border-window-border bg-window p-2 font-mono text-type-caption text-window-title ${minimizedStyle}`}
+                          className={`absolute w-1/2 overflow-hidden rounded border border-window-border shadow-elevation-dock ${minimizedStyle}`}
                         >
-                          {appLabel(item.id)}
+                          {renderPreview(item.id)}
                         </span>
                       );
                     })}
@@ -163,7 +173,11 @@ function WorkspaceOverview({
             })}
           </nav>
 
-          <section aria-label={t.overviewWindows} className="flex-1">
+          <TransitionChild
+            as="section"
+            aria-label={t.overviewWindows}
+            className="flex-1 transition duration-300 ease-out data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:delay-75 data-[leave]:duration-150 motion-reduce:transition-none motion-reduce:!transform-none"
+          >
             <h3 className="mb-4 font-mono text-type-label text-body-muted">
               {spaceLabels[currentSpace]} / {t.overviewSelectWindow}
             </h3>
@@ -172,50 +186,44 @@ function WorkspaceOverview({
                 {t.overviewEmpty}
               </p>
             ) : (
-              <div className="grid grid-cols-3 gap-6 compact:grid-cols-2 mobile:grid-cols-1">
+              <div className="grid grid-cols-3 items-center gap-8 compact:grid-cols-2 mobile:grid-cols-1">
                 {currentWindows.map((item) => {
-                  const { Icon } = AppInfo[item.id];
                   const minimizedLabel = item.minimized
                     ? ` · ${t.overviewMinimized}`
                     : "";
                   const selectionLabel = `${t.overviewSelectWindow}: ${appLabel(item.id)}${minimizedLabel}`;
-                  const isTerminal = item.id === Apps.TERMINAL;
-                  const previewStyle = isTerminal
-                    ? "bg-terminal font-mono text-terminal-output"
-                    : "bg-window font-sans text-body-muted";
                   return (
                     <button
                       type="button"
                       key={item.id}
                       aria-label={selectionLabel}
                       onClick={() => onSelectWindow(item)}
-                      className={`group overflow-hidden rounded-project-card border border-window-border bg-window text-left shadow-elevation-dock transition duration-200 hover:-translate-y-1 hover:border-accent motion-reduce:transform-none motion-reduce:transition-none ${FocusStyle}`}
+                      className={`group min-w-0 text-left ${FocusStyle}`}
                     >
-                      <span className="flex items-center gap-2 border-b border-window-bar-border bg-window-bar p-3 text-type-xs">
-                        <Icon aria-hidden="true" />
-                        <span className="flex-1">{appLabel(item.id)}</span>
+                      <span
+                        aria-hidden="true"
+                        className="block overflow-hidden rounded-project-card border border-window-border bg-window shadow-elevation-dock transition duration-200 group-hover:-translate-y-1 group-hover:border-accent group-hover:ring-2 group-hover:ring-accent motion-reduce:transform-none motion-reduce:transition-none"
+                      >
+                        {renderPreview(item.id)}
+                      </span>
+                      <span className="mt-3 flex items-center justify-center gap-2 font-mono text-type-label text-body-muted group-hover:text-accent">
+                        {appLabel(item.id)}
                         {item.minimized && (
-                          <span className="font-mono text-type-caption text-accent">
-                            {t.overviewMinimized}
+                          <span className="text-accent">
+                            · {t.overviewMinimized}
                           </span>
                         )}
-                      </span>
-                      <span
-                        className={`block h-40 overflow-hidden whitespace-pre-line break-words p-4 text-type-label leading-relaxed ${previewStyle}`}
-                      >
-                        {previews[item.id]}
-                      </span>
-                      <span className="block p-3 text-type-label text-body-muted group-hover:text-accent">
-                        {t.overviewSelectWindow} ↗
                       </span>
                     </button>
                   );
                 })}
               </div>
             )}
-          </section>
+          </TransitionChild>
           <p className="font-mono text-type-label text-body-muted">
             {t.overviewHint}
+            <br />
+            {t.overviewGestureInfo}
           </p>
         </DialogPanel>
       </div>

@@ -4,6 +4,8 @@ import type { Locale } from "./locales";
 
 const Portuguese = {
   overviewTitle: "Visão geral das mesas",
+  workspaceGestureInfo: "Alt + Shift + rolagem lateral: ← Início · → Projetos",
+  overviewGestureInfo: "Alt + Shift + rolagem: ↑ abrir · ↓ fechar (dois dedos)",
   closeOverview: "Fechar visão geral",
   overviewWindows: "janelas",
   overviewSelectWindow: "Selecionar janela",
@@ -28,7 +30,10 @@ const Portuguese = {
   heroDescription:
     "Sou Hélio Palença, Software Engineer. Este é meu canto da internet — fique à vontade para explorar.",
   exploreProjects: "Explorar projetos",
-  workspaceHint: "Use o seletor no topo para mudar de mesa",
+  workspaceShortcut: "Trocar de mesa",
+  workspaceSwitcherHint: "Ou use Início / Projetos no topo ↑",
+  shortcutScope:
+    "Use fora dos campos de texto, com menus e visão geral fechados.",
   desktopApps: "Aplicativos do desktop",
   terminalIntro: "Um portfólio para explorar.",
   terminalCommand: "Comando do terminal",
@@ -96,6 +101,8 @@ type Messages = { [Key in keyof typeof Portuguese]: string };
 
 const English = {
   overviewTitle: "Workspace overview",
+  workspaceGestureInfo: "Alt + Shift + horizontal scroll: ← Home · → Projects",
+  overviewGestureInfo: "Alt + Shift + scroll: ↑ open · ↓ close (two fingers)",
   closeOverview: "Close overview",
   overviewWindows: "windows",
   overviewSelectWindow: "Select window",
@@ -120,7 +127,9 @@ const English = {
   heroDescription:
     "I'm Hélio Palença, a Software Engineer. This is my corner of the internet — feel free to explore.",
   exploreProjects: "Explore projects",
-  workspaceHint: "Use the switcher at the top to change workspaces",
+  workspaceShortcut: "Switch workspace",
+  workspaceSwitcherHint: "Or use Home / Projects at the top ↑",
+  shortcutScope: "Use outside text fields, with menus and overview closed.",
   desktopApps: "Desktop apps",
   terminalIntro: "A portfolio to explore.",
   terminalCommand: "Terminal command",

@@ -3,10 +3,10 @@
 ## Ordem de prioridade
 
 1. Português e inglês com seletor de idioma no padrão de sistema operacional — integrado em `e053411`.
-2. Visão geral das mesas e janelas — primeira entrega aprovada pelo usuário, pendente de commit e publicação.
-3. Atalho de teclado para trocar de mesa — próximo item de implementação.
-4. Prévias mais visuais das janelas na visão geral.
-5. Transição mais fluida entre desktop e visão geral.
+2. Visão geral das mesas e janelas — primeira entrega integrada em `4c0a33b`.
+3. Atalho de teclado para trocar de mesa — aprovado, aguardando publicação.
+4. Prévias mais visuais das janelas na visão geral — aprovadas, aguardando publicação.
+5. Transição mais fluida entre desktop e visão geral — aprovada, aguardando publicação.
 6. Busca rápida com `⌘K` / `Ctrl+K`.
 7. Jogo acessível pelo terminal.
 8. Definir GitFlow e fluxo de publicação.
@@ -28,7 +28,7 @@ Pontos para refinamento:
 
 ## Prioridade 1 — Idioma do sistema: português e inglês
 
-Status: implementado localmente. Menu de idioma na barra do sistema e na 404, catálogos PT/EN, rotas localizadas, preferência por cookie e metadados por idioma. A troca com janelas abertas preservou mesa, posição/camada, minimização, projeto selecionado e histórico nos testes do navegador. Novas respostas do terminal foram traduzidas; a 404 e o menu foram conferidos até 320 px.
+Status: integrado em `e053411`. Menu de idioma na barra do sistema e na 404, catálogos PT/EN, rotas localizadas, preferência por cookie e metadados por idioma. A troca com janelas abertas preservou mesa, posição/camada, minimização, projeto selecionado e histórico nos testes do navegador. Novas respostas do terminal foram traduzidas; a 404 e o menu foram conferidos até 320 px.
 
 Permitir que a pessoa troque de idioma a qualquer momento pelo menu superior do Hélio OS. Usar um controle de idioma integrado à barra do sistema, abrindo um menu com Português e English e indicação da opção ativa. O controle deve funcionar com clique, teclado e toque, mantendo a identidade do desktop.
 
@@ -55,7 +55,7 @@ Usar a página 404 como primeiro exercício da regra de estilização registrada
 
 ### Visão geral das mesas e janelas — referência Mission Control
 
-Status: primeira entrega implementada localmente e aprovada pelo usuário, pendente de commit e publicação. Duas mesas com miniaturas posicionais, prévias resumidas dos dados das janelas, restauração de minimizadas, troca direta pelos botões das mesas, visão geral opcional pelo botão de grade (clique/teclado/toque) e fechamento por Esc. Sem criação de mesas ou transferência de janelas. As prévias representam o estado da sessão sem duplicar componentes interativos; não reproduzem todos os pixels do aplicativo.
+Status: primeira entrega aprovada pelo usuário e integrada em `4c0a33b`. Duas mesas com miniaturas posicionais, prévias resumidas dos dados das janelas, restauração de minimizadas, troca direta pelos botões das mesas, visão geral opcional pelo botão de grade (clique/teclado/toque) e fechamento por Esc. Sem criação de mesas ou transferência de janelas. As prévias representam o estado da sessão sem duplicar componentes interativos; não reproduzem todos os pixels do aplicativo.
 
 A gravação enviada em 22/11/2026 mostra uma visão geral do macOS: faixa superior com miniaturas das mesas e, abaixo, as janelas da mesa atual reduzidas e distribuídas no espaço. Essa é a referência para o portfólio, substituindo a interpretação anterior de um pequeno popover. A visão geral deve abrir a partir do seletor superior, com transição do desktop para esse modo e retorno ao selecionar uma mesa ou janela.
 
@@ -74,7 +74,13 @@ Complexidade da primeira entrega (duas mesas existentes e seleção de janelas):
 
 Extensão para reproduzir o botão `+` e arrastar janelas entre mesas: alta, com aproximadamente 12–20 horas adicionais. Antes de implementar, definir criação, nomes e remoção de mesas, destino das janelas ao remover uma mesa, relação das novas mesas com Início/Projetos e alternativas de transferência por teclado e toque. Essa extensão não deve entrar implicitamente na primeira entrega.
 
+### Gestos de trackpad para visão geral e mesas
+
+Status: implementação local para avaliação no dispositivo do usuário. `Alt + Shift` com rolagem vertical de dois dedos: para cima abre; para baixo fecha. Também funciona com eventos de roda do mouse; gestos nativos de três/quatro dedos não são capturados. Há limite mínimo, normalização de unidades, bloqueio de inércia e proteção de campos/menus. A direção física acompanha a configuração de rolagem natural. A rolagem lateral com os mesmos modificadores também troca entre Início/Projetos, sem circular; fica inativa na visão geral. O eixo dominante distingue navegação horizontal e abertura vertical. Pendente de validação física do trackpad e de publicação.
+
 ### Atalho de teclado para trocar de mesa
+
+Status: implementado e aprovado pelo usuário, aguardando publicação. `Alt + Shift + ← / →`, sem circular nos extremos, com dicas nos botões e na home; ignora edição, menus, composição e diálogos.
 
 Adicionar uma forma de alternar entre **Início** e **Projetos** pelo teclado, além do seletor superior. Escolher uma combinação que funcione no macOS e no Linux sem disputar atalhos do sistema, do navegador ou o `⌘K` da busca. O atalho muda somente a mesa ativa; os aplicativos do dock continuam abrindo janelas na mesa atual.
 
@@ -87,6 +93,8 @@ Critérios de aceite:
 
 ### Prévias mais visuais das janelas
 
+Status: implementação local aprovada pelo usuário. Miniaturas estáticas escaladas, com avatar, identidade/painel do projeto selecionado e terminal, na grade e nas mesas. Aguardando publicação.
+
 Evoluir os resumos atuais para representações visuais reconhecíveis de cada aplicativo: avatar no Sobre, identidade do projeto selecionado e aparência própria do terminal. Preservar a troca direta entre mesas e a abertura opcional da visão geral.
 
 Critérios de aceite:
@@ -97,6 +105,8 @@ Critérios de aceite:
 - Reutilizar Tailwind e tokens existentes, sem exigir capturas exatas do DOM.
 
 ### Transição mais fluida para a visão geral
+
+Status: implementação aprovada pelo usuário, aguardando publicação. Zoom coordenado do desktop/painel e entrada suave das miniaturas, com transição de 300 ms e suporte a movimento reduzido. Funciona tanto pelo botão quanto pelo gesto; o limiar do gesto permanece, sem progresso contínuo vinculado aos dedos. Aprovação visual concluída.
 
 Dar a sensação de afastar o desktop ao abrir a visão geral e retornar à janela escolhida ao sair. A animação deve complementar a navegação rápida, sem atrasar a troca direta de mesa.
 

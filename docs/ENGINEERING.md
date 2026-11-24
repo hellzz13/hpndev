@@ -85,3 +85,29 @@ Incluir nessa revisão a necessidade de cada efeito novo/alterado e a eventual d
 `WorkspaceOverview.tsx` apresenta mesas e prévias de janelas a partir do estado existente, sem instanciar `DesktopWindow` ou remontar aplicativos. As miniaturas de mesa usam posições relativas limitadas ao seu quadro; as prévias maiores usam grade responsiva sem sobreposição. Conteúdo é resumido a dados da sessão, incluindo o projeto selecionado e as duas últimas respostas do terminal. Abertura/seleção pertencem aos handlers da página; nenhum efeito novo foi necessário.
 
 O `Dialog` do Headless UI, dependência já existente, oferece modal, isolamento do fundo, contenção/restauração de foco e Escape. Não duplicar esses comportamentos com listeners próprios. A transição usa Tailwind e respeita movimento reduzido. Os botões das mesas preservam a troca direta. O botão de grade abre a visão geral apenas por ação explícita; não usar hover para interromper a navegação rápida com um modal.
+
+## Atalhos das mesas
+
+`useWorkspaceShortcuts.ts` registra um listener de `keydown` no documento, com cleanup ao desmontar ou mudar sua ativação. O efeito sincroniza esse listener externo; o Next/React não implementa atalhos específicos do portfólio. A navegação usa atualização funcional da mesa para evitar closures antigas; não interfere no gerenciador de janelas. Chaves e rótulo ficam em `constants.ts`. Eventos de edição, composição, repetição, menus e diálogos são ignorados antes de chamar `preventDefault`. O listener só existe na home e não altera a 404.
+
+A indicação do atalho usa `WorkspaceShortcutHint.tsx`, com elementos semânticos `kbd`, tokens Tailwind e nome acessível completo. A referência visual são os keycaps do shadcn/ui e a notação de teclas do macOS, sem incorporar biblioteca ou detectar a plataforma no render. O `help`/`ajuda` também apresenta a combinação e seu contexto de uso, a partir das mesmas constantes e mensagens PT/EN.
+
+### Miniaturas visuais dos aplicativos
+
+`WindowPreview.tsx` apresenta versões estáticas dos aplicativos com seus estilos compartilhados, avatar, logo e painel do projeto selecionado e últimas linhas/comando do terminal. Um `svg` com `foreignObject` escala uma área de referência por aplicativo, sem medir a viewport durante o render. Essas dimensões ficam no menor escopo do componente. A visão geral recebe uma função de apresentação e reutiliza as miniaturas na faixa de mesas e na grade, sem montar `DesktopWindow` ou outro terminal interativo.
+
+O conteúdo das miniaturas é `inert`, decorativo para leitores de tela e não contém links, campos ou botões próprios; a seleção é um único botão externo com nome acessível. Não há IDs duplicados, novos efeitos ou listeners. As miniaturas não são capturas pixel a pixel do DOM nem reproduzem scroll interno; preservam a aparência principal e os dados atuais. A apresentação visual foi aprovada pelo usuário e deve ser mantida.
+
+## Gestos de rolagem do desktop
+
+`useDesktopGestures.ts` sincroniza um listener externo de `wheel`, com cleanup; React/Next não implementa o gesto específico do portfólio. O listener não passivo permite cancelar apenas a rolagem modificada reconhecida. Eventos não canceláveis são ignorados. As unidades `deltaMode` são normalizadas (pixels, linhas e páginas); amplitude, pausa, direção e cooldown vivem em ref, sem renderizações para cada evento. O efeito depende dos estados da mesa/visão geral e dos setters; a ref preserva o bloqueio de inércia nas transições. Não usar detecção de plataforma no render nem presumir que o navegador informa quantidade de dedos.
+
+A combinação aparece na dica do botão de grade, no `help` e no rodapé da visão geral, em PT/EN. A implementação pode ser verificada com eventos simulados; sensibilidade, rolagem natural e atalhos reservados pelo sistema exigem teste no trackpad e navegador reais do usuário.
+
+## Movimento da visão geral
+
+A entrada e a saída coordenam escala/opacidade do desktop com `DialogBackdrop`, `DialogPanel` e `TransitionChild` do Headless UI já instalado. O desktop recua para 95%; o painel aproxima de 105% para 100%, e as miniaturas entram com deslocamento curto e atraso de 75 ms. A transição principal dura 300 ms, com saída das miniaturas mais rápida. Usar Tailwind e o ciclo nativo de transição do diálogo para preservar montagem, foco e eventos até a saída terminar, sem timers ou efeitos extras. Movimento reduzido desativa transforms e transições.
+
+O gesto continua disparando após o limiar de rolagem; esta etapa suaviza a mudança de modo, sem implementar progresso contínuo vinculado à posição dos dedos. Trocar diretamente de mesa permanece independente dessa animação. O estado de posição das janelas não é alterado pela escala temporária do desktop.
+
+Com `Alt + Shift`, o eixo horizontal troca de mesa (direita: próxima; esquerda: anterior) e o vertical abre/fecha a visão geral. O eixo precisa superar o outro em 25%; diagonais ambíguas não acionam ações. Mudança de eixo reinicia a amplitude acumulada, e o cooldown é compartilhado para impedir duas ações na mesma sequência por inércia. O gesto horizontal fica inativo na visão geral. `workspaceNavigation.ts` centraliza a ordem e os limites das mesas para teclado e rolagem, sem circular nos extremos e sem alterar estado das janelas. A ref conserva limiar e cooldown quando o listener é atualizado após a troca.

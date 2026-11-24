@@ -1,4 +1,4 @@
-import { Apps } from "./constants";
+import { Apps, WorkspaceShortcut } from "./constants";
 import type { AppId } from "./constants";
 import { Locales } from "./locales";
 import type { Locale } from "./locales";
@@ -45,7 +45,11 @@ function resolveTerminalCommand(
   const appToOpen = TerminalTargets[command];
 
   if (shouldClear) return { output: "", clear: true };
-  if (isHelp) return { output: t.help, clear: false };
+  if (isHelp)
+    return {
+      output: `${t.help}\n\n${t.workspaceShortcut}: ${WorkspaceShortcut.label}\n${t.shortcutScope}\n\n${t.overviewGestureInfo}\n${t.workspaceGestureInfo}`,
+      clear: false,
+    };
   if (isWhoami) return { output: t.whoami, clear: false };
   if (isList) return { output: TerminalFiles, clear: false };
   if (appToOpen) {

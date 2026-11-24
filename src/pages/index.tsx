@@ -5,18 +5,26 @@ import { useEffect, useRef, useState } from "react";
 import { DesktopWindow } from "@/portfolio/DesktopWindow";
 import { StackTags } from "@/portfolio/StackTags";
 import { ProjectIdentity } from "@/portfolio/ProjectIdentity";
-import { Apps, AppIds, AppInfo, Spaces } from "@/portfolio/constants";
+import {
+  Apps,
+  AppIds,
+  AppInfo,
+  Spaces,
+  WorkspaceShortcut,
+} from "@/portfolio/constants";
 import { getContent } from "@/portfolio/content";
 import { useLanguage } from "@/portfolio/useLanguage";
+import { WorkspaceShortcutHint } from "@/portfolio/WorkspaceShortcutHint";
+import { WindowPreview } from "@/portfolio/WindowPreview";
 import { WorkspaceOverview } from "@/portfolio/WorkspaceOverview";
 import { LanguageSwitcher } from "@/portfolio/LanguageSwitcher";
 import type { AppId, SpaceId } from "@/portfolio/constants";
 import { resolveTerminalCommand } from "@/portfolio/terminal";
+import { useDesktopGestures } from "@/portfolio/useDesktopGestures";
+import { useWorkspaceShortcuts } from "@/portfolio/useWorkspaceShortcuts";
 import { useWindowManager } from "@/portfolio/useWindowManager";
 import { getSeo, LocaleUrls } from "@/portfolio/seo";
 import { FiArrowUpRight, FiGithub, FiLinkedin, FiGrid } from "react-icons/fi";
-
-const TerminalPreviewLineLimit = 2;
 
 type TerminalLine = { command: string; output: string };
 
@@ -33,6 +41,13 @@ function Home() {
   } = getSeo(locale);
   const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
   const [isOverviewOpen, setOverviewOpen] = useState(false);
+  useDesktopGestures({
+    currentSpace,
+    setCurrentSpace,
+    isOverviewOpen,
+    setOverviewOpen,
+  });
+  useWorkspaceShortcuts({ isDisabled: isOverviewOpen, setCurrentSpace });
   const isHomeSpace = currentSpace === Spaces.HOME;
   const isProjectsSpace = currentSpace === Spaces.PROJECTS;
   const { windows, open, close, minimize, focus, move } = useWindowManager<
@@ -341,7 +356,7 @@ function Home() {
         />
       </Head>
       <div
-        className={`desktop ${DesktopStyles.desktop}`}
+        className={`desktop ${DesktopStyles.desktop} origin-center transition duration-300 ease-out motion-reduce:transition-none motion-reduce:transform-none ${isOverviewOpen ? "scale-95 opacity-80" : "scale-100 opacity-100"}`}
         data-space={currentSpace}
       >
         <header className={`menubar ${DesktopStyles.menubar}`}>
@@ -363,6 +378,8 @@ function Home() {
           >
             <button
               type="button"
+              title={`${t.home} · Alt + Shift + ←`}
+              aria-keyshortcuts={WorkspaceShortcut.previousAria}
               aria-pressed={isHomeSpace}
               onClick={() => switchSpace(Spaces.HOME)}
             >
@@ -370,6 +387,8 @@ function Home() {
             </button>
             <button
               type="button"
+              title={`${t.projects} · Alt + Shift + →`}
+              aria-keyshortcuts={WorkspaceShortcut.nextAria}
               aria-pressed={isProjectsSpace}
               onClick={() => switchSpace(Spaces.PROJECTS)}
             >
@@ -380,7 +399,7 @@ function Home() {
               aria-haspopup="dialog"
               aria-expanded={isOverviewOpen}
               aria-label={t.overviewTitle}
-              title={t.overviewTitle}
+              title={`${t.overviewTitle} · ${t.overviewGestureInfo}`}
               onClick={() => setOverviewOpen(true)}
             >
               <FiGrid aria-hidden="true" className="h-3.5 w-3.5" />
@@ -421,7 +440,7 @@ function Home() {
                 {t.exploreProjects} <FiArrowUpRight />
               </button>
               <span className={`hero-secondary ${DesktopStyles.heroSecondary}`}>
-                {t.workspaceHint}
+                <WorkspaceShortcutHint />
               </span>
             </section>
             <nav
@@ -567,19 +586,14 @@ function Home() {
         isOpen={isOverviewOpen}
         currentSpace={currentSpace}
         windows={windows}
-        previews={{
-          [Apps.TERMINAL]:
-            lines
-              .slice(-TerminalPreviewLineLimit)
-              .map((line) => `% ${line.command}\n${line.output}`)
-              .join("\n\n") + `\n% ${command}`,
-          [Apps.PROJECTS]: `${Projects[selectedProject].name}\n\n${Projects[selectedProject].summary}`,
-          [Apps.ABOUT]: `${t.aboutFirst} ${t.aboutLast}\n${t.role}\n\n${t.aboutDescription}`,
-          [Apps.CAREER]: Experience.map(
-            (item) => `${item.company} · ${item.role}\n${item.date}`,
-          ).join("\n\n"),
-          [Apps.CONTACT]: `${t.contactDescription}\n\nhpalenca13@gmail.com\nlinkedin.com/in/hpneto`,
-        }}
+        renderPreview={(id) => (
+          <WindowPreview
+            id={id}
+            selectedProject={selectedProject}
+            lines={lines}
+            command={command}
+          />
+        )}
         onClose={() => setOverviewOpen(false)}
         onSelectSpace={(space) => {
           switchSpace(space);

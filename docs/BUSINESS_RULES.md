@@ -24,6 +24,8 @@ DisciplineHub e project-spec-starter são apresentados como trabalhos distintos,
 
 Início e Projetos são mesas distintas. O visitante troca entre elas pelos controles visíveis no menu superior. Abrir um aplicativo no dock, no desktop ou no terminal abre sua janela na mesa atual, sem mudar de mesa. Uma janela já aberta em outra mesa é trazida para a mesa atual ao ser aberta novamente. Janelas abertas permanecem em estado e só aparecem na mesa correspondente. Os projetos continuam presentes no HTML para indexação.
 
+Atalhos: `Alt + Shift + ←` vai para a mesa anterior e `Alt + Shift + →` para a próxima, sem circular nos extremos. Só alteram a mesa ativa: preservam janelas, posições, minimização e conteúdo. Ignoram campos editáveis, seletores, menu de idioma, composição de texto, repetição de tecla e eventos já tratados; ficam inativos com a visão geral ou outro diálogo modal aberto. Botões e toque continuam disponíveis.
+
 ## BR-006 — Página não encontrada
 
 Rotas inexistentes exibem uma página 404 inspirada em uma tela azul do Hélio OS. O controle “Reiniciar Hélio OS” navega para a home no idioma ativo, iniciando uma nova sessão das janelas. A página informa o erro no idioma ativo e usa `noindex`.
@@ -43,3 +45,13 @@ As prévias são representações de dados da sessão: projeto selecionado, últ
 Esta entrega não coleta dados pelo site. Contato abre o cliente de e-mail do visitante; links externos abrem os destinos declarados.
 
 O cookie de preferência guarda somente o código do idioma, sem persistir conteúdo do terminal ou das janelas.
+
+## BR-009 — Gesto de rolagem para a visão geral
+
+Com `Alt + Shift`, uma rolagem vertical para cima abre a visão geral; para baixo a fecha. O navegador recebe rolagem de dois dedos como eventos `wheel`, também disponíveis na roda do mouse; não há detecção de quantidade de dedos nem interceptação de gestos nativos de três/quatro dedos do sistema. A direção física depende da configuração de rolagem natural do dispositivo.
+
+O gesto exige deslocamento mínimo acumulado de 60 pixels equivalentes, reinicia após 250 ms sem eventos ou mudança de direção e bloqueia novas ações por 700 ms para reduzir acionamentos por inércia. Rolagem sem os modificadores, movimento diagonal sem eixo dominante, zoom/pinça, edição de texto, menus, eventos já tratados e outros modais não acionam a visão geral. Nenhuma janela é movida ou reiniciada. Botão de grade, Esc e controles existentes permanecem disponíveis.
+
+## BR-010 — Troca de mesa por rolagem lateral
+
+`Alt + Shift` com rolagem horizontal para a direita vai para Projetos; para a esquerda, Início. Mantém os mesmos limites e o estado de janelas dos atalhos de teclado. Sem os modificadores, a rolagem normal não é interceptada. Edição, menus, outros modais e a própria visão geral bloqueiam a troca lateral. O gesto vertical continua abrindo/fechando a visão geral. Os eixos usam deslocamento mínimo e cooldown compartilhados; diagonais ambíguas não acionam os dois modos. A direção física dos dedos depende da configuração de rolagem natural.

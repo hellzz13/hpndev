@@ -37,6 +37,22 @@ const AppInfo = {
   contact: { label: "Contato", Icon: FiMail },
 } as const satisfies Record<AppId, { label: string; Icon: IconType }>;
 const AppIds = Object.values(Apps);
+const WorkspaceShortcut = {
+  previousKey: "ArrowLeft",
+  nextKey: "ArrowRight",
+  previousAria: "Alt+Shift+ArrowLeft",
+  nextAria: "Alt+Shift+ArrowRight",
+  label: "Alt + Shift + ← / →",
+} as const;
+
 const DesktopBreakpoint = "(max-width: 760px)";
-export { Apps, AppIds, AppInfo, Spaces, DesktopBreakpoint, StackIcons };
+export {
+  Apps,
+  AppIds,
+  AppInfo,
+  Spaces,
+  DesktopBreakpoint,
+  StackIcons,
+  WorkspaceShortcut,
+};
 export type { AppId, SpaceId, StackName };
