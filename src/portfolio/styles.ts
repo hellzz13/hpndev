@@ -237,7 +237,7 @@ const DesktopStyles = {
     "[&_button_span]:leading-natural [&_button_span]:font-mono [&_button[aria-pressed=true]]:bg-accent",
     "[&_button[aria-pressed=true]]:text-navigation-active [&_button[aria-pressed=true]_span]:text-navigation-active-index",
     "[&_button:focus-visible]:outline [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-accent",
-    "[&_button:focus-visible]:outline-offset-2 mobile:left-1/2 mobile:right-auto mobile:-translate-x-1/2",
+    "[&_button:focus-visible]:outline-offset-2 mobile:left-workspace-switcher-mobile mobile:right-auto mobile:-translate-x-1/2",
     "mobile:[&_button]:py-1.5 mobile:[&_button]:px-2.25",
   ].join(" "),
   spaceTrack: [

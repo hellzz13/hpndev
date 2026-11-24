@@ -27,7 +27,7 @@ Pessoas recrutadoras, equipes de produto e desenvolvimento, possíveis clientes 
 
 ## Decisões e limites
 
-O site continua como aplicação Next.js existente. Nesta entrega não haverá backend, conta de usuário, persistência de estado ou emulação completa de um sistema operacional. Conteúdo de projetos é estático e pode ser refinado com capturas e estudos de caso depois.
+O site continua como aplicação Next.js existente. Nesta entrega não haverá backend, conta de usuário, persistência das janelas/partidas ou emulação completa de um sistema operacional. Conteúdo de projetos é estático e pode ser refinado com capturas e estudos de caso depois.
 
 ## Dependências e riscos
 
@@ -36,3 +36,5 @@ As imagens detalhadas dos projetos ainda não foram selecionadas. Links e descri
 ## Próximas melhorias
 
 O suporte a português e inglês foi implementado localmente, com seletor integrado ao menu do Hélio OS e preservação do estado ao trocar. A visão geral das mesas e janelas segue como próxima prioridade, conforme a referência de Mission Control enviada pelo usuário. Status de revisão, escopo e demais melhorias estão descritos em [Backlog do portfólio](docs/BACKLOG.md).
+
+A central de notificações guarda apenas a conquista de descoberta do Snake e sua leitura no navegador; idioma mantém sua preferência própria. Não há backend ou sincronização entre dispositivos.

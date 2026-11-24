@@ -10,6 +10,7 @@ import type { RefObject } from "react";
 import type { IconType } from "react-icons";
 import {
   FiMaximize2,
+  FiBell,
   FiArrowUpRight,
   FiSearch,
   FiGrid,
@@ -38,6 +39,7 @@ type SearchBodyProps = Omit<SearchProps, "isOpen"> & {
 };
 const SearchIcons = {
   [SearchActions.APP]: FiFolder,
+  [SearchActions.NOTIFICATIONS]: FiBell,
   [SearchActions.WINDOW_SIZE]: FiMaximize2,
   [SearchActions.PROJECT]: FiFolder,
   [SearchActions.SPACE]: FiGrid,
@@ -82,7 +84,7 @@ function SearchBody({ onClose, onSelect, inputRef }: SearchBodyProps) {
 
   return (
     <>
-      <div className="flex items-center gap-3 border-b border-window-bar-border px-5 py-4 mobile:px-4">
+      <div className="flex items-center gap-3 rounded-t-project-card border-b border-window-bar-border px-5 py-4 focus-within:ring-1 focus-within:ring-inset focus-within:ring-accent mobile:px-4">
         <FiSearch className="h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
         <DialogTitle className="sr-only">{t.searchTitle}</DialogTitle>
         <input
@@ -100,7 +102,7 @@ function SearchBody({ onClose, onSelect, inputRef }: SearchBodyProps) {
           placeholder={t.searchPlaceholder}
           autoComplete="off"
           spellCheck={false}
-          className="min-w-0 flex-1 bg-transparent py-2 text-type-base text-foreground placeholder:text-body-muted mobile:text-base focus-visible:outline-offset-4"
+          className="h-10 min-w-0 flex-1 border-0 bg-transparent p-0 text-type-base leading-normal text-foreground placeholder:text-body-muted focus-visible:!outline-none mobile:text-base"
           onChange={(event) => {
             setQuery(event.target.value);
             setActiveIndex(0);

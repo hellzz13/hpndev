@@ -12,6 +12,7 @@ const SearchActions = {
   SPACE: "space",
   COMMAND: "command",
   OVERVIEW: "overview",
+  NOTIFICATIONS: "notifications",
   WINDOW_SIZE: "window-size",
   GOOGLE: "google",
 } as const;
@@ -21,6 +22,7 @@ type SearchAction =
   | { kind: typeof SearchActions.SPACE; spaceId: SpaceId }
   | { kind: typeof SearchActions.COMMAND; command: string }
   | { kind: typeof SearchActions.OVERVIEW }
+  | { kind: typeof SearchActions.NOTIFICATIONS }
   | { kind: typeof SearchActions.WINDOW_SIZE; appId: AppId; maximized: boolean }
   | { kind: typeof SearchActions.GOOGLE; query: string };
 type SearchEntry = {
@@ -65,6 +67,23 @@ function getSearchCatalog(locale: Locale): SearchEntry[] {
   const en = getMessages(Locales.ENGLISH);
   const { Projects } = getContent(locale);
   return [
+    {
+      id: "notifications",
+      title: t.notifications,
+      description: t.achievements,
+      category: t.workspaces,
+      keywords: [
+        "notification",
+        "notifications",
+        "notificacoes",
+        "conquistas",
+        "achievement",
+        "achievements",
+        "central",
+        "avisos",
+      ],
+      action: { kind: SearchActions.NOTIFICATIONS },
+    },
     ...AppIds.map(
       (appId): SearchEntry => ({
         id: `app:${appId}`,

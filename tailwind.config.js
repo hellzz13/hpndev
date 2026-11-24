@@ -108,6 +108,10 @@ const Config = {
     extend: {
       colors: Colors,
       keyframes: {
+        "notification-in": {
+          from: { opacity: "0", transform: "translateX(24px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
         "boot-symbol": {
           from: { transform: "rotate(0deg)" },
           to: { transform: "rotate(1440deg)" },
@@ -118,6 +122,7 @@ const Config = {
         },
       },
       animation: {
+        "notification-in": "notification-in 240ms ease-out both",
         "boot-symbol":
           "boot-symbol 1900ms cubic-bezier(.65, 0, 1, .55) 440ms both",
         "boot-reveal": "boot-reveal 2700ms ease-out both",
@@ -168,6 +173,7 @@ const Config = {
         "terminal-mobile": "min(440px,calc(100dvh - 92px))",
       },
       maxWidth: {
+        notification: "calc(100vw - 32px)",
         "overview-mini": "50%",
         "snake-board": "320px",
         "snake-board-expanded": "max(160px, calc(100dvh - 280px))",
@@ -294,6 +300,7 @@ const Config = {
         projects: "repeat(2, minmax(0, 1fr))",
         "projects-mobile": "1fr",
       },
+      inset: { "workspace-switcher-mobile": "calc(50% - 8px)" },
       screens: {
         desktop: { raw: "(min-width: 761px)" },
         compact: {

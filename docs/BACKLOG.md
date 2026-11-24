@@ -6,7 +6,8 @@
 2. Explorar identidade pessoal com asterisco e iniciais HPN.
 3. Avaliar extensão da visão geral com criação/remoção de mesas e transferência de janelas (escopo ainda a definir).
 4. Validar gestos no trackpad real: sensibilidade, direção e conflitos com atalhos do sistema.
-5. Investigar falha de deploy do projeto secundário Vercel `hpndev13` — último da fila por decisão do usuário. O projeto principal `hpndev` está publicado normalmente; a causa da falha secundária ainda depende da consulta aos logs autenticados.
+5. Refatorar tokens e nomenclaturas para desacoplamento e legibilidade.
+6. Investigar falha de deploy do projeto secundário Vercel `hpndev13` — último da fila por decisão do usuário. O projeto principal `hpndev` está publicado normalmente; a causa da falha secundária ainda depende da consulta aos logs autenticados.
 
 Entregues e publicados em `main` no commit `e3c6bb8`: idiomas, navegação e visão geral das mesas, prévias, atalhos/gestos, busca rápida, Snake, logo e abertura, tema roxo com perfil verde preservado, maximização/restauração e redimensionamento de janelas. Os status detalhados abaixo registram o histórico das entregas; a fila pendente vigente é esta lista.
 
@@ -195,3 +196,21 @@ Critérios de aceite:
 ## Gesto horizontal na visão geral
 
 Implementado localmente para avaliação: rolagem de dois dedos esquerda/direita, sem modificadores dentro do overview, destaca mesas e mostra suas janelas; Enter/clique confirma. Mantém setas, clique e rolagem vertical. Pendente validação física no trackpad e publicação autorizada.
+
+## Notificações e conquista de descoberta
+
+Implementado localmente para avaliação: sino no canto superior direito, painel lateral como central do SO e conquista por descobrir Snake. Aviso temporário, estado não lido e histórico local persistente; abre também pela busca. Não salva partida nem revela ícones automaticamente em sessões futuras. Pendente publicação autorizada.
+
+## Refactor de tokens e nomenclaturas
+
+Status: solicitado para backlog, sem implementação nesta entrega.
+
+Revisar tokens visuais, composições de estilos e nomes de constantes/componentes para reduzir acoplamento e facilitar leitura e manutenção.
+
+Critérios de aceite:
+
+- Identificar nomes ligados a páginas, aplicativos ou valores específicos que possam expressar responsabilidades semânticas reutilizáveis.
+- Separar primitivas, papéis semânticos e decisões específicas de componentes quando essa divisão melhorar a compreensão, sem abstrações desnecessárias.
+- Reduzir duplicações, dependências de seletores estruturais e nomes ambíguos; manter constantes no menor escopo coerente.
+- Preservar os perfis verde/roxo, escalas de espaçamento, visual, acessibilidade e comportamentos existentes.
+- Documentar convenções e exemplos de migração; revisar o diff e validar formatter, tipos, lint, testes relevantes e build, além de comparação visual desktop/celular.

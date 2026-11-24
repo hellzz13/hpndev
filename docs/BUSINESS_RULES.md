@@ -83,3 +83,9 @@ A busca oferece maximizar/restaurar por aplicativo; a ação abre/restaura na me
 ## BR-015 — Rolagem lateral dentro da visão geral
 
 Com a visão geral aberta, rolagem horizontal sem modificadores destaca a mesa anterior/próxima e mostra suas janelas, sem fechar o modal ou mudar a mesa ativa. Enter ou clique confirma; Escape cancela a prévia. O gesto move o foco para a mesa destacada, preserva os limites sem circular e não interfere na rolagem vertical. Usa limiar de 60 px equivalentes, predominância horizontal de 1,25 e cooldown de 700 ms; direção física depende da rolagem natural do dispositivo. O navegador informa `wheel`, não quantidade de dedos; mouse com rolagem horizontal também funciona. Modificadores, pinça/zoom e eventos já tratados são ignorados. A troca lateral no desktop continua exigindo Alt + Shift.
+
+## BR-016 — Central de notificações e conquista Snake
+
+O sino no canto superior direito abre um painel lateral de notificações, também acessível por busca. Ao abrir Snake pela primeira vez no navegador (terminal, busca ou demais acessos), registra uma única conquista e mostra um aviso temporário de 6,5 s, dispensável sem roubar foco. O sino indica uma notificação não lida até abrir a central. Ler/dispensar o aviso não remove a conquista; a central permite abrir o jogo novamente. Escape ou clique fora fecha o painel com restauração de foco.
+
+A conquista e sua leitura persistem em `localStorage`, apenas neste navegador/origem; não armazenam partida, pontuação ou janelas e não enviam dados. Sem armazenamento disponível, funcionam durante a sessão. Os ícones secretos continuam sendo liberados somente ao abrir o jogo na sessão atual; a conquista salva não os revela automaticamente. Atualizar ou trocar idioma não repete a notificação de uma conquista já registrada. O sistema usa avisos internos, sem permissão de notificações do navegador ou do sistema operacional.

@@ -4,7 +4,22 @@ import dynamic from "next/dynamic";
 import { Brand } from "@/portfolio/Brand";
 import Image from "next/image";
 import type { SetStateAction } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import { AchievementToast } from "@/portfolio/AchievementToast";
+import { NotificationCenter } from "@/portfolio/NotificationCenter";
+import {
+  getAchievements,
+  getServerAchievements,
+  subscribeAchievements,
+  discoverSnake,
+  readAchievements,
+} from "@/portfolio/achievements";
 import { SnakeGame } from "@/portfolio/snake/SnakeGame";
 import { useSnake } from "@/portfolio/snake/useSnake";
 import { DesktopWindow } from "@/portfolio/DesktopWindow";
@@ -43,6 +58,7 @@ import {
   FiLinkedin,
   FiGrid,
   FiSearch,
+  FiBell,
 } from "react-icons/fi";
 
 const BootScreen = dynamic(
@@ -64,6 +80,26 @@ function Home() {
     ogLocale,
   } = getSeo(locale);
   const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
+  const achievements = useSyncExternalStore(
+    subscribeAchievements,
+    getAchievements,
+    getServerAchievements,
+  );
+  const [isNotificationsOpen, setNotificationsOpen] = useState(false);
+  const [isAchievementToastVisible, setAchievementToastVisible] =
+    useState(false);
+  const dismissAchievementToast = useCallback(
+    () => setAchievementToastVisible(false),
+    [],
+  );
+  function openNotifications() {
+    setAchievementToastVisible(false);
+    readAchievements();
+    setNotificationsOpen(true);
+  }
+  const notificationLabel = achievements.unread
+    ? `${t.notifications} · ${t.oneUnreadNotification}`
+    : t.notifications;
   const [isOverviewOpen, setOverviewOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isSnakeUnlocked, setSnakeUnlocked] = useState(false);
@@ -91,6 +127,7 @@ function Home() {
     topWindow?.id === Apps.SNAKE &&
     !isOverviewOpen &&
     !isSearchOpen &&
+    !isNotificationsOpen &&
     !isBooting;
   const { state: snakeState, dispatch: snakeDispatch } =
     useSnake(isSnakeActive);
@@ -101,9 +138,12 @@ function Home() {
     },
     [snakeDispatch],
   );
-  useSearchShortcut({ isDisabled: isOverviewOpen || isBooting, setSearchOpen });
+  useSearchShortcut({
+    isDisabled: isOverviewOpen || isNotificationsOpen || isBooting,
+    setSearchOpen,
+  });
   const areWorkspaceShortcutsDisabled =
-    isOverviewOpen || isSearchOpen || isBooting;
+    isOverviewOpen || isSearchOpen || isNotificationsOpen || isBooting;
   useDesktopGestures({
     currentSpace,
     setCurrentSpace: navigateSpace,
@@ -143,7 +183,11 @@ function Home() {
 
   function openApp(id: AppId) {
     const isSnakeApp = id === Apps.SNAKE;
-    if (isSnakeApp) setSnakeUnlocked(true);
+    if (isSnakeApp) {
+      setSnakeUnlocked(true);
+      const isNewAchievement = discoverSnake();
+      if (isNewAchievement) setAchievementToastVisible(true);
+    }
     open(id, currentSpace);
     const isTerminalApp = id === Apps.TERMINAL;
     if (isTerminalApp) {
@@ -188,6 +232,11 @@ function Home() {
     if (isWindowSize) {
       openApp(action.appId);
       setMaximized(action.appId, action.maximized);
+      return;
+    }
+    const isNotifications = action.kind === SearchActions.NOTIFICATIONS;
+    if (isNotifications) {
+      openNotifications();
       return;
     }
     const isOverview = action.kind === SearchActions.OVERVIEW;
@@ -511,12 +560,29 @@ function Home() {
               <FiGrid aria-hidden="true" className="h-3.5 w-3.5" />
             </button>
           </nav>
-          <div>
+          <div className="mobile:!gap-1">
             <span className={`available ${DesktopStyles.available}`}>
               ● &nbsp; {t.available}
             </span>
             <time>{time}</time>
             <LanguageSwitcher />
+            <button
+              type="button"
+              onClick={openNotifications}
+              aria-label={notificationLabel}
+              title={notificationLabel}
+              aria-haspopup="dialog"
+              aria-expanded={isNotificationsOpen}
+              className="relative grid h-7 w-7 place-items-center rounded-md text-window-title hover:bg-glass-surface"
+            >
+              <FiBell aria-hidden="true" className="h-4 w-4" />
+              {achievements.unread && (
+                <span
+                  aria-hidden="true"
+                  className="absolute right-0 top-0 h-2 w-2 rounded-full border border-menubar bg-accent"
+                />
+              )}
+            </button>
           </div>
         </header>
         <div
@@ -717,6 +783,21 @@ function Home() {
         </nav>
       </div>
       {isBooting && <BootScreen onComplete={finishBoot} />}
+      {isAchievementToastVisible && !isNotificationsOpen && (
+        <AchievementToast
+          onDismiss={dismissAchievementToast}
+          onOpen={openNotifications}
+        />
+      )}
+      <NotificationCenter
+        isOpen={isNotificationsOpen}
+        achievements={achievements}
+        onClose={() => setNotificationsOpen(false)}
+        onPlaySnake={() => {
+          setNotificationsOpen(false);
+          openApp(Apps.SNAKE);
+        }}
+      />
       <QuickSearch
         isOpen={isSearchOpen}
         onClose={() => setSearchOpen(false)}

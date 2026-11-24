@@ -12,7 +12,8 @@
     "test:theme": "node --test scripts/theme.test.mjs",
     "test:snake": "node --test scripts/snake.test.mjs",
     "test:windows": "node --test scripts/window-resize.test.mjs",
-    "test:overview-gestures": "node --test scripts/overview-gesture.test.mjs"
+    "test:overview-gestures": "node --test scripts/overview-gesture.test.mjs",
+    "test:achievements": "node --test scripts/achievements.test.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

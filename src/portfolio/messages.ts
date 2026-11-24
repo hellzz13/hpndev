@@ -3,6 +3,21 @@ import { Locales } from "./locales";
 import type { Locale } from "./locales";
 
 const Portuguese = {
+  notifications: "Central de notificações",
+  closeNotifications: "Fechar notificações",
+  achievements: "Conquistas",
+  achievementUnlocked: "Conquista desbloqueada",
+  snakeAchievementTitle: "Você encontrou a cobrinha!",
+  snakeAchievementDescription:
+    "Um pequeno segredo do Hélio OS. O Snake agora faz parte da sua exploração.",
+  notificationsEmpty:
+    "Nenhuma notificação por enquanto. Continue explorando: há pequenas surpresas pelo sistema.",
+  notificationsLocal:
+    "Conquistas salvas apenas neste navegador. Nenhum dado da partida é armazenado.",
+  oneUnreadNotification: "1 não lida",
+  dismissNotification: "Dispensar aviso de conquista",
+  viewNotifications: "Ver notificações",
+  playSnake: "Abrir Snake",
   snakeReady: "Pronto para jogar?",
   snakeRunning: "Em jogo",
   snakePaused: "Partida pausada",
@@ -155,6 +170,21 @@ const Portuguese = {
 type Messages = { [Key in keyof typeof Portuguese]: string };
 
 const English = {
+  notifications: "Notification Center",
+  closeNotifications: "Close notifications",
+  achievements: "Achievements",
+  achievementUnlocked: "Achievement unlocked",
+  snakeAchievementTitle: "You found Snake!",
+  snakeAchievementDescription:
+    "A little Helio OS secret. Snake is now part of your exploration.",
+  notificationsEmpty:
+    "No notifications yet. Keep exploring: there are little surprises in the system.",
+  notificationsLocal:
+    "Achievements are saved only in this browser. No game data is stored.",
+  oneUnreadNotification: "1 unread",
+  dismissNotification: "Dismiss achievement alert",
+  viewNotifications: "View notifications",
+  playSnake: "Open Snake",
   snakeReady: "Ready to play?",
   snakeRunning: "Playing",
   snakePaused: "Game paused",
