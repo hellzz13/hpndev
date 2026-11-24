@@ -1,3 +1,5 @@
+import { SnakeBoard } from "./snake/SnakeBoard";
+import type { SnakeState } from "./snake/engine";
 import Image from "next/image";
 import { Apps } from "./constants";
 import type { AppId } from "./constants";
@@ -7,12 +9,14 @@ import { useLanguage } from "./useLanguage";
 
 type WindowPreviewProps = {
   id: AppId;
+  snakeState: SnakeState;
   selectedProject: number;
   lines: readonly { command: string; output: string }[];
   command: string;
 };
 
 const PreviewSizes = {
+  snake: { width: 440, height: 620 },
   terminal: { width: 530, height: 350 },
   projects: { width: 690, height: 610 },
   about: { width: 560, height: 460 },
@@ -23,6 +27,7 @@ const TerminalPreviewLines = 3;
 
 function WindowPreview({
   id,
+  snakeState,
   selectedProject,
   lines,
   command,
@@ -41,6 +46,16 @@ function WindowPreview({
     : "border-window-bar-border bg-window-bar text-window-title";
 
   function content() {
+    const isSnake = id === Apps.SNAKE;
+    if (isSnake)
+      return (
+        <div className="bg-terminal p-6 font-mono text-terminal-prompt">
+          <p>
+            SNAKE / {t.snakeScore}: {snakeState.score}
+          </p>
+          <SnakeBoard state={snakeState} />
+        </div>
+      );
     if (isTerminal)
       return (
         <div className="h-full overflow-hidden bg-terminal p-6 font-mono text-type-sm leading-relaxed text-terminal-text">

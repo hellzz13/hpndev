@@ -67,3 +67,9 @@ Todo novo aplicativo, projeto, mesa, comando ou ação navegável deve entrar na
 ## BR-012 — Abertura do sistema
 
 A home apresenta o símbolo do perfil de cor ativo em repouso e depois acelerando, com nome fixo, antes de revelar a mesa. A sequência dura aproximadamente 2,7 s e pode ser pulada pelo botão de entrada (clique/Enter) ou Escape. Não simula progresso de carregamento. Movimento reduzido entra diretamente no desktop. Recarregar ou reiniciar pela 404 apresenta novamente; trocar idioma, mesa ou janela não. Conteúdo permanece no HTML e acessível sem JavaScript. A abertura não cria persistência de janelas nem altera seu estado.
+
+## BR-013 — Snake
+
+`snake` ou `cobrinha` abre o jogo na mesa atual; a busca `⌘K` também permite encontrá-lo desde o início. Os ícones do desktop e dock ficam ocultos até abrir o jogo pela primeira vez, pelo terminal ou busca; depois permanecem disponíveis durante a sessão, inclusive após fechar a janela. Recarregar oculta os ícones novamente. A partida começa por ação explícita, usa setas/WASD ou botões de direção, espaço/P para pausar e Enter para iniciar/continuar ou reiniciar após término. Uma mudança de direção por tick impede reversão instantânea. Comida aumenta corpo e pontuação; colisão com borda/corpo encerra; completar o tabuleiro vence.
+
+O teclado do jogo só atua com o tabuleiro focado e ignora modificadores, composição e repetição. Não interfere na digitação do terminal ou busca. Perder foco da janela, minimizar, abrir diálogos, mudar de mesa ou sair da aba pausa. Restaurar exige continuar explicitamente e preserva a partida; fechar limpa o estado. A visão geral mostra tabuleiro e pontos sem montar outra partida. Não existe persistência entre carregamentos nem comunicação de rede para jogar.

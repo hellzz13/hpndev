@@ -19,6 +19,8 @@ const TerminalTargets: Partial<Record<string, AppId>> = {
   experiencia: Apps.CAREER,
   contact: Apps.CONTACT,
   contato: Apps.CONTACT,
+  snake: Apps.SNAKE,
+  cobrinha: Apps.SNAKE,
 };
 
 const TerminalCommands = {
@@ -29,7 +31,7 @@ const TerminalCommands = {
   CLEAR: "clear",
 } as const;
 
-const TerminalFiles = "projects/  about.txt  career.log  contact.txt";
+const TerminalFiles = "projects/  about.txt  career.log  contact.txt  snake";
 const TerminalCommandIds = [
   ...new Set([
     ...Object.values(TerminalCommands),

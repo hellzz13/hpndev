@@ -3,7 +3,10 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import { Brand } from "@/portfolio/Brand";
 import Image from "next/image";
+import type { SetStateAction } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { SnakeGame } from "@/portfolio/snake/SnakeGame";
+import { useSnake } from "@/portfolio/snake/useSnake";
 import { DesktopWindow } from "@/portfolio/DesktopWindow";
 import { StackTags } from "@/portfolio/StackTags";
 import { ProjectIdentity } from "@/portfolio/ProjectIdentity";
@@ -63,27 +66,56 @@ function Home() {
   const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
   const [isOverviewOpen, setOverviewOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
+  const [isSnakeUnlocked, setSnakeUnlocked] = useState(false);
+  const visibleAppIds = AppIds.filter((id) => {
+    const canShowApp = id !== Apps.SNAKE || isSnakeUnlocked;
+    return canShowApp;
+  });
   const [isBooting, setBooting] = useState(true);
   const finishBoot = useCallback(() => setBooting(false), []);
-  useSearchShortcut({ isDisabled: isOverviewOpen || isBooting, setSearchOpen });
-  const areWorkspaceShortcutsDisabled =
-    isOverviewOpen || isSearchOpen || isBooting;
-  useDesktopGestures({
-    currentSpace,
-    setCurrentSpace,
-    isOverviewOpen,
-    setOverviewOpen,
-  });
-  useWorkspaceShortcuts({
-    isDisabled: areWorkspaceShortcutsDisabled,
-    setCurrentSpace,
-  });
   const isHomeSpace = currentSpace === Spaces.HOME;
   const isProjectsSpace = currentSpace === Spaces.PROJECTS;
   const { windows, open, close, minimize, focus, move } = useWindowManager<
     AppId,
     SpaceId
   >(Apps.TERMINAL, Spaces.HOME);
+  const visibleWindows = windows.filter(
+    (item) => !item.minimized && item.space === currentSpace,
+  );
+  const topWindow = visibleWindows.reduce<(typeof windows)[number] | undefined>(
+    (top, item) => {
+      const isTop = !top || item.z > top.z;
+      return isTop ? item : top;
+    },
+    undefined,
+  );
+  const isSnakeActive =
+    topWindow?.id === Apps.SNAKE &&
+    !isOverviewOpen &&
+    !isSearchOpen &&
+    !isBooting;
+  const { state: snakeState, dispatch: snakeDispatch } =
+    useSnake(isSnakeActive);
+  const navigateSpace = useCallback(
+    (next: SetStateAction<SpaceId>) => {
+      snakeDispatch({ type: "pause" });
+      setCurrentSpace(next);
+    },
+    [snakeDispatch],
+  );
+  useSearchShortcut({ isDisabled: isOverviewOpen || isBooting, setSearchOpen });
+  const areWorkspaceShortcutsDisabled =
+    isOverviewOpen || isSearchOpen || isBooting;
+  useDesktopGestures({
+    currentSpace,
+    setCurrentSpace: navigateSpace,
+    isOverviewOpen,
+    setOverviewOpen,
+  });
+  useWorkspaceShortcuts({
+    isDisabled: areWorkspaceShortcutsDisabled,
+    setCurrentSpace: navigateSpace,
+  });
   const [selectedProject, setSelectedProject] = useState(0);
   const [lines, setLines] = useState<TerminalLine[]>(InitialTerminalLines);
   const [command, setCommand] = useState("");
@@ -108,10 +140,12 @@ function Home() {
     if (terminal) terminal.scrollTop = terminal.scrollHeight;
   }, [lines]);
   function switchSpace(space: SpaceId) {
-    setCurrentSpace(space);
+    navigateSpace(space);
   }
 
   function openApp(id: AppId) {
+    const isSnakeApp = id === Apps.SNAKE;
+    if (isSnakeApp) setSnakeUnlocked(true);
     open(id, currentSpace);
     const isTerminalApp = id === Apps.TERMINAL;
     if (isTerminalApp) {
@@ -185,6 +219,9 @@ function Home() {
   }
 
   function appContent(id: AppId) {
+    const isSnakeApp = id === Apps.SNAKE;
+    if (isSnakeApp)
+      return <SnakeGame state={snakeState} dispatch={snakeDispatch} />;
     const isTerminalApp = id === Apps.TERMINAL;
     const isProjectsApp = id === Apps.PROJECTS;
     const isAboutApp = id === Apps.ABOUT;
@@ -510,27 +547,30 @@ function Home() {
             </section>
             <nav
               className={`desktop-icons ${DesktopStyles.desktopIcons}`}
+              data-snake-unlocked={isSnakeUnlocked}
               aria-label={t.desktopApps}
             >
-              {AppIds.filter((id) => id !== Apps.TERMINAL).map((id) => {
-                const { Icon } = AppInfo[id];
-                const label = appLabel(id);
-                return (
-                  <button
-                    type="button"
-                    key={id}
-                    data-tooltip={label}
-                    onClick={() => openApp(id)}
-                  >
-                    <span
-                      className={`desktop-icon icon-${id} ${DesktopStyles.desktopIcon}`}
+              {visibleAppIds
+                .filter((id) => id !== Apps.TERMINAL)
+                .map((id) => {
+                  const { Icon } = AppInfo[id];
+                  const label = appLabel(id);
+                  return (
+                    <button
+                      type="button"
+                      key={id}
+                      data-tooltip={label}
+                      onClick={() => openApp(id)}
                     >
-                      <Icon aria-hidden="true" />
-                    </span>
-                    {label}
-                  </button>
-                );
-              })}
+                      <span
+                        className={`desktop-icon icon-${id} ${DesktopStyles.desktopIcon}`}
+                      >
+                        <Icon aria-hidden="true" />
+                      </span>
+                      {label}
+                    </button>
+                  );
+                })}
             </nav>
           </main>
           <section
@@ -610,10 +650,22 @@ function Home() {
                 label={label}
                 title={title}
                 position={item}
-                onFocus={() => focus(item.id)}
+                onFocus={() => {
+                  const isOtherApp = item.id !== Apps.SNAKE;
+                  if (isOtherApp) snakeDispatch({ type: "pause" });
+                  focus(item.id);
+                }}
                 onMove={(x, y) => move(item.id, x, y)}
-                onClose={() => close(item.id)}
-                onMinimize={() => minimize(item.id)}
+                onClose={() => {
+                  const isSnake = item.id === Apps.SNAKE;
+                  if (isSnake) snakeDispatch({ type: "reset" });
+                  close(item.id);
+                }}
+                onMinimize={() => {
+                  const isSnake = item.id === Apps.SNAKE;
+                  if (isSnake) snakeDispatch({ type: "pause" });
+                  minimize(item.id);
+                }}
               >
                 {appContent(item.id)}
               </DesktopWindow>
@@ -625,7 +677,7 @@ function Home() {
           <span>{t.madeWith} ✳</span>
         </footer>
         <nav className={`dock ${DesktopStyles.dock}`} aria-label={t.dock}>
-          {AppIds.map((id) => {
+          {visibleAppIds.map((id) => {
             const { Icon } = AppInfo[id];
             const label = appLabel(id);
             return (
@@ -670,6 +722,7 @@ function Home() {
         windows={windows}
         renderPreview={(id) => (
           <WindowPreview
+            snakeState={snakeState}
             id={id}
             selectedProject={selectedProject}
             lines={lines}

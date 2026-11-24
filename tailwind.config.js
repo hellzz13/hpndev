@@ -152,6 +152,7 @@ const Config = {
         terminal: "min(530px, 45vw)",
         "projects-window": "min(690px, 68vw)",
         "content-window": "min(560px, 60vw)",
+        "snake-window": "min(440px, 70vw)",
         "window-mobile": "calc(100vw - 24px)",
         "terminal-compact": "54vw",
         "workspace-track": "200%",
@@ -165,6 +166,7 @@ const Config = {
         "terminal-mobile": "min(440px,calc(100dvh - 92px))",
       },
       maxWidth: {
+        "snake-board": "320px",
         tooltip: "140px",
         hero: "600px",
         "projects-heading": "760px",
@@ -184,6 +186,7 @@ const Config = {
         terminal: "min(530px, 45vw)",
         "projects-window": "min(690px, 68vw)",
         "content-window": "min(560px, 60vw)",
+        "snake-window": "min(440px, 70vw)",
         "viewport-54vw": "54vw",
         "window-mobile": "calc(100vw - 24px)",
         "space-track-width": "200%",
@@ -281,6 +284,7 @@ const Config = {
       gridTemplateColumns: {
         "desktop-apps": "repeat(2, 88px)",
         "desktop-apps-mobile": "repeat(4,1fr)",
+        "desktop-apps-unlocked": "repeat(5,1fr)",
         projects: "repeat(2, minmax(0, 1fr))",
         "projects-mobile": "1fr",
       },

@@ -3,6 +3,24 @@ import { Locales } from "./locales";
 import type { Locale } from "./locales";
 
 const Portuguese = {
+  snakeReady: "Pronto para jogar?",
+  snakeRunning: "Em jogo",
+  snakePaused: "Partida pausada",
+  snakeLost: "Fim de jogo. Mais uma?",
+  snakeWon: "Você completou o tabuleiro!",
+  snakeScore: "Pontos",
+  snakeControls:
+    "Tabuleiro Snake. Setas ou WASD movem; espaço ou P pausa; Enter inicia ou reinicia.",
+  snakeInstructions:
+    "Setas / WASD · Espaço / P pausa · Enter joga. Ao sair da janela, a partida pausa.",
+  snakePlay: "Jogar / continuar",
+  snakePause: "Pausar",
+  snakeRestart: "Reiniciar",
+  snakeDirections: "Controles de direção",
+  snakeUp: "Mover para cima",
+  snakeDown: "Mover para baixo",
+  snakeLeft: "Mover para a esquerda",
+  snakeRight: "Mover para a direita",
   bootStarting: "Iniciando seu espaço.",
   bootSkip: "Entrar no desktop",
   searchTitle: "Busca do Hélio OS",
@@ -40,6 +58,7 @@ const Portuguese = {
   workspaces: "Áreas de trabalho",
   home: "Início",
   projects: "Projetos",
+  snake: "Snake",
   terminal: "Terminal",
   about: "Sobre",
   career: "Experiência",
@@ -95,7 +114,7 @@ const Portuguese = {
   language: "Idioma do sistema",
   languageOptions: "Escolher idioma",
   languageError: "Não foi possível mudar o idioma. Tente novamente.",
-  help: "Comandos: help, whoami, projects, about, career, contact, clear.",
+  help: "Comandos: help, whoami, projects, about, career, contact, snake, clear.",
   whoami:
     "Hélio Palença. Software Engineer que gosta de construir interfaces, ferramentas e experiências com personalidade.",
   unknownCommand: "Comando não encontrado. Digite help para ver as opções.",
@@ -122,6 +141,24 @@ const Portuguese = {
 type Messages = { [Key in keyof typeof Portuguese]: string };
 
 const English = {
+  snakeReady: "Ready to play?",
+  snakeRunning: "Playing",
+  snakePaused: "Game paused",
+  snakeLost: "Game over. Another round?",
+  snakeWon: "You filled the board!",
+  snakeScore: "Score",
+  snakeControls:
+    "Snake board. Arrow keys or WASD move; Space or P pauses; Enter starts or restarts.",
+  snakeInstructions:
+    "Arrows / WASD · Space / P pauses · Enter plays. Leaving the window pauses the game.",
+  snakePlay: "Play / resume",
+  snakePause: "Pause",
+  snakeRestart: "Restart",
+  snakeDirections: "Direction controls",
+  snakeUp: "Move up",
+  snakeDown: "Move down",
+  snakeLeft: "Move left",
+  snakeRight: "Move right",
   bootStarting: "Starting your space.",
   bootSkip: "Enter desktop",
   searchTitle: "Hélio OS Search",
@@ -159,6 +196,7 @@ const English = {
   workspaces: "Workspaces",
   home: "Home",
   projects: "Projects",
+  snake: "Snake",
   terminal: "Terminal",
   about: "About",
   career: "Experience",
@@ -213,7 +251,7 @@ const English = {
   language: "System language",
   languageOptions: "Choose language",
   languageError: "Unable to change the language. Please try again.",
-  help: "Commands: help, whoami, projects, about, career, contact, clear.",
+  help: "Commands: help, whoami, projects, about, career, contact, snake, clear.",
   whoami:
     "Hélio Palença. A Software Engineer who enjoys building interfaces, tools and experiences with personality.",
   unknownCommand: "Command not found. Type help to see the available commands.",
@@ -247,6 +285,7 @@ const AppLabelKeys = {
   about: "about",
   career: "career",
   contact: "contact",
+  snake: "snake",
 } as const satisfies Record<AppId, keyof Messages>;
 
 function getMessages(locale: Locale): Messages {

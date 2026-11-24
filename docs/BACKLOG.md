@@ -2,16 +2,14 @@
 
 ## Ordem de prioridade
 
-1. Português e inglês com seletor de idioma no padrão de sistema operacional — integrado em `e053411`.
-2. Visão geral das mesas e janelas — primeira entrega integrada em `4c0a33b`.
-3. Atalho de teclado para trocar de mesa — aprovado, aguardando publicação.
-4. Prévias mais visuais das janelas na visão geral — aprovadas, aguardando publicação.
-5. Transição mais fluida entre desktop e visão geral — aprovada, aguardando publicação.
-6. Busca rápida com `⌘K` / `Ctrl+K` — implementada localmente, aguardando revisão.
-7. Jogo acessível pelo terminal.
-8. Definir GitFlow e fluxo de publicação.
-9. Explorar identidade pessoal com o asterisco do Hélio OS e as iniciais HPN.
-10. Animação de inicialização com o asterisco verde parado e depois girando com aceleração.
+1. Revisar e publicar o conjunto atual autorizado: busca, mesas/gestos, tema roxo, marca e abertura. Base dessas melhorias salva em `713d395`; publicação exige autorização específica.
+2. Snake no terminal — implementado localmente nesta entrega, aguardando avaliação/publicação.
+3. Definir GitFlow e fluxo de publicação.
+4. Explorar identidade pessoal com asterisco e iniciais HPN.
+5. Redimensionar e maximizar/restaurar janelas.
+6. Avaliar extensão da visão geral com criação/remoção de mesas e transferência de janelas (escopo ainda a definir).
+
+Português/inglês e a primeira visão geral já estão integrados. Atalhos, prévias, transições, busca, paletas e boot estão implementados. A navegação por direcionais/Enter na visão geral também está concluída. Gestos exigem validação física no trackpad do usuário.
 
 ## Identidade pessoal — asterisco e HPN
 
@@ -136,19 +134,15 @@ Critérios de aceite:
 
 ## Jogo no portfólio
 
-### Abrir o jogo por comando do terminal
+### Snake em uma janela do Hélio OS
 
-Adicionar o jogo criado por Hélio ao portfólio como aplicativo. Um comando próprio, listado em `help`, deve abri-lo em uma janela na mesa atual, seguindo o comportamento dos demais aplicativos. O jogo também precisa de um controle visível para quem não usa o terminal.
+Status: implementado localmente para avaliação, sem publicação. O pedido foi refinado de integrar um jogo pré-existente para criar uma cobrinha própria, sem depender de outro repositório.
 
-Antes de implementar, confirmar o nome do jogo, onde está o código ou a versão publicada, como ele pode ser incorporado ao site e quais controles exige. Escolher então se a janela executa o jogo diretamente ou apresenta um acesso à versão externa.
-
-Critérios de aceite:
-
-- O comando escolhido aparece em `help` e abre o jogo sem executar código arbitrário.
-- Há um ícone ou outro controle visível para abrir o mesmo conteúdo.
-- A janela pode ser focada, minimizada, fechada e movida como as demais no desktop.
-- O jogo e seus controles funcionam em tela pequena ou oferecem uma alternativa clara quando houver limitação técnica.
-- Nome, descrição e links correspondem à versão real do jogo.
+- `snake` e `cobrinha` abrem a janela na mesa atual; comandos aparecem em `help` e busca. Os ícones do desktop e dock só aparecem após a primeira abertura por comando ou busca e permanecem até recarregar.
+- Tabuleiro preto/verde, pontuação, pausa, reinício, setas/WASD e controles por toque.
+- Minimização, perda de foco/visibilidade e troca de mesa pausam a partida; restaurar preserva o estado. Fechar inicia nova partida na próxima abertura.
+- A visão geral mostra uma representação estática do tabuleiro e pontuação da sessão.
+- Sem backend, persistência, placar global ou dependências novas. Lógica testada com `npm run test:snake` (Node com suporte nativo a TypeScript, como Node 24).
 
 ## Dependências de implementação
 
@@ -183,3 +177,18 @@ Pontos para refinamento e aceite:
 - Decidir quando exibir (primeira visita, sessão ou reinício), evitando repetir ao trocar idioma, mesa ou abrir janelas. Não criar persistência de janelas.
 - Manter HTML inicial indexável e consistente na hidratação; não simular progresso real de carregamento sem dados reais.
 - Avaliar teclado, foco, leitor de tela e celular antes de aplicar.
+
+## Redimensionar e maximizar janelas
+
+Status: solicitado para backlog, sem implementação.
+
+Permitir aumentar ou diminuir as janelas do Hélio OS pelas bordas/cantos, além de oferecer maximizar e restaurar o tamanho anterior por um controle no cabeçalho. Refinar a interação mantendo o padrão visual do sistema operacional.
+
+Critérios de aceite:
+
+- Definir tamanhos mínimos por aplicativo e limites da área útil da tela, preservando acesso ao cabeçalho, controles e dock.
+- Adaptar o conteúdo ao tamanho disponível sem cortar ações ou prejudicar terminal, projetos e Snake.
+- Preservar tamanho e posição durante minimização, restauração e troca de mesa; maximizar/restaurar recupera a geometria anterior.
+- Refletir a geometria nas miniaturas da visão geral sem alterar o estado das janelas.
+- Oferecer alternativa acessível ao arrasto e definir o comportamento no celular, mantendo controles por toque utilizáveis.
+- Reutilizar tokens e Tailwind; validar arrasto, foco, teclado, responsividade e movimento reduzido. Incluir a ação na busca caso seja oferecida como ação navegável.

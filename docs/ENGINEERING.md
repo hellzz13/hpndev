@@ -135,3 +135,13 @@ A navegação da faixa de mesas usa handlers de teclado e foco, sem efeito ou li
 Movimento fica em keyframes e animações nomeadas do Tailwind. O fim da animação externa, clique ou Escape encerra a apresentação. O único efeito novo sincroniza um timeout de segurança de 3,4 s e a preferência externa `matchMedia`: sem movimento, sai imediatamente; mudança para movimento reduzido também encerra. React/Next não executam esses comportamentos da apresentação; o efeito remove listener e timer no cleanup, inclusive ao pular/desmontar. O callback é estável. Headless UI mantém isolamento e foco do diálogo, sem listeners de teclado ou foco duplicados. Verificar abertura, saída automática, opção de pular, teclado, celular e PT/EN. Referência de acabamento: [Impeccable](https://impeccable.style/), sem instalação ou dependências novas.
 
 O boot é uma apresentação automática, sem nova rota ou comando; seu controle de entrada é interno. A busca continua cobrindo todas as ações navegáveis existentes e não precisa de item para fechar a apresentação.
+
+## Jogo Snake
+
+`snake/engine.ts` concentra regras puras e o estado inicial determinístico; sorteio de comida recebe uma amostra fornecida pelo evento de timer, nunca pelo render ou reducer. `SnakeBoard` desenha SVG estático compartilhado entre jogo e miniaturas; `SnakeGame` contém controles de teclado/toque e handlers de foco. Estado em `useSnake` na home sobrevive à desmontagem por minimização/troca de mesa. Fechar reseta a partida por handler. Mesa por teclado/gesto também usa `navigateSpace` para pausar antes de trocar.
+
+Dois efeitos novos em `useSnake` sincronizam sistemas externos: um intervalo de movimento apenas quando a janela está ativa e a partida em execução; outro registra `visibilitychange` e `window.blur` para pausar ao sair da aba/app. Ambos removem seus recursos no cleanup; dependências refletem a ativação e nenhum estado é espelhado por efeito. React/Next não fornecem o loop nem as regras de pausa do jogo. Eventos do tabuleiro, foco e controles tratam as demais transições, sem listener global de teclas do jogo.
+
+`npm run test:snake` usa o runner nativo do Node (Node 24 ou versão com suporte nativo a TypeScript). Cobre reversão, múltiplos comandos no mesmo tick, colisões, cauda que se move, crescimento, comida livre, vitória e reinício. Validar também terminal, busca, minimização, mesas, overview e layout 320 px. Sem novos estilos globais ou dependências.
+
+A descoberta do Snake é intencional: `isSnakeUnlocked` na home libera os ícones de desktop/dock após a primeira abertura, inclusive pela busca. O catálogo da busca e comandos continuam disponíveis desde o início. A flag vive somente na sessão React, sem efeito ou armazenamento; fechar não a remove e recarregar reinicia.

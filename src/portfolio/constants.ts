@@ -1,4 +1,11 @@
-import { FiCode, FiFolder, FiMail, FiTerminal, FiUser } from "react-icons/fi";
+import {
+  FiCode,
+  FiPlay,
+  FiFolder,
+  FiMail,
+  FiTerminal,
+  FiUser,
+} from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { SiNodedotjs, SiReact, SiSupabase, SiTypescript } from "react-icons/si";
 
@@ -18,6 +25,7 @@ const Apps = {
   ABOUT: "about",
   CAREER: "career",
   CONTACT: "contact",
+  SNAKE: "snake",
 } as const;
 
 type AppId = (typeof Apps)[keyof typeof Apps];
@@ -35,6 +43,7 @@ const AppInfo = {
   about: { label: "Sobre", Icon: FiUser },
   career: { label: "Experiência", Icon: FiCode },
   contact: { label: "Contato", Icon: FiMail },
+  snake: { label: "Snake", Icon: FiPlay },
 } as const satisfies Record<AppId, { label: string; Icon: IconType }>;
 const AppIds = Object.values(Apps);
 const WorkspaceShortcut = {

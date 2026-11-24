@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "theme:green": "node scripts/theme.mjs green",
     "theme:purple": "node scripts/theme.mjs purple",
-    "test:theme": "node --test scripts/theme.test.mjs"
+    "test:theme": "node --test scripts/theme.test.mjs",
+    "test:snake": "node --test scripts/snake.test.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

@@ -51,7 +51,7 @@ const DesktopStyles = {
     "[&_button:focus-visible::before]:visible [&_button:focus-visible::before]:-translate-x-1/2",
     "[&_button:focus-visible::before]:translate-y-0 can-hover:[&_button:hover::before]:opacity-100",
     "can-hover:[&_button:hover::before]:visible can-hover:[&_button:hover::before]:-translate-x-1/2",
-    "can-hover:[&_button:hover::before]:translate-y-0 mobile:grid-cols-desktop-apps-mobile mobile:gap-2 mobile:pt-13.5",
+    "can-hover:[&_button:hover::before]:translate-y-0 mobile:grid-cols-desktop-apps-mobile mobile:data-[snake-unlocked=true]:grid-cols-desktop-apps-unlocked mobile:gap-2 mobile:pt-13.5",
     "mobile:[&_button]:text-type-tiny narrow:gap-0.5",
   ].join(" "),
   desktopIcon: [
@@ -59,7 +59,7 @@ const DesktopStyles = {
     "shadow-elevation-desktop-icon transition-desktop-icon [&_svg]:w-6.25 [&_svg]:h-6.25",
     "[&.icon-projects]:bg-icon-projects [&.icon-projects]:text-icon-projects-foreground [&.icon-about]:bg-icon-about",
     "[&.icon-about]:text-icon-about-foreground [&.icon-career]:bg-icon-career [&.icon-career]:text-icon-career-foreground",
-    "[&.icon-contact]:bg-icon-contact [&.icon-contact]:text-icon-contact-foreground mobile:w-13 mobile:h-13",
+    "[&.icon-snake]:bg-terminal-bar [&.icon-snake]:text-terminal-prompt [&.icon-contact]:bg-icon-contact [&.icon-contact]:text-icon-contact-foreground mobile:w-13 mobile:h-13",
     "mobile:rounded-desktop-icon-mobile narrow:w-11.5 narrow:h-11.5",
   ].join(" "),
   windowsLayer: [
@@ -72,6 +72,7 @@ const DesktopStyles = {
     "shadow-elevation-app-window max-h-window-limit [&.window-terminal]:w-terminal [&.window-terminal]:h-78.75",
     "[&.window-terminal]:top-terminal-top [&.window-terminal]:left-terminal-left [&.window-projects]:w-projects-window",
     "[&.window-projects]:h-projects-window [&.window-projects]:top-projects-top [&.window-projects]:left-projects-left",
+    "[&.window-snake]:w-snake-window [&.window-snake]:h-content-window [&.window-snake]:top-content-top [&.window-snake]:left-content-left",
     "[&.window-about]:w-content-window [&.window-about]:h-content-window [&.window-about]:top-content-top",
     "[&.window-about]:left-content-left [&.window-career]:w-content-window [&.window-career]:h-content-window",
     "[&.window-career]:top-content-top [&.window-career]:left-content-left [&.window-contact]:w-content-window",
@@ -190,7 +191,7 @@ const DesktopStyles = {
     "[&_button:focus-visible::before]:-translate-x-1/2 [&_button:focus-visible::before]:translate-y-0",
     "can-hover:[&_button:hover::before]:opacity-100 can-hover:[&_button:hover::before]:visible",
     "can-hover:[&_button:hover::before]:-translate-x-1/2 can-hover:[&_button:hover::before]:translate-y-0 mobile:bottom-2",
-    "mobile:[&_button]:w-10.25 mobile:[&_button]:h-10.25",
+    "mobile:[&_button]:w-10.25 mobile:[&_button]:h-10.25 narrow:gap-0.5 narrow:p-1",
   ].join(" "),
   heroSecondary: [
     "inline-block ml-5 text-accent text-type-xs underline-offset-4 mobile:block mobile:mt-4.5 mobile:mx-0 mobile:mb-0",

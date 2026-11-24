@@ -35,6 +35,7 @@ const AppKeywords = {
   projects: ["portfolio", "trabalhos", "work"],
   about: ["bio", "perfil", "helio"],
   career: ["curriculo", "resume", "trajetoria"],
+  snake: ["cobrinha", "jogo", "game", "play", "arcade"],
   contact: ["email", "linkedin", "github", "fale"],
 } as const satisfies Record<AppId, readonly string[]>;
 const SpaceKeys = {
