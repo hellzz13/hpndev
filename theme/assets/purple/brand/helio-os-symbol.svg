@@ -1,0 +1,14 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="-24 -24 48 48"
+  role="img"
+  aria-label="Hélio OS — símbolo"
+>
+  <path
+    d="M0-18v36M-18 0h36M-12.728-12.728l25.456 25.456M-12.728 12.728l25.456-25.456"
+    fill="none"
+    stroke="#c5a0ff"
+    stroke-width="6"
+    stroke-linecap="round"
+  />
+</svg>

@@ -119,3 +119,19 @@ Com `Alt + Shift`, o eixo horizontal troca de mesa (direita: próxima; esquerda:
 `QuickSearch.tsx` usa os diálogos e transições do Headless UI já instalado para foco, Escape, isolamento do fundo e fechamento. O conteúdo da busca desmonta ao fechar, reiniciando consulta e seleção sem efeito de estado espelhado. O ciclo `afterLeave` aplica a ação local e preserva a restauração do foco; Google é acionado diretamente no evento explícito para manter a ativação de popup do navegador. `useSearchShortcut.ts` sincroniza somente o listener externo de teclado e faz cleanup. React/Next não implementa a combinação específica da paleta; não duplicar a gestão de foco do diálogo.
 
 A página aplica as ações reutilizando `openApp`, `runCommand`, o gerenciador de janelas e o estado de mesa. Preservar `selectedProject`, histórico e posições ao abrir/fechar a busca. O `help` informa o atalho. Toda entrega deve revisar cobertura do catálogo conforme BR-011, incluindo aliases, traduções, nomes alterados e ação executada.
+
+## Perfis de cores e marca
+
+`theme/palettes` mantém os mesmos papéis semânticos nos perfis verde e roxo. `theme.config.json` seleciona o perfil para o Tailwind; os componentes continuam usando utilitários sem cores literais. `scripts/theme.mjs` aceita somente os IDs de `theme/constants.mjs`, copia uma lista explícita de assets e atualiza a seleção. Não depende de pacotes adicionais nem introduz efeitos React. O favicon inclui a seleção em sua versão de cache.
+
+Após alterar um perfil ou os assets de origem, executar o comando correspondente e formatar os arquivos. Validar `npm run test:theme`, tipos, lint e build. Os testes de troca usam cópias temporárias para preservar o tema local. Os comandos e limites estão em `PURPLE_THEME.md`.
+
+A navegação da faixa de mesas usa handlers de teclado e foco, sem efeito ou listener global adicional. `WorkspaceOverviewContent` mantém uma mesa de prévia local; setas reutilizam `moveWorkspace` e movem o foco real entre botões. Enter usa o clique nativo. O Dialog com `unmount` desmonta esse conteúdo após a saída e inicializa uma nova prévia na próxima abertura, preservando a transição e o gerenciamento de foco do Headless UI instalado. Nenhum estado das janelas ou mesa ativa muda antes da confirmação. A ação existente de visão geral continua acessível pela busca.
+
+## Apresentação de inicialização
+
+`Brand.tsx` reutiliza os SVGs do perfil ativo, com assinatura na barra e símbolo no celular. `BootScreen.tsx` usa `next/dynamic` com `ssr: false` (recurso nativo da versão instalada) somente para a apresentação: conteúdo e metadados do desktop continuam renderizados no servidor. O estado da home impede repetição em navegação cliente de idioma. Não há cookie de boot nem persistência de janelas.
+
+Movimento fica em keyframes e animações nomeadas do Tailwind. O fim da animação externa, clique ou Escape encerra a apresentação. O único efeito novo sincroniza um timeout de segurança de 3,4 s e a preferência externa `matchMedia`: sem movimento, sai imediatamente; mudança para movimento reduzido também encerra. React/Next não executam esses comportamentos da apresentação; o efeito remove listener e timer no cleanup, inclusive ao pular/desmontar. O callback é estável. Headless UI mantém isolamento e foco do diálogo, sem listeners de teclado ou foco duplicados. Verificar abertura, saída automática, opção de pular, teclado, celular e PT/EN. Referência de acabamento: [Impeccable](https://impeccable.style/), sem instalação ou dependências novas.
+
+O boot é uma apresentação automática, sem nova rota ou comando; seu controle de entrada é interno. A busca continua cobrindo todas as ações navegáveis existentes e não precisa de item para fechar a apresentação.

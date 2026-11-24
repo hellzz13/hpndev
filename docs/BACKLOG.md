@@ -15,7 +15,7 @@
 
 ## Identidade pessoal — asterisco e HPN
 
-Status: proposta enxuta de assinatura Hélio OS criada em `public/brand/`, com símbolo independente, versões horizontal/vertical e nome vetorial; pendente de avaliação. Detalhes em `BRAND.md`. A exploração pessoal com HPN continua aberta. Como aplicação provisória autorizada, o favicon usa um asterisco vetorial verde sobre fundo escuro, com fallback ICO; isso não define a marca final ou sua combinação com HPN.
+Status: assinatura enxuta Hélio OS aprovada, com símbolo independente, versões horizontal/vertical e nome vetorial em `public/brand/`. Base verde preservada em `a9cd1b7`; teste roxo no logo/interface em avaliação, conforme `PURPLE_THEME.md`. Detalhes em `BRAND.md`. A exploração pessoal com HPN continua aberta. Como aplicação provisória autorizada, o favicon usa um asterisco vetorial verde sobre fundo escuro, com fallback ICO; isso não define a marca final ou sua combinação com HPN.
 
 Hélio gostou do asterisco que acompanha o nome Hélio OS e quer investigar seu uso como uma marca pessoal simples. As iniciais **HPN**, que já usa com frequência, também são uma referência para essa exploração.
 
@@ -170,7 +170,7 @@ Critérios de aceite:
 
 ## Inicialização do Hélio OS — asterisco em movimento
 
-Status: ideia registrada para refinar, sem implementação nesta entrega de busca.
+Status: implementado localmente para avaliação: assinatura integrada, abertura curta com símbolo acelerando, opção de pular e movimento reduzido. Pendente publicação autorizada.
 
 Criar uma abertura como um sistema operacional ligando: o asterisco verde atual aparece parado sobre fundo escuro, começa a girar e acelera progressivamente até revelar a mesa Início. Manter o símbolo simples; a marca definitiva com HPN segue como exploração separada.
 

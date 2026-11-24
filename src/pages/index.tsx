@@ -1,7 +1,9 @@
 import { DesktopStyles } from "@/portfolio/styles";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+import { Brand } from "@/portfolio/Brand";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { DesktopWindow } from "@/portfolio/DesktopWindow";
 import { StackTags } from "@/portfolio/StackTags";
 import { ProjectIdentity } from "@/portfolio/ProjectIdentity";
@@ -40,6 +42,11 @@ import {
   FiSearch,
 } from "react-icons/fi";
 
+const BootScreen = dynamic(
+  () => import("@/portfolio/BootScreen").then((module) => module.BootScreen),
+  { ssr: false },
+);
+
 type TerminalLine = { command: string; output: string };
 
 function Home() {
@@ -56,8 +63,11 @@ function Home() {
   const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
   const [isOverviewOpen, setOverviewOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
-  useSearchShortcut({ isDisabled: isOverviewOpen, setSearchOpen });
-  const areWorkspaceShortcutsDisabled = isOverviewOpen || isSearchOpen;
+  const [isBooting, setBooting] = useState(true);
+  const finishBoot = useCallback(() => setBooting(false), []);
+  useSearchShortcut({ isDisabled: isOverviewOpen || isBooting, setSearchOpen });
+  const areWorkspaceShortcutsDisabled =
+    isOverviewOpen || isSearchOpen || isBooting;
   useDesktopGestures({
     currentSpace,
     setCurrentSpace,
@@ -419,10 +429,7 @@ function Home() {
       >
         <header className={`menubar ${DesktopStyles.menubar}`}>
           <div>
-            <span className={`menubar-mark ${DesktopStyles.menubarMark}`}>
-              ✳
-            </span>
-            <strong>Hélio OS</strong>
+            <Brand compactOnMobile />
             <span
               className={`menubar-separator ${DesktopStyles.menubarSeparator}`}
             />{" "}
@@ -651,6 +658,7 @@ function Home() {
           </button>
         </nav>
       </div>
+      {isBooting && <BootScreen onComplete={finishBoot} />}
       <QuickSearch
         isOpen={isSearchOpen}
         onClose={() => setSearchOpen(false)}

@@ -35,20 +35,26 @@ function WindowPreview({
   const isAbout = id === Apps.ABOUT;
   const isCareer = id === Apps.CAREER;
   const project = Projects[selectedProject];
+  const surfaceStyle = isTerminal ? "bg-terminal" : "bg-window";
+  const barStyle = isTerminal
+    ? "border-terminal-border bg-terminal-bar text-terminal-title"
+    : "border-window-bar-border bg-window-bar text-window-title";
 
   function content() {
     if (isTerminal)
       return (
         <div className="h-full overflow-hidden bg-terminal p-6 font-mono text-type-sm leading-relaxed text-terminal-text">
-          <div className="mb-5 text-terminal-muted">
-            HÉLIO OS <span>v1.0</span>
+          <div className="mb-5 text-terminal-prompt">
+            HÉLIO OS <span className="text-terminal-muted">v1.0</span>
             <br />
             {t.terminalIntro}
           </div>
           {lines.slice(-TerminalPreviewLines).map((line, index) => (
             <div key={index} className="mb-4">
               <div>
-                <span className="text-accent">helio@portfolio ~ % </span>
+                <span className="text-terminal-prompt">
+                  helio@portfolio ~ %{" "}
+                </span>
                 {line.command}
               </div>
               <p className="mt-2 whitespace-pre-line text-terminal-output">
@@ -57,7 +63,7 @@ function WindowPreview({
             </div>
           ))}
           <div>
-            <span className="text-accent">helio@portfolio ~ % </span>
+            <span className="text-terminal-prompt">helio@portfolio ~ % </span>
             {command}
             <span className="ml-1 text-terminal-input">▏</span>
           </div>
@@ -194,9 +200,11 @@ function WindowPreview({
       <foreignObject width={width} height={height}>
         <div
           inert
-          className="h-full overflow-hidden bg-window font-sans text-foreground [&_em]:text-accent [&_em]:not-italic"
+          className={`h-full overflow-hidden font-sans text-foreground [&_em]:text-accent [&_em]:not-italic ${surfaceStyle}`}
         >
-          <div className="relative flex h-10 items-center justify-center border-b border-window-bar-border bg-window-bar px-4 font-mono text-type-label text-window-title">
+          <div
+            className={`relative flex h-10 items-center justify-center border-b px-4 font-mono text-type-label ${barStyle}`}
+          >
             <span className="absolute left-4 flex gap-2">
               <span className="h-3 w-3 rounded-full bg-control-close" />
               <span className="h-3 w-3 rounded-full bg-control-minimize" />

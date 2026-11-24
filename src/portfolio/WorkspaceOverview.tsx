@@ -6,7 +6,10 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { FiX } from "react-icons/fi";
-import type { ReactNode } from "react";
+import { useRef, useState } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
+import { moveWorkspace } from "./workspaceNavigation";
+import { Brand } from "./Brand";
 import { Spaces } from "./constants";
 import type { AppId, SpaceId } from "./constants";
 import type { DesktopWindowState } from "./useWindowManager";
@@ -33,31 +36,45 @@ const PreviewPosition = {
 const FocusStyle =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus";
 
-function WorkspaceOverview({
-  isOpen,
+function WorkspaceOverviewContent({
   currentSpace,
   windows,
   renderPreview,
   onClose,
   onSelectSpace,
   onSelectWindow,
-}: WorkspaceOverviewProps) {
+}: Omit<WorkspaceOverviewProps, "isOpen">) {
   const { t, appLabel } = useLanguage();
+  const [previewSpace, setPreviewSpace] = useState(currentSpace);
+  const spaceButtons = useRef<
+    Partial<Record<SpaceId, HTMLButtonElement | null>>
+  >({});
   const spaceLabels = { [Spaces.HOME]: t.home, [Spaces.PROJECTS]: t.projects };
   const currentWindows = windows.filter((item) => {
-    const belongsToCurrentSpace = item.space === currentSpace;
+    const belongsToCurrentSpace = item.space === previewSpace;
     return belongsToCurrentSpace;
   });
   const isEmpty = currentWindows.length === 0;
 
+  function navigateSpaces(event: KeyboardEvent<HTMLElement>) {
+    const isPrevious = event.key === "ArrowLeft" || event.key === "ArrowUp";
+    const isNext = event.key === "ArrowRight" || event.key === "ArrowDown";
+    const canNavigate =
+      !event.defaultPrevented &&
+      !event.altKey &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.shiftKey &&
+      !event.nativeEvent.isComposing &&
+      (isPrevious || isNext);
+    if (!canNavigate) return;
+    event.preventDefault();
+    const nextSpace = moveWorkspace(previewSpace, isPrevious ? -1 : 1);
+    spaceButtons.current[nextSpace]?.focus();
+  }
+
   return (
-    <Dialog
-      data-workspace-overview
-      open={isOpen}
-      onClose={onClose}
-      transition
-      className="relative z-101"
-    >
+    <>
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-desktop/95 backdrop-blur-menubar transition-opacity duration-300 ease-out data-[closed]:opacity-0 motion-reduce:transition-none"
@@ -88,10 +105,11 @@ function WorkspaceOverview({
 
           <nav
             aria-label={t.workspaces}
+            onKeyDown={navigateSpaces}
             className="flex justify-center gap-6 border-b border-glass-border pb-6 mobile:gap-3"
           >
             {SpaceIds.map((space, index) => {
-              const isActive = space === currentSpace;
+              const isActive = space === previewSpace;
               const spaceWindows = windows.filter((item) => {
                 const belongsToSpace = item.space === space;
                 return belongsToSpace;
@@ -111,7 +129,12 @@ function WorkspaceOverview({
                 <button
                   type="button"
                   key={space}
+                  ref={(element) => {
+                    spaceButtons.current[space] = element;
+                  }}
+                  data-autofocus={space === currentSpace ? true : undefined}
                   aria-pressed={isActive}
+                  onFocus={() => setPreviewSpace(space)}
                   onClick={() => onSelectSpace(space)}
                   className={`w-full max-w-xs rounded-project-card text-left ${FocusStyle}`}
                 >
@@ -120,7 +143,7 @@ function WorkspaceOverview({
                     className={`relative aspect-video overflow-hidden rounded-project-card border ${wallpaperStyle} ${surfaceStyle}`}
                   >
                     <span className="absolute left-3 top-3 font-display text-type-label text-hero-muted">
-                      ✳ Hélio OS
+                      <Brand className="h-4 w-auto" />
                     </span>
                     {spaceWindows.map((item) => {
                       const left = Math.max(
@@ -179,7 +202,7 @@ function WorkspaceOverview({
             className="flex-1 transition duration-300 ease-out data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:delay-75 data-[leave]:duration-150 motion-reduce:transition-none motion-reduce:!transform-none"
           >
             <h3 className="mb-4 font-mono text-type-label text-body-muted">
-              {spaceLabels[currentSpace]} / {t.overviewSelectWindow}
+              {spaceLabels[previewSpace]} / {t.overviewSelectWindow}
             </h3>
             {isEmpty ? (
               <p className="rounded-project-card border border-dashed border-glass-border p-8 text-center text-body-muted">
@@ -227,6 +250,25 @@ function WorkspaceOverview({
           </p>
         </DialogPanel>
       </div>
+    </>
+  );
+}
+
+function WorkspaceOverview({
+  isOpen,
+  onClose,
+  ...props
+}: WorkspaceOverviewProps) {
+  return (
+    <Dialog
+      data-workspace-overview
+      open={isOpen}
+      onClose={onClose}
+      transition
+      unmount
+      className="relative z-101"
+    >
+      <WorkspaceOverviewContent {...props} onClose={onClose} />
     </Dialog>
   );
 }

@@ -1,18 +1,18 @@
 # Tokens visuais
 
-`tailwind.config.js` é a fonte dos tokens usados pela home, pelas mesas, pelas janelas e pela 404. Os componentes usam utilitários Tailwind; `src/portfolio/styles.ts` reúne composições reutilizáveis para o desktop. As classes curtas como `app-window`, `menubar` e `show-projects` também servem como marcadores de interação e estado, sem regras próprias no CSS global.
+`tailwind.config.js` centraliza os tokens de layout e consome as cores de `theme/palettes/<perfil>.json`, selecionadas por `theme.config.json`. Esses tokens são usados pela home, pelas mesas, pelas janelas e pela 404. Os componentes usam utilitários Tailwind; `src/portfolio/styles.ts` reúne composições reutilizáveis para o desktop. As classes curtas como `app-window`, `menubar` e `show-projects` também servem como marcadores de interação e estado, sem regras próprias no CSS global.
 
 ## Cores por responsabilidade
 
-| Uso | Tokens / exemplo |
-| --- | --- |
-| Destaque e foco | `accent`, `accent-hover`, `focus` → `text-accent` |
-| Desktop e textos | `desktop`, `foreground`, `body-muted` → `bg-desktop` |
-| Janelas | `window`, `window-border`, `window-bar`, `window-title` |
-| Terminal | `terminal`, `terminal-text`, `terminal-output`, `terminal-input` |
-| Projetos | `project-surface`, `project-text`, `project-muted`, `project-green`, `project-purple` |
-| Dock e tooltips | `dock`, `dock-icon`, `tooltip`, `tooltip-border` |
-| Recuperação / 404 | grupo `recovery` → `bg-recovery-background` |
+| Uso               | Tokens / exemplo                                                                                                                         |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Destaque e foco   | `accent`, `accent-hover`, `focus` → `text-accent`                                                                                        |
+| Desktop e textos  | `desktop`, `foreground`, `body-muted` → `bg-desktop`                                                                                     |
+| Janelas           | `window`, `window-border`, `window-bar`, `window-title`                                                                                  |
+| Terminal          | `terminal`, `terminal-prompt`, `terminal-text`, `terminal-output`, `terminal-input`, `terminal-bar`, `terminal-border`, `terminal-title` |
+| Projetos          | `project-surface`, `project-text`, `project-muted`, `project-discipline`, `project-spec`                                                 |
+| Dock e tooltips   | `dock`, `dock-icon`, `tooltip`, `tooltip-border`                                                                                         |
+| Recuperação / 404 | grupo `recovery` → `bg-recovery-background`                                                                                              |
 
 A paleta preserva os tons e canais alfa existentes. Destaque e foco compartilham a mesma cor primitiva; gradientes e sombras referenciam a paleta. Antes de acrescentar uma cor, procurar o papel visual equivalente e reutilizar seu token. Não escrever hexadecimais, RGB ou cores arbitrárias em páginas e componentes.
 
@@ -31,3 +31,5 @@ Tipografia (`font-sans`, `font-display`, `font-mono`, `text-type-*`), raios, ele
 - Posição e camada das janelas durante o arrasto são dados de execução, mantidos em `style`; não são tokens estáticos.
 - O global contém apenas fontes, diretivas Tailwind, reset, foco compartilhado e movimento reduzido. Exceções específicas exigem a justificativa descrita em `ENGINEERING.md`.
 - Ao migrar ou alterar o tema, comparar desktop e celular, estados ativos, foco, tooltips, janelas e navegação antes de concluir.
+
+A troca entre os perfis verde e roxo usa `npm run theme:green` e `npm run theme:purple`, sincronizando também marca e favicon. Ver `PURPLE_THEME.md`.

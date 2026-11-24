@@ -12,13 +12,7 @@ const DesktopStyles = {
     "[&_strong]:text-type-sm [&_time]:font-mono mobile:h-11 mobile:py-0 mobile:px-4 mobile:[&>div]:gap-2.25",
     "mobile:[&_time]:hidden mobile:[&_strong]:text-type-xs",
   ].join(" "),
-  menubarMark: [
-    "mobile:hidden",
-    "text-accent text-type-mark",
-  ].join(" "),
-  menubarSeparator: [
-    "h-3.75 w-0.25 bg-separator mobile:hidden",
-  ].join(" "),
+  menubarSeparator: ["h-3.75 w-0.25 bg-separator mobile:hidden"].join(" "),
   available: [
     "compact:hidden",
     "text-accent text-type-label mobile:hidden",
@@ -74,6 +68,7 @@ const DesktopStyles = {
   ].join(" "),
   appWindow: [
     "absolute flex flex-col pointer-events-auto overflow-hidden border border-window-border rounded-app-window bg-window",
+    "[&.window-terminal]:bg-terminal [&.window-terminal]:border-terminal-border [&.window-terminal_.window-bar]:bg-terminal-bar [&.window-terminal_.window-bar]:border-terminal-border [&.window-terminal_.window-bar>span]:text-terminal-title",
     "shadow-elevation-app-window max-h-window-limit [&.window-terminal]:w-terminal [&.window-terminal]:h-78.75",
     "[&.window-terminal]:top-terminal-top [&.window-terminal]:left-terminal-left [&.window-projects]:w-projects-window",
     "[&.window-projects]:h-projects-window [&.window-projects]:top-projects-top [&.window-projects]:left-projects-left",
@@ -99,38 +94,30 @@ const DesktopStyles = {
     "[&_button_svg]:text-window-control-symbol [&_button_svg]:opacity-0 [&:hover_button_svg]:opacity-100",
     "[&>span]:bg-control-status",
   ].join(" "),
-  close: [
-    "bg-control-close",
-  ].join(" "),
-  minimize: [
-    "bg-control-minimize",
-  ].join(" "),
+  close: ["bg-control-close"].join(" "),
+  minimize: ["bg-control-minimize"].join(" "),
   terminalBody: [
     "flex-terminal-body overflow-auto bg-terminal py-5.5 px-6 text-terminal-text font-normal text-type-xs",
     "leading-terminal-body font-mono cursor-text",
   ].join(" "),
   terminalIntro: [
-    "mb-3.5 text-accent tracking-terminal-intro [&_span]:text-terminal-muted",
+    "mb-3.5 text-terminal-prompt tracking-terminal-intro [&_span]:text-terminal-muted",
   ].join(" "),
   terminalLine: [
     "mb-2.75 [&_p]:mt-0.5 [&_p]:mx-0 [&_p]:mb-0 [&_p]:text-terminal-output [&_p]:whitespace-pre-wrap",
   ].join(" "),
-  prompt: [
-    "text-accent",
-  ].join(" "),
+  prompt: ["text-terminal-prompt"].join(" "),
   terminalForm: [
-    "[&_label]:text-accent flex items-center gap-1.75 whitespace-nowrap [&_input]:min-w-7.5 [&_input]:flex-terminal-body",
+    "[&_label]:text-terminal-prompt flex items-center gap-1.75 whitespace-nowrap [&_input]:min-w-7.5 [&_input]:flex-terminal-body",
     "[&_input]:border-0 [&_input]:outline-reset [&_input:focus]:outline-reset [&_input]:bg-transparent",
-    "[&_input]:text-terminal-input [&_input]:font-inherit [&_input]:p-0",
+    "[&_input]:text-terminal-input [&_input]:caret-terminal-prompt [&_input]:font-inherit [&_input]:p-0",
   ].join(" "),
   windowContent: [
     "overflow-auto p-8 leading-content [&_h2]:font-semibold [&_h2]:text-type-window [&_h2]:leading-heading",
     "[&_h2]:font-display [&_h2]:tracking-window-content [&_h2]:my-3.25 [&_h2]:mx-0 [&>p]:max-w-content-copy",
     "[&>p]:text-body-muted [&>p]:text-type-small mobile:p-6 mobile:[&_h2]:text-type-window-mobile",
   ].join(" "),
-  lede: [
-    "max-w-content-copy text-body-muted text-type-small",
-  ].join(" "),
+  lede: ["max-w-content-copy text-body-muted text-type-small"].join(" "),
   projectTabs: [
     "flex gap-1.5 border-b border-b-window-border mt-5.75 overflow-x-auto [&_button]:flex-project-tabs [&_button]:pt-2.75",
     "[&_button]:px-3.5 [&_button]:pb-3.25 [&_button]:text-tab-muted [&_button]:bg-none [&_button]:border-0",
@@ -140,8 +127,8 @@ const DesktopStyles = {
     "narrow:[&_button]:pl-1.75 narrow:[&_button]:pr-1.75",
   ].join(" "),
   projectCard: [
-    "mt-5 min-h-62.5 p-6.25 rounded-project-card bg-project-green text-project-green-foreground",
-    "[&.project-card-1]:bg-project-purple [&.project-card-1]:text-project-purple-foreground [&_h3]:wrap-anywhere",
+    "mt-5 min-h-62.5 p-6.25 rounded-project-card bg-project-discipline text-project-discipline-foreground",
+    "[&.project-card-1]:bg-project-spec [&.project-card-1]:text-project-spec-foreground [&_h3]:wrap-anywhere",
     "[&_h3]:font-semibold [&_h3]:text-type-card [&_h3]:leading-natural [&_h3]:font-display [&_h3]:tracking-window-content",
     "[&_h3]:mt-4.5 [&_h3]:mx-0 [&_h3]:mb-2.5 [&_p]:max-w-project-copy [&_p]:mb-2.5 [&_p]:text-type-sm",
     "[&_p]:leading-project-card [&_.project-detail]:text-type-label [&_.project-detail]:opacity-80 mobile:p-5",
@@ -257,9 +244,7 @@ const DesktopStyles = {
     "[&_>_.portfolio-index]:bg-projects-wallpaper mobile:h-workspace-mobile mobile:[&_>_.desktop-main]:h-workspace-mobile",
     "mobile:[&_>_.portfolio-index]:h-workspace-mobile",
   ].join(" "),
-  menubarSection: [
-    "mobile:hidden",
-  ].join(" "),
+  menubarSection: ["mobile:hidden"].join(" "),
 } as const;
 
 export { DesktopStyles };

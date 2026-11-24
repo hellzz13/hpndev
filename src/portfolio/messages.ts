@@ -3,6 +3,8 @@ import { Locales } from "./locales";
 import type { Locale } from "./locales";
 
 const Portuguese = {
+  bootStarting: "Iniciando seu espaço.",
+  bootSkip: "Entrar no desktop",
   searchTitle: "Busca do Hélio OS",
   searchPlaceholder: "Busque projetos, aplicativos ou comandos…",
   searchClose: "Fechar busca",
@@ -33,7 +35,7 @@ const Portuguese = {
     "Nenhuma janela nesta mesa. Volte ao desktop para abrir um aplicativo.",
   overviewMinimized: "Minimizada",
   overviewHint:
-    "Selecione uma mesa ou janela para voltar. Esc fecha sem mudar de mesa.",
+    "Use as setas nas mesas para ver suas janelas e Enter para entrar. Clique também seleciona. Tab navega pelas janelas; Esc fecha sem mudar de mesa.",
   portfolio: "Portfólio",
   workspaces: "Áreas de trabalho",
   home: "Início",
@@ -120,6 +122,8 @@ const Portuguese = {
 type Messages = { [Key in keyof typeof Portuguese]: string };
 
 const English = {
+  bootStarting: "Starting your space.",
+  bootSkip: "Enter desktop",
   searchTitle: "Hélio OS Search",
   searchPlaceholder: "Search projects, apps or commands…",
   searchClose: "Close search",
@@ -150,7 +154,7 @@ const English = {
     "No windows in this workspace. Return to the desktop to open an app.",
   overviewMinimized: "Minimized",
   overviewHint:
-    "Select a workspace or window to return. Esc closes without switching workspaces.",
+    "Use arrow keys on workspaces to preview their windows and Enter to switch. Clicking also selects. Tab browses windows; Esc closes without switching workspaces.",
   portfolio: "Portfolio",
   workspaces: "Workspaces",
   home: "Home",

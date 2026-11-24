@@ -6,7 +6,10 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "theme:green": "node scripts/theme.mjs green",
+    "theme:purple": "node scripts/theme.mjs purple",
+    "test:theme": "node --test scripts/theme.test.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
