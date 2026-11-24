@@ -161,3 +161,9 @@ A alternativa de teclado usa botões nomeados em PT/EN, foco visível e setas. A
 Snake usa composição flexível: tabuleiro limitado pela área/altura disponível e controles laterais quando couberem; em janelas estreitas, controles abaixo e rolagem preservam o acesso. Tokens do tema centralizam medidas estruturais. Não há efeito para medir/redimensionar o jogo e nenhuma regra de gameplay é alterada.
 
 Na visão geral, a grade limita cada cartão a `max-w-sm` e cada SVG a `max-h-64`/`max-w-full`, preservando a proporção intrínseca do app. A moldura acompanha o SVG, sem quadro adicional ou faixas vazias. Maximização e dimensões personalizadas não mudam a escala das prévias. A seleção preserva a geometria real no desktop. Sem efeitos ou medições novas.
+
+## Gesto lateral da visão geral
+
+`overviewGesture.ts` resolve limiar, direção, unidades e inércia como regra pura. `useOverviewGestures` sincroniza um listener `wheel` não passivo somente no contêiner montado da visão geral; isso permite cancelar a navegação horizontal padrão do navegador quando o gesto é reconhecido, mantendo rolagem vertical e modificadores intactos. React usa listeners de wheel passivos no root e não implementa a navegação de mesas do portfólio; por isso não usamos um handler React que chama preventDefault sem suporte. O efeito remove o listener no cleanup; dependências incluem ref e callback. A ref do acumulador persiste quando o callback muda após a seleção para manter cooldown/inércia. Nenhum efeito espelha estado.
+
+A seleção reutiliza foco dos botões e `moveWorkspace`, sem alterar a mesa real antes de confirmar. Texto PT/EN explica o gesto. O catálogo já oferece a visão geral; este é um controle interno, sem nova ação de busca. `npm run test:overview-gestures` cobre limiar, direção, cooldown, unidades, diagonais e modificadores. A sensação física deve ser conferida no trackpad do usuário.

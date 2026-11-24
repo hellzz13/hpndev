@@ -6,8 +6,9 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { FiX } from "react-icons/fi";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import type { KeyboardEvent, ReactNode } from "react";
+import { useOverviewGestures } from "./useOverviewGestures";
 import { moveWorkspace } from "./workspaceNavigation";
 import { Brand } from "./Brand";
 import { Spaces } from "./constants";
@@ -49,6 +50,18 @@ function WorkspaceOverviewContent({
   const spaceButtons = useRef<
     Partial<Record<SpaceId, HTMLButtonElement | null>>
   >({});
+  const overviewRef = useRef<HTMLDivElement>(null);
+  const previewWorkspace = useCallback(
+    (direction: number) => {
+      const nextSpace = moveWorkspace(previewSpace, direction);
+      spaceButtons.current[nextSpace]?.focus({ preventScroll: true });
+    },
+    [previewSpace],
+  );
+  useOverviewGestures({
+    containerRef: overviewRef,
+    onNavigate: previewWorkspace,
+  });
   const spaceLabels = { [Spaces.HOME]: t.home, [Spaces.PROJECTS]: t.projects };
   const currentWindows = windows.filter((item) => {
     const belongsToCurrentSpace = item.space === previewSpace;
@@ -69,8 +82,7 @@ function WorkspaceOverviewContent({
       (isPrevious || isNext);
     if (!canNavigate) return;
     event.preventDefault();
-    const nextSpace = moveWorkspace(previewSpace, isPrevious ? -1 : 1);
-    spaceButtons.current[nextSpace]?.focus();
+    previewWorkspace(isPrevious ? -1 : 1);
   }
 
   return (
@@ -79,7 +91,10 @@ function WorkspaceOverviewContent({
         transition
         className="fixed inset-0 bg-desktop/95 backdrop-blur-menubar transition-opacity duration-300 ease-out data-[closed]:opacity-0 motion-reduce:transition-none"
       />
-      <div className="fixed inset-0 overflow-y-auto">
+      <div
+        ref={overviewRef}
+        className="fixed inset-0 overflow-y-auto overscroll-x-none"
+      >
         <DialogPanel
           transition
           className="mx-auto flex min-h-dvh w-full max-w-screen-xl origin-center flex-col gap-8 p-8 text-foreground transition duration-300 ease-out data-[closed]:translate-y-3 data-[closed]:scale-105 data-[closed]:opacity-0 motion-reduce:transition-none motion-reduce:!transform-none mobile:gap-6 mobile:p-4"
@@ -247,6 +262,8 @@ function WorkspaceOverviewContent({
             {t.overviewHint}
             <br />
             {t.overviewGestureInfo}
+            <br />
+            {t.overviewHorizontalGesture}
           </p>
         </DialogPanel>
       </div>

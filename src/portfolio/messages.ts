@@ -45,6 +45,8 @@ const Portuguese = {
 
   overviewTitle: "Visão geral das mesas",
   workspaceGestureInfo: "Alt + Shift + rolagem lateral: ← Início · → Projetos",
+  overviewHorizontalGesture:
+    "Nesta visão, deslize dois dedos ← / → para ver as mesas. Enter ou clique para entrar.",
   overviewGestureInfo: "Alt + Shift + rolagem: ↑ abrir · ↓ fechar (dois dedos)",
   closeOverview: "Fechar visão geral",
   overviewWindows: "janelas",
@@ -195,6 +197,8 @@ const English = {
 
   overviewTitle: "Workspace overview",
   workspaceGestureInfo: "Alt + Shift + horizontal scroll: ← Home · → Projects",
+  overviewHorizontalGesture:
+    "In this view, swipe two fingers ← / → to preview workspaces. Enter or click to switch.",
   overviewGestureInfo: "Alt + Shift + scroll: ↑ open · ↓ close (two fingers)",
   closeOverview: "Close overview",
   overviewWindows: "windows",

@@ -2,14 +2,13 @@
 
 ## Ordem de prioridade
 
-1. Revisar e publicar o conjunto atual autorizado: busca, mesas/gestos, tema roxo, marca e abertura. Base dessas melhorias salva em `713d395`; publicação exige autorização específica.
-2. Snake no terminal — implementado localmente nesta entrega, aguardando avaliação/publicação.
-3. Definir GitFlow e fluxo de publicação.
-4. Explorar identidade pessoal com asterisco e iniciais HPN.
-5. Redimensionar, maximizar/restaurar janelas — implementado localmente, pendente avaliação/publicação.
-6. Avaliar extensão da visão geral com criação/remoção de mesas e transferência de janelas (escopo ainda a definir).
+1. Definir GitFlow e fluxo de publicação.
+2. Explorar identidade pessoal com asterisco e iniciais HPN.
+3. Avaliar extensão da visão geral com criação/remoção de mesas e transferência de janelas (escopo ainda a definir).
+4. Validar gestos no trackpad real: sensibilidade, direção e conflitos com atalhos do sistema.
+5. Investigar falha de deploy do projeto secundário Vercel `hpndev13` — último da fila por decisão do usuário. O projeto principal `hpndev` está publicado normalmente; a causa da falha secundária ainda depende da consulta aos logs autenticados.
 
-Português/inglês e a primeira visão geral já estão integrados. Atalhos, prévias, transições, busca, paletas e boot estão implementados. A navegação por direcionais/Enter na visão geral também está concluída. Gestos exigem validação física no trackpad do usuário.
+Entregues e publicados em `main` no commit `e3c6bb8`: idiomas, navegação e visão geral das mesas, prévias, atalhos/gestos, busca rápida, Snake, logo e abertura, tema roxo com perfil verde preservado, maximização/restauração e redimensionamento de janelas. Os status detalhados abaixo registram o histórico das entregas; a fila pendente vigente é esta lista.
 
 ## Identidade pessoal — asterisco e HPN
 
@@ -192,3 +191,7 @@ Critérios de aceite:
 - Refletir a geometria nas miniaturas da visão geral sem alterar o estado das janelas.
 - Oferecer alternativa acessível ao arrasto e definir o comportamento no celular, mantendo controles por toque utilizáveis.
 - Reutilizar tokens e Tailwind; validar arrasto, foco, teclado, responsividade e movimento reduzido. Incluir a ação na busca caso seja oferecida como ação navegável.
+
+## Gesto horizontal na visão geral
+
+Implementado localmente para avaliação: rolagem de dois dedos esquerda/direita, sem modificadores dentro do overview, destaca mesas e mostra suas janelas; Enter/clique confirma. Mantém setas, clique e rolagem vertical. Pendente validação física no trackpad e publicação autorizada.

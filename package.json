@@ -11,7 +11,8 @@
     "theme:purple": "node scripts/theme.mjs purple",
     "test:theme": "node --test scripts/theme.test.mjs",
     "test:snake": "node --test scripts/snake.test.mjs",
-    "test:windows": "node --test scripts/window-resize.test.mjs"
+    "test:windows": "node --test scripts/window-resize.test.mjs",
+    "test:overview-gestures": "node --test scripts/overview-gesture.test.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
