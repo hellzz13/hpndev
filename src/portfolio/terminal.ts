@@ -1,4 +1,4 @@
-import { Apps, WorkspaceShortcut } from "./constants";
+import { Apps, WorkspaceShortcut, SearchShortcutLabel } from "./constants";
 import type { AppId } from "./constants";
 import { Locales } from "./locales";
 import type { Locale } from "./locales";
@@ -30,6 +30,12 @@ const TerminalCommands = {
 } as const;
 
 const TerminalFiles = "projects/  about.txt  career.log  contact.txt";
+const TerminalCommandIds = [
+  ...new Set([
+    ...Object.values(TerminalCommands),
+    ...Object.keys(TerminalTargets),
+  ]),
+];
 
 function resolveTerminalCommand(
   rawCommand: string,
@@ -42,12 +48,13 @@ function resolveTerminalCommand(
     command === TerminalCommands.HELP || command === TerminalCommands.AJUDA;
   const isWhoami = command === TerminalCommands.WHOAMI;
   const isList = command === TerminalCommands.LS;
-  const appToOpen = TerminalTargets[command];
+  const hasTerminalTarget = Object.hasOwn(TerminalTargets, command);
+  const appToOpen = hasTerminalTarget ? TerminalTargets[command] : undefined;
 
   if (shouldClear) return { output: "", clear: true };
   if (isHelp)
     return {
-      output: `${t.help}\n\n${t.workspaceShortcut}: ${WorkspaceShortcut.label}\n${t.shortcutScope}\n\n${t.overviewGestureInfo}\n${t.workspaceGestureInfo}`,
+      output: `${t.help}\n\n${t.workspaceShortcut}: ${WorkspaceShortcut.label}\n${t.shortcutScope}\n\n${t.overviewGestureInfo}\n${t.workspaceGestureInfo}\n\n${t.searchTitle}: ${SearchShortcutLabel}`,
       clear: false,
     };
   if (isWhoami) return { output: t.whoami, clear: false };
@@ -63,5 +70,5 @@ function resolveTerminalCommand(
   return { output: t.unknownCommand, clear: false };
 }
 
-export { resolveTerminalCommand };
+export { resolveTerminalCommand, TerminalCommandIds };
 export type { TerminalResult };

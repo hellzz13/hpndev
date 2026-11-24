@@ -45,6 +45,8 @@ const WorkspaceShortcut = {
   label: "Alt + Shift + ← / →",
 } as const;
 
+const SearchShortcutLabel = "⌘K / Ctrl+K";
+
 const DesktopBreakpoint = "(max-width: 760px)";
 export {
   Apps,
@@ -54,5 +56,6 @@ export {
   DesktopBreakpoint,
   StackIcons,
   WorkspaceShortcut,
+  SearchShortcutLabel,
 };
 export type { AppId, SpaceId, StackName };

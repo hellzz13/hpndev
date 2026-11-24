@@ -7,14 +7,15 @@
 3. Atalho de teclado para trocar de mesa — aprovado, aguardando publicação.
 4. Prévias mais visuais das janelas na visão geral — aprovadas, aguardando publicação.
 5. Transição mais fluida entre desktop e visão geral — aprovada, aguardando publicação.
-6. Busca rápida com `⌘K` / `Ctrl+K`.
+6. Busca rápida com `⌘K` / `Ctrl+K` — implementada localmente, aguardando revisão.
 7. Jogo acessível pelo terminal.
 8. Definir GitFlow e fluxo de publicação.
 9. Explorar identidade pessoal com o asterisco do Hélio OS e as iniciais HPN.
+10. Animação de inicialização com o asterisco verde parado e depois girando com aceleração.
 
 ## Identidade pessoal — asterisco e HPN
 
-Status: identidade definitiva para explorar e refinar. Como aplicação provisória autorizada, o favicon usa um asterisco vetorial verde sobre fundo escuro, com fallback ICO; isso não define a marca final ou sua combinação com HPN.
+Status: proposta enxuta de assinatura Hélio OS criada em `public/brand/`, com símbolo independente, versões horizontal/vertical e nome vetorial; pendente de avaliação. Detalhes em `BRAND.md`. A exploração pessoal com HPN continua aberta. Como aplicação provisória autorizada, o favicon usa um asterisco vetorial verde sobre fundo escuro, com fallback ICO; isso não define a marca final ou sua combinação com HPN.
 
 Hélio gostou do asterisco que acompanha o nome Hélio OS e quer investigar seu uso como uma marca pessoal simples. As iniciais **HPN**, que já usa com frequência, também são uma referência para essa exploração.
 
@@ -119,6 +120,8 @@ Critérios de aceite:
 
 ### Busca rápida com `⌘K`
 
+Status: implementada localmente, pendente de revisão do usuário. Lupa no dock, `⌘K`/`Ctrl+K`, sugestões PT/EN, setas/Enter/Esc, catálogo derivado de aplicativos/projetos/mesas/comandos e opção explícita de Google quando não há resultado. Manutenção obrigatória nas entregas futuras, conforme BR-011.
+
 Abrir uma paleta de busca por `⌘K` no macOS, `Ctrl+K` nas demais plataformas e por um controle visível. A busca deve encontrar projetos, seções, aplicativos e comandos do portfólio, com sugestões e autocomplete enquanto a pessoa digita. Selecionar um resultado abre a mesa ou janela correspondente.
 
 Se não houver um resultado útil, oferecer **Pesquisar no Google por “…”**. Essa opção abre uma busca externa somente após clique ou Enter explícito; nunca envia o texto digitado automaticamente. Usar a URL de pesquisa do Google com a consulta codificada e avisar visualmente que o destino é externo.
@@ -164,3 +167,19 @@ Critérios de aceite:
 - Separar preview, produção e rollback, incluindo a relação entre branch e ambiente na Vercel.
 - Configurar as proteções e verificações automáticas acordadas no GitHub e testar o fluxo com uma mudança pequena.
 - Atualizar `AGENTS.md` e `docs/GITFLOW.md` para que agentes e pessoas sigam o mesmo processo.
+
+## Inicialização do Hélio OS — asterisco em movimento
+
+Status: ideia registrada para refinar, sem implementação nesta entrega de busca.
+
+Criar uma abertura como um sistema operacional ligando: o asterisco verde atual aparece parado sobre fundo escuro, começa a girar e acelera progressivamente até revelar a mesa Início. Manter o símbolo simples; a marca definitiva com HPN segue como exploração separada.
+
+Referências: [inicialização do macOS, com marca central e progresso](https://support.apple.com/en-my/102535) para composição contida, e [Plymouth](https://wiki.freedesktop.org/Software/Plymouth/) para a ideia de uma animação de boot do Linux. A aceleração do asterisco é a proposta própria de Hélio, não uma reprodução desses sistemas.
+
+Pontos para refinamento e aceite:
+
+- Definir duração curta, aceleração suave e revelação da mesa sem flashes ou giro abrupto.
+- Oferecer pular e alternativa sem rotação para movimento reduzido; não bloquear o acesso ao conteúdo se a animação falhar ou JavaScript estiver indisponível.
+- Decidir quando exibir (primeira visita, sessão ou reinício), evitando repetir ao trocar idioma, mesa ou abrir janelas. Não criar persistência de janelas.
+- Manter HTML inicial indexável e consistente na hidratação; não simular progresso real de carregamento sem dados reais.
+- Avaliar teclado, foco, leitor de tela e celular antes de aplicar.

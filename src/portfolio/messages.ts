@@ -3,6 +3,26 @@ import { Locales } from "./locales";
 import type { Locale } from "./locales";
 
 const Portuguese = {
+  searchTitle: "Busca do Hélio OS",
+  searchPlaceholder: "Busque projetos, aplicativos ou comandos…",
+  searchClose: "Fechar busca",
+  searchSuggestions: "Acesso rápido",
+  searchResults: "resultados locais",
+  searchResult: "resultado local",
+  searchGoogle: "Pesquisar no Google por",
+  searchGoogleHint:
+    "Abre uma busca externa em uma nova aba; o texto só é enviado ao selecionar.",
+  searchExternal: "Externo",
+  searchNavigate: "navegar",
+  searchSelect: "abrir",
+  searchOpenApp: "Abrir aplicativo na mesa atual",
+  searchSwitchSpace: "Trocar de mesa",
+  searchRunCommand: "Executar comando no terminal",
+  searchApps: "Aplicativos",
+  searchCommands: "Comandos",
+  searchActions: "Sistema",
+  searchOpenOverview: "Ver mesas e janelas abertas",
+
   overviewTitle: "Visão geral das mesas",
   workspaceGestureInfo: "Alt + Shift + rolagem lateral: ← Início · → Projetos",
   overviewGestureInfo: "Alt + Shift + rolagem: ↑ abrir · ↓ fechar (dois dedos)",
@@ -100,6 +120,26 @@ const Portuguese = {
 type Messages = { [Key in keyof typeof Portuguese]: string };
 
 const English = {
+  searchTitle: "Hélio OS Search",
+  searchPlaceholder: "Search projects, apps or commands…",
+  searchClose: "Close search",
+  searchSuggestions: "Quick access",
+  searchResults: "local results",
+  searchResult: "local result",
+  searchGoogle: "Search Google for",
+  searchGoogleHint:
+    "Opens an external search in a new tab; text is only sent when selected.",
+  searchExternal: "External",
+  searchNavigate: "navigate",
+  searchSelect: "open",
+  searchOpenApp: "Open app in the current workspace",
+  searchSwitchSpace: "Switch workspace",
+  searchRunCommand: "Run command in the terminal",
+  searchApps: "Apps",
+  searchCommands: "Commands",
+  searchActions: "System",
+  searchOpenOverview: "View workspaces and open windows",
+
   overviewTitle: "Workspace overview",
   workspaceGestureInfo: "Alt + Shift + horizontal scroll: ← Home · → Projects",
   overviewGestureInfo: "Alt + Shift + scroll: ↑ open · ↓ close (two fingers)",

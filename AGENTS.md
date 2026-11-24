@@ -4,6 +4,8 @@ Leia `PROJECT.md`, `docs/ENGINEERING.md` e `docs/BUSINESS_RULES.md` antes de alt
 
 Estilização: use Tailwind como padrão em páginas e componentes. CSS global específico exige uma exceção técnica forte, documentada conforme `docs/ENGINEERING.md`. Confira essa regra na revisão do diff.
 
+Busca rápida: ao adicionar ou alterar um aplicativo, projeto, mesa, comando ou ação acessível ao visitante, atualizar também o catálogo pesquisável e seus termos PT/EN. Conferir que o resultado executa a mesma ação dos controles existentes. Novos recursos não podem ficar ausentes da busca; registrar uma exceção apenas quando o item não for uma ação ou conteúdo navegável.
+
 Formatação: após cada alteração, execute o equivalente a “Format Document”/format on save do VS Code nos arquivos alterados, antes dos gates e da entrega. Respeite o formatter e suas opções configuradas para a linguagem; TypeScript/TSX usa Prettier e correções do ESLint, conforme `docs/ENGINEERING.md`. Não substitua formatação por uma execução de lint sem correção.
 
 Efeitos e responsabilidades do framework: antes de adicionar ou alterar `useEffect`, identifique o sistema externo sincronizado, avalie renderização derivada e handlers de eventos e confirme na documentação ou implementação da versão instalada se React/Next já cuidam do comportamento. Revise dependências e cleanup. Na entrega, justifique os efeitos introduzidos ou alterados e registre como foram verificados, conforme `docs/ENGINEERING.md`.

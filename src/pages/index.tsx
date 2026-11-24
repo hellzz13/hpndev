@@ -20,11 +20,25 @@ import { WorkspaceOverview } from "@/portfolio/WorkspaceOverview";
 import { LanguageSwitcher } from "@/portfolio/LanguageSwitcher";
 import type { AppId, SpaceId } from "@/portfolio/constants";
 import { resolveTerminalCommand } from "@/portfolio/terminal";
+import { QuickSearch } from "@/portfolio/QuickSearch";
+import {
+  SearchActions,
+  SearchShortcutLabel,
+  getGoogleSearchUrl,
+} from "@/portfolio/search";
+import type { SearchAction } from "@/portfolio/search";
+import { useSearchShortcut } from "@/portfolio/useSearchShortcut";
 import { useDesktopGestures } from "@/portfolio/useDesktopGestures";
 import { useWorkspaceShortcuts } from "@/portfolio/useWorkspaceShortcuts";
 import { useWindowManager } from "@/portfolio/useWindowManager";
 import { getSeo, LocaleUrls } from "@/portfolio/seo";
-import { FiArrowUpRight, FiGithub, FiLinkedin, FiGrid } from "react-icons/fi";
+import {
+  FiArrowUpRight,
+  FiGithub,
+  FiLinkedin,
+  FiGrid,
+  FiSearch,
+} from "react-icons/fi";
 
 type TerminalLine = { command: string; output: string };
 
@@ -41,13 +55,19 @@ function Home() {
   } = getSeo(locale);
   const [currentSpace, setCurrentSpace] = useState<SpaceId>(Spaces.HOME);
   const [isOverviewOpen, setOverviewOpen] = useState(false);
+  const [isSearchOpen, setSearchOpen] = useState(false);
+  useSearchShortcut({ isDisabled: isOverviewOpen, setSearchOpen });
+  const areWorkspaceShortcutsDisabled = isOverviewOpen || isSearchOpen;
   useDesktopGestures({
     currentSpace,
     setCurrentSpace,
     isOverviewOpen,
     setOverviewOpen,
   });
-  useWorkspaceShortcuts({ isDisabled: isOverviewOpen, setCurrentSpace });
+  useWorkspaceShortcuts({
+    isDisabled: areWorkspaceShortcutsDisabled,
+    setCurrentSpace,
+  });
   const isHomeSpace = currentSpace === Spaces.HOME;
   const isProjectsSpace = currentSpace === Spaces.PROJECTS;
   const { windows, open, close, minimize, focus, move } = useWindowManager<
@@ -94,8 +114,8 @@ function Home() {
     return !item.minimized && belongsToCurrentSpace;
   }
 
-  function submitCommand() {
-    const trimmedCommand = command.trim();
+  function runCommand(rawCommand: string) {
+    const trimmedCommand = rawCommand.trim();
     const hasCommand = trimmedCommand.length > 0;
     if (!hasCommand) return;
 
@@ -114,6 +134,44 @@ function Home() {
       { command: trimmedCommand, output: result.output },
     ]);
     setCommand("");
+  }
+
+  function selectSearchResult(action: SearchAction) {
+    setSearchOpen(false);
+    const isApp = action.kind === SearchActions.APP;
+    const isProject = action.kind === SearchActions.PROJECT;
+    const isSpace = action.kind === SearchActions.SPACE;
+    const isCommand = action.kind === SearchActions.COMMAND;
+    const isOverview = action.kind === SearchActions.OVERVIEW;
+    const isGoogle = action.kind === SearchActions.GOOGLE;
+    if (isApp) {
+      openApp(action.appId);
+      return;
+    }
+    if (isProject) {
+      setSelectedProject(action.projectIndex);
+      openApp(Apps.PROJECTS);
+      return;
+    }
+    if (isSpace) {
+      switchSpace(action.spaceId);
+      return;
+    }
+    if (isCommand) {
+      openApp(Apps.TERMINAL);
+      runCommand(action.command);
+      return;
+    }
+    if (isOverview) {
+      setOverviewOpen(true);
+      return;
+    }
+    if (isGoogle)
+      window.open(
+        getGoogleSearchUrl(action.query),
+        "_blank",
+        "noopener,noreferrer",
+      );
   }
 
   function appContent(id: AppId) {
@@ -151,7 +209,7 @@ function Home() {
             className={`terminal-form ${DesktopStyles.terminalForm}`}
             onSubmit={(event) => {
               event.preventDefault();
-              submitCommand();
+              runCommand(command);
             }}
           >
             <label htmlFor="terminal-command">helio@portfolio ~ %</label>
@@ -580,8 +638,24 @@ function Home() {
               </button>
             );
           })}
+          <button
+            type="button"
+            aria-label={t.searchTitle}
+            aria-haspopup="dialog"
+            aria-expanded={isSearchOpen}
+            aria-keyshortcuts="Meta+k Control+k"
+            data-tooltip={`${t.searchTitle} · ${SearchShortcutLabel}`}
+            onClick={() => setSearchOpen(true)}
+          >
+            <FiSearch aria-hidden="true" />
+          </button>
         </nav>
       </div>
+      <QuickSearch
+        isOpen={isSearchOpen}
+        onClose={() => setSearchOpen(false)}
+        onSelect={selectSearchResult}
+      />
       <WorkspaceOverview
         isOpen={isOverviewOpen}
         currentSpace={currentSpace}

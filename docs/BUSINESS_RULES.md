@@ -55,3 +55,11 @@ O gesto exige deslocamento mínimo acumulado de 60 pixels equivalentes, reinicia
 ## BR-010 — Troca de mesa por rolagem lateral
 
 `Alt + Shift` com rolagem horizontal para a direita vai para Projetos; para a esquerda, Início. Mantém os mesmos limites e o estado de janelas dos atalhos de teclado. Sem os modificadores, a rolagem normal não é interceptada. Edição, menus, outros modais e a própria visão geral bloqueiam a troca lateral. O gesto vertical continua abrindo/fechando a visão geral. Os eixos usam deslocamento mínimo e cooldown compartilhados; diagonais ambíguas não acionam os dois modos. A direção física dos dedos depende da configuração de rolagem natural.
+
+## BR-011 — Busca rápida e cobertura de novos recursos
+
+A busca abre pela lupa no dock ou por `⌘K`/`Ctrl+K`, inclusive durante edição do terminal; o mesmo atalho a fecha. Não compete com a visão geral: o atalho fica inativo enquanto ela estiver aberta. A paleta recebe foco, oferece sugestões locais, navegação por setas, seleção por Enter e fechamento por Esc com restauração do foco. Texto de busca e seleção são locais à paleta e não persistem após fechá-la.
+
+Aplicativos e projetos abrem na mesa atual; projetos abrem com a aba correspondente selecionada. Um resultado de mesa troca de área de trabalho. Comandos são exclusivamente os reconhecidos pelo terminal, com a mesma interpretação e efeitos; texto livre não é executado. A seleção de uma ação local ocorre ao terminar o fechamento, evitando sobreposição de diálogos e perda de foco. Google é oferecido somente para consulta não vazia sem resultado local, indica destino externo e abre em nova aba só após clique ou Enter explícito. Digitar não envia consultas à rede.
+
+Todo novo aplicativo, projeto, mesa, comando ou ação navegável deve entrar na busca, com nome, termos PT/EN e ação coerente com o acesso direto. Os catálogos existentes são a fonte para geração dos itens; metadados específicos e aliases são mantidos junto da busca. Remoções e renomeações devem atualizar os resultados. Verificar cobertura e destino na revisão de cada entrega. Controles internos da própria paleta não são resultados pesquisáveis.
