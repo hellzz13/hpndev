@@ -183,6 +183,8 @@ const DesktopStyles = {
     "[&_button:hover]:bg-glass-highlight [&_svg]:w-5 [&_svg]:h-5 [&_button.running::after]:content-['']",
     "[&_button.running::after]:absolute [&_button.running::after]:-bottom-1.5 [&_button.running::after]:w-0.75",
     "[&_button.running::after]:h-0.75 [&_button.running::after]:rounded-full [&_button.running::after]:bg-accent",
+    "[&_button.minimized::after]:content-[''] [&_button.minimized::after]:absolute [&_button.minimized::after]:-bottom-1.5 [&_button.minimized::after]:h-0.75 [&_button.minimized::after]:w-2 [&_button.minimized::after]:rounded-full [&_button.minimized::after]:bg-accent",
+    "[&_button.minimized]:ring-1 [&_button.minimized]:ring-inset [&_button.minimized]:ring-accent/50",
     "[&_button::before]:content-[attr(data-tooltip)] [&_button::before]:absolute [&_button::before]:bottom-tooltip",
     "[&_button::before]:left-1/2 [&_button::before]:-translate-x-1/2 [&_button::before]:translate-y-1",
     "[&_button::before]:w-max [&_button::before]:max-w-tooltip [&_button::before]:py-1.5 [&_button::before]:px-2.25",

@@ -752,17 +752,28 @@ function Home() {
           {visibleAppIds.map((id) => {
             const { Icon } = AppInfo[id];
             const label = appLabel(id);
+            const appWindow = windows.find((item) => item.id === id);
+            const isOpen = appWindow !== undefined;
+            const isMinimized = appWindow?.minimized === true;
+            const stateLabel = isMinimized
+              ? t.dockMinimized
+              : isOpen
+                ? t.dockOpen
+                : t.dockClosed;
+            const tooltip = `${label} · ${stateLabel}`;
+            const actionLabel = isMinimized ? t.restoreApp : t.open;
+            const stateStyle = isMinimized
+              ? "minimized"
+              : isOpen
+                ? "running"
+                : "";
             return (
               <button
                 type="button"
                 key={id}
-                data-tooltip={label}
-                aria-label={`${t.open} ${label}`}
-                className={
-                  windows.some((item) => item.id === id && !item.minimized)
-                    ? "running"
-                    : ""
-                }
+                data-tooltip={tooltip}
+                aria-label={`${actionLabel} ${label} · ${stateLabel}`}
+                className={stateStyle}
                 onClick={() => openApp(id)}
               >
                 <Icon aria-hidden="true" />
